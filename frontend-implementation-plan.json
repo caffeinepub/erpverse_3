@@ -1,0 +1,220 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "ERPVerse Phase 1 – Frontend Implementation for Authentication, Company Setup & Role Infrastructure",
+  "requirements": [
+    {
+      "id": "REQ-5",
+      "summary": "Build a landing page with two clearly separated login/registration portals for Company Owner and Staff authentication using Internet Identity",
+      "acceptanceCriteria": [
+        "Landing page displays two distinct entry points",
+        "Company Owner portal triggers Internet Identity login/registration flow",
+        "Staff portal triggers Internet Identity login/registration flow",
+        "After authentication, users are routed to the appropriate screen based on their account type"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/LandingPage.tsx",
+          "operation": "create",
+          "description": "Create the landing page component with two portal sections: Company Owner Portal and Staff Portal. Display the generated hero background image (frontend/public/assets/generated/hero-bg.dim_1920x1080.png) as the page background. Include the ERPVerse logo (frontend/public/assets/generated/erpverse-logo.dim_256x256.png) in the header. Each portal section should have a login button that triggers Internet Identity authentication. Apply the dark navy, slate, and gold/amber color palette. Include language toggle in the header for Turkish/English switching. Use the authorization component to handle Internet Identity login flow."
+        },
+        {
+          "path": "frontend/src/components/PortalCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable portal card component for the Company Owner and Staff entry points. Style with card-based layout, consistent spacing, dark navy background with slate borders, and gold/amber accent for CTAs. Include icon, title, description, and login button props."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the LandingPage as the default route for unauthenticated users. Add routing logic to redirect authenticated users based on their account type (company owner vs staff) by checking backend capabilities. Integrate language context provider for Turkish/English support."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Display Company Setup screen for first-time company owners to register their company with all required fields",
+      "acceptanceCriteria": [
+        "All required fields are present and validated before submission",
+        "Successful submission creates the company in the backend",
+        "Owner is redirected to the Company Dashboard after setup",
+        "If the owner already has a company, the setup screen is skipped"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/CompanySetupPage.tsx",
+          "operation": "create",
+          "description": "Create the Company Setup form page with fields for: Company Name, Tax Number, Sector, Address, Phone (with country code), Email, Authorized Person Name, Employee Count, and Founding Year. Include form validation for all required fields. On successful submission, call backend createCompany capability and redirect to Company Owner Dashboard. Apply professional ERP theme with dark navy background, slate form fields, and gold/amber submit button. Support Turkish/English labels."
+        },
+        {
+          "path": "frontend/src/hooks/useCompanySetup.ts",
+          "operation": "create",
+          "description": "Create a custom hook for company setup logic. Check if the authenticated owner already has a company using the backend isRegisteredAsCompany capability. Return setup status and mutation for creating company via backend createCompany capability. Handle success and error states."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add routing for CompanySetupPage at /company-setup. Add route guard logic: after Company Owner login, check if they have a registered company using backend capabilities. If no company exists, route to /company-setup. If company exists, route to /company-dashboard."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Display Staff Registration screen for first-time staff members to complete their profile and view their generated employee code",
+      "acceptanceCriteria": [
+        "New staff are prompted to complete their profile on first login",
+        "The 12-character employee code is displayed clearly after registration",
+        "Returning staff are taken directly to their dashboard",
+        "Employee code is accessible from the staff profile at any time"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/StaffRegistrationPage.tsx",
+          "operation": "create",
+          "description": "Create the Staff Registration page with a profile form. After the user submits their profile, fetch and prominently display their generated 12-character employee code from the backend using the getMyEmployeeCode capability. Use a highlighted card with copy-to-clipboard functionality for the employee code. Include instructions for sharing the code with company managers. Apply dark navy and gold/amber styling. Support Turkish/English text."
+        },
+        {
+          "path": "frontend/src/hooks/useStaffProfile.ts",
+          "operation": "create",
+          "description": "Create a custom hook for staff profile management. Check if the authenticated staff member has a profile using the backend getCallerUserProfile capability. Provide mutation for saving staff profile via saveCallerUserProfile capability. Fetch employee code via getMyEmployeeCode capability. Handle loading and error states."
+        },
+        {
+          "path": "frontend/src/components/EmployeeCodeDisplay.tsx",
+          "operation": "create",
+          "description": "Create a component to display the 12-character employee code prominently with copy-to-clipboard button. Style with gold/amber accents and clear typography. Include Turkish/English labels for instructions."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add routing for StaffRegistrationPage at /staff-registration. Add route guard logic: after Staff login, check if they have a profile using backend capabilities. If no profile exists, route to /staff-registration. If profile exists, route to /staff-dashboard."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Build a Company Owner Dashboard showing company information and navigation to staff management features",
+      "acceptanceCriteria": [
+        "Dashboard displays company name and key info",
+        "Navigation to staff management section is accessible",
+        "Dashboard is only accessible to authenticated company owners"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/CompanyOwnerDashboard.tsx",
+          "operation": "create",
+          "description": "Create the Company Owner Dashboard with sidebar navigation pattern. Display company information (name, sector, employee count) fetched via backend getCompany capability. Include navigation links to staff management section. Apply enterprise-grade layout with dark navy sidebar, slate content area, and gold/amber active nav indicators. Guard the page to ensure only authenticated company owners can access it. Support Turkish/English UI text."
+        },
+        {
+          "path": "frontend/src/components/DashboardSidebar.tsx",
+          "operation": "create",
+          "description": "Create a reusable sidebar navigation component for dashboards. Include ERPVerse logo, navigation menu items, and user profile section. Style with dark navy background, slate borders, and gold/amber hover states. Support Turkish/English labels."
+        },
+        {
+          "path": "frontend/src/components/CompanyInfoCard.tsx",
+          "operation": "create",
+          "description": "Create a card component to display company information. Use card-based layout with consistent spacing, dark navy background, and slate borders. Display company name, tax number, sector, and other key details. Support Turkish/English labels."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add routing for CompanyOwnerDashboard at /company-dashboard. Ensure route is protected and only accessible to authenticated company owners. Verify authorization using backend capabilities."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Build a Staff Dashboard showing all companies the staff member belongs to with their roles in each company",
+      "acceptanceCriteria": [
+        "Staff dashboard lists all companies the staff member is part of",
+        "Each company entry shows the staff member's role(s) in that company",
+        "Staff can navigate into a company panel appropriate to their role",
+        "Dashboard is only accessible to authenticated staff"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/StaffDashboard.tsx",
+          "operation": "create",
+          "description": "Create the Staff Dashboard that lists all companies the staff member belongs to. Fetch staff memberships and roles using backend getCallerUserProfile capability. Display each company in a card showing company name and the staff member's role. Include navigation to access each company's panel. Use sidebar navigation pattern with dark navy and slate styling. Guard the page to ensure only authenticated staff can access it. Support Turkish/English UI text."
+        },
+        {
+          "path": "frontend/src/components/CompanyMembershipCard.tsx",
+          "operation": "create",
+          "description": "Create a card component to display a company membership with the staff member's role. Include company name, role name, and a button to access the company panel. Style with dark navy background, slate borders, and gold/amber CTAs. Support Turkish/English labels."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add routing for StaffDashboard at /staff-dashboard. Ensure route is protected and only accessible to authenticated staff members. Verify authorization using backend capabilities."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Implement Turkish (default) and English language support throughout the entire application with a language toggle in the header",
+      "acceptanceCriteria": [
+        "All UI text is available in Turkish and English",
+        "Turkish is the default language on first load",
+        "A language toggle (TR / EN) is visible in the header",
+        "Switching language updates all visible text immediately without page reload"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/contexts/LanguageContext.tsx",
+          "operation": "create",
+          "description": "Create a Language Context with React Context API to manage the current language state (Turkish or English). Turkish is the default. Provide a toggle function to switch between languages. Store the selected language in localStorage to persist user preference."
+        },
+        {
+          "path": "frontend/src/locales/tr.json",
+          "operation": "create",
+          "description": "Create Turkish translation file containing all UI text strings, labels, buttons, error messages, and notifications used throughout the application. Organize by page/component for easy maintenance."
+        },
+        {
+          "path": "frontend/src/locales/en.json",
+          "operation": "create",
+          "description": "Create English translation file containing all UI text strings, labels, buttons, error messages, and notifications used throughout the application. Organize by page/component matching the Turkish file structure."
+        },
+        {
+          "path": "frontend/src/hooks/useTranslation.ts",
+          "operation": "create",
+          "description": "Create a custom hook to access translations. Accept a translation key and return the translated string based on the current language from LanguageContext. Support nested keys using dot notation (e.g., 'landing.ownerPortal.title')."
+        },
+        {
+          "path": "frontend/src/components/LanguageToggle.tsx",
+          "operation": "create",
+          "description": "Create a language toggle component displaying TR / EN options. Highlight the active language with gold/amber styling. On click, update the language in LanguageContext. Place this component in the app header visible on all pages."
+        },
+        {
+          "path": "frontend/src/components/Header.tsx",
+          "operation": "create",
+          "description": "Create a header component that includes the ERPVerse logo (frontend/public/assets/generated/erpverse-logo.dim_256x256.png), LanguageToggle component, and authentication status (login/logout button). Style with dark navy background and consistent spacing. This header should be visible across all pages."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap the entire app with LanguageContext.Provider. Include the Header component at the top level so it's visible on all routes."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Apply a professional, corporate ERP visual theme with dark navy, slate, and gold/amber palette across the entire application",
+      "acceptanceCriteria": [
+        "Consistent color palette (dark navy, slate, gold/amber accents) is applied throughout",
+        "Dashboard layouts use sidebar navigation",
+        "Cards and panels follow consistent spacing and border styling",
+        "The design looks professional and suitable for enterprise use"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Define the ERP color palette using CSS custom properties: dark navy (#1a2332) for backgrounds, slate (#475569) for secondary backgrounds and borders, gold/amber (#f59e0b) for accents and CTAs, and appropriate text colors. Set clean, modern typography (sans-serif font stack). Define base styles for cards, buttons, and form elements following the enterprise theme. Apply consistent spacing and border radius values."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend Tailwind theme with custom ERP color palette: navy (primary dark navy shades), slate (secondary slate shades), and amber (gold/amber accent shades). Define custom spacing scale for consistent enterprise layout. Configure typography plugin for clean, modern font styles. Set border radius values for premium card styling."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "kind": "build_request",
+  "title": "ERPVerse Phase 1 – Authentication, Company Setup & Role Infrastructure",
+  "projectName": "ERPVerse",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create the backend data models and actor logic for multi-tenant company management. Each company must store: company name, tax number, sector, address, phone, email, authorized person name, employee count, and founding year. Each company must be uniquely identified and isolated from other companies (multi-tenant architecture). The company owner is tied to their Internet Identity principal.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-4",
+          "msg-6"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A company record can be created with all required fields",
+        "Each company has a unique identifier",
+        "Company data is only accessible by authorized principals",
+        "Duplicate company registration by the same principal is prevented"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement a hierarchical role system in the backend with the following built-in roles: Company Owner (single, top-level), Company Manager (Technical / Administrative subtypes), Company Administrator (Technical / Administrative subtypes), and Company Staff. Each company can also define custom roles. Roles are scoped per company. A user can belong to multiple companies with different roles in each. Role permissions are configured by the role one level above.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Built-in roles (Owner, Manager, Administrator, Staff) exist per company",
+        "Custom roles can be added to a company by the owner or manager",
+        "A principal can have roles in multiple companies simultaneously",
+        "Role permissions are stored and enforced per company"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement staff account creation in the backend. When a staff member registers, generate a unique 12-character alphanumeric employee code (e.g., 'A3F9K2X7M1Q8'). This code is used for role assignment by company owners/managers. A staff account is linked to the staff member's Internet Identity principal.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Staff registration creates a profile with a unique 12-character alphanumeric code",
+        "No two staff members share the same employee code",
+        "Employee code is retrievable after login",
+        "Staff profile is linked to their Internet Identity principal"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement backend functions for company owners and managers to add or remove staff from their company, assign roles using the staff member's 12-character employee code, and update role assignments. A Company Manager can manage Company Administrator and Staff roles; a Company Owner can manage all roles.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Owner can add/remove staff using their employee code",
+        "Owner can assign any role to staff",
+        "Manager can add/remove and assign Administrator and Staff roles",
+        "Unauthorized role assignments are rejected"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Build a landing page with two clearly separated login/registration portals: (1) Company Owner Portal – for registering a new company or logging in as a company owner via Internet Identity; (2) Staff Portal – for staff members to register or log in via Internet Identity. Both portals use Internet Identity for authentication.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Landing page displays two distinct entry points",
+        "Company Owner portal triggers Internet Identity login/registration flow",
+        "Staff portal triggers Internet Identity login/registration flow",
+        "After authentication, users are routed to the appropriate screen based on their account type"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "After a company owner authenticates for the first time (no company registered yet), display a Company Setup screen with a form collecting: Company Name, Tax Number, Sector, Address, Phone, Email, Authorized Person Name, Employee Count, and Founding Year. On successful submission, create the company record in the backend and redirect to the Company Owner Dashboard.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4",
+          "msg-6"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All required fields are present and validated before submission",
+        "Successful submission creates the company in the backend",
+        "Owner is redirected to the Company Dashboard after setup",
+        "If the owner already has a company, the setup screen is skipped"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "After a staff member authenticates for the first time (no staff profile yet), show a Staff Registration screen where they can complete their profile. Display their generated 12-character employee code prominently after registration so they can share it with company managers.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ]
+      },
+      "acceptanceCriteria": [
+        "New staff are prompted to complete their profile on first login",
+        "The 12-character employee code is displayed clearly after registration",
+        "Returning staff are taken directly to their dashboard",
+        "Employee code is accessible from the staff profile at any time"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Build a Company Owner Dashboard that shows the company's basic information and provides navigation to staff management (add/remove staff, assign roles). This is the home screen after company setup is complete.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Dashboard displays company name and key info",
+        "Navigation to staff management section is accessible",
+        "Dashboard is only accessible to authenticated company owners"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Build a Staff Dashboard that shows all companies the staff member belongs to, along with their role in each company. If a staff member is assigned to multiple companies, each company's panel is accessible from this dashboard based on their assigned role.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Staff dashboard lists all companies the staff member is part of",
+        "Each company entry shows the staff member's role(s) in that company",
+        "Staff can navigate into a company panel appropriate to their role",
+        "Dashboard is only accessible to authenticated staff"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Implement Turkish (default) and English language support throughout the entire application. All UI text, labels, buttons, error messages, and notifications must be available in both languages. The user must be able to switch between languages via a language toggle in the app header.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All UI text is available in Turkish and English",
+        "Turkish is the default language on first load",
+        "A language toggle (TR / EN) is visible in the header",
+        "Switching language updates all visible text immediately without page reload"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Apply a professional, corporate ERP visual theme across the entire application. Use a dark navy and slate color palette with gold/amber accents for highlights and CTAs. Typography should be clean and modern. Layout should feel structured and enterprise-grade with a sidebar navigation pattern for dashboards, card-based information panels, and consistent spacing. The design must feel premium and trustworthy for multi-company business use.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Consistent color palette (dark navy, slate, gold/amber accents) is applied throughout",
+        "Dashboard layouts use sidebar navigation",
+        "Cards and panels follow consistent spacing and border styling",
+        "The design looks professional and suitable for enterprise use"
+      ]
+    }
+  ],
+  "constraints": [
+    "All Motoko logic must remain in a single actor in backend/main.mo",
+    "Authentication must use Internet Identity only — no other auth providers",
+    "Do not implement Faz 2 ERP modules (HR, Accounting, CRM, etc.) in this build — infrastructure only",
+    "Immutable frontend paths (hooks, ui components) must not be modified"
+  ],
+  "nonGoals": [
+    "ERP modules (HR, Accounting/Finance, Project Management, Inventory, CRM, Production, Procurement, Task Management) — these are Faz 3+",
+    "Advanced permission configuration UI — role permission editing is out of scope for this phase",
+    "Email or SMS notifications",
+    "File uploads or document management"
+  ],
+  "imageRequirements": {
+    "required": [
+      "ERPVerse logo mark — stylized geometric monogram 'EV' with dark navy background and gold accent lines, modern corporate style (erpverse-logo.dim_256x256.png)",
+      "Landing page hero background — abstract dark navy and slate gradient with subtle geometric grid pattern and gold accent lines, enterprise tech aesthetic (hero-bg.dim_1920x1080.png)"
+    ],
+    "edits": []
+  }
+}

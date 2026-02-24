@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "ERPVerse – Unified Business Management Platform: Multi-tenant ERP system with Turkish (primary) and English language support. Features two separate login portals (Company Owner/Registration + Staff Login via Internet Identity), hierarchical role system (Owner → Manager → Administrator → Staff), 12-character unique employee codes, customizable roles per company, and staff can work across multiple companies with multiple roles. Full ERP modules planned: HR, Accounting/Finance, Project Management, Stock/Inventory, CRM, Production, Procurement, Task/Workflow Management.",
+  "architectural_notes": [
+    "Multi-tenant mimari: Her şirket kendi izole ortamında çalışır, Motoko backend + React/TypeScript frontend",
+    "İki giriş noktası: Şirket Sahibi/Kayıt (Internet Identity) ve Personel Girişi (Internet Identity) ayrı ekranlar",
+    "Rol hiyerarşisi: Şirket Sahibi (tek) → Yönetici (Teknik/İdari) → İdareci (Teknik/İdari) → Personel; üst rol alt rolün yetkilerini belirler",
+    "Bir personel birden fazla şirkette, birden fazla rolle çalışabilir; 12 haneli alfanümerik benzersiz personel kodu",
+    "Modüler yetki sistemi: Şirket bazında özel roller eklenebilir, yetki kapsamı üst rol tarafından tanımlanır"
+  ],
+  "known_issues": [
+    "Faz 1 inşası ilk denemede başarısız oldu; yeniden deneniyor"
+  ],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- ERPVerse logo mark — stylized geometric monogram 'EV' with dark navy background and gold accent lines, modern corporate style (erpverse-logo.dim_256x256.png)\n- Landing page hero background — abstract dark navy and slate gradient with subtle geometric grid pattern and gold accent lines, enterprise tech aesthetic (hero-bg.dim_1920x1080.png)",
+  "existing_features": [
+    {
+      "id": "feature-build-a-landing-page-with-two-clearly-separated-login-registration-portals-1-company-owner-portal-for-registering-a-new-company-or-logging-in-as-a-company-owner-via-internet-identity-2-staff-portal-for-staff-members-to-register-or-log-in-via-internet-identity-both-portals-use-internet-identity-for-authentication",
+      "title": "Build a landing page with two clearly separated login/registration portals: (1) Company Owner Portal – for registering a new company or logging in as a company owner via Internet Identity; (2) Staff Portal – for staff members to register or log in via Internet Identity. Both portals use Internet Identity for authentication.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-after-a-company-owner-authenticates-for-the-first-time-no-company-registered-yet-display-a-company-setup-screen-with-a-form-collecting-company-name-tax-number-sector-address-phone-email-authorized-person-name-employee-count-and-founding-year-on-successful-submission-create-the-company-record-in-the-backend-and-redirect-to-the-company-owner-dashboard",
+      "title": "After a company owner authenticates for the first time (no company registered yet), display a Company Setup screen with a form collecting: Company Name, Tax Number, Sector, Address, Phone, Email, Authorized Person Name, Employee Count, and Founding Year. On successful submission, create the company record in the backend and redirect to the Company Owner Dashboard.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-after-a-staff-member-authenticates-for-the-first-time-no-staff-profile-yet-show-a-staff-registration-screen-where-they-can-complete-their-profile-display-their-generated-12-character-employee-code-prominently-after-registration-so-they-can-share-it-with-company-managers",
+      "title": "After a staff member authenticates for the first time (no staff profile yet), show a Staff Registration screen where they can complete their profile. Display their generated 12-character employee code prominently after registration so they can share it with company managers.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-company-owner-dashboard-that-shows-the-company-s-basic-information-and-provides-navigation-to-staff-management-add-remove-staff-assign-roles-this-is-the-home-screen-after-company-setup-is-complete",
+      "title": "Build a Company Owner Dashboard that shows the company's basic information and provides navigation to staff management (add/remove staff, assign roles). This is the home screen after company setup is complete.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-staff-dashboard-that-shows-all-companies-the-staff-member-belongs-to-along-with-their-role-in-each-company-if-a-staff-member-is-assigned-to-multiple-companies-each-company-s-panel-is-accessible-from-this-dashboard-based-on-their-assigned-role",
+      "title": "Build a Staff Dashboard that shows all companies the staff member belongs to, along with their role in each company. If a staff member is assigned to multiple companies, each company's panel is accessible from this dashboard based on their assigned role.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-turkish-default-and-english-language-support-throughout-the-entire-application-all-ui-text-labels-buttons-error-messages-and-notifications-must-be-available-in-both-languages-the-user-must-be-able-to-switch-between-languages-via-a-language-toggle-in-the-app-header",
+      "title": "Implement Turkish (default) and English language support throughout the entire application. All UI text, labels, buttons, error messages, and notifications must be available in both languages. The user must be able to switch between languages via a language toggle in the app header.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-professional-corporate-erp-visual-theme-across-the-entire-application-use-a-dark-navy-and-slate-color-palette-with-gold-amber-accents-for-highlights-and-ctas-typography-should-be-clean-and-modern-layout-should-feel-structured-and-enterprise-grade-with-a-sidebar-navigation-pattern-for-dashboards-card-based-information-panels-and-consistent-spacing-the-design-must-feel-premium-and-trustworthy-for-multi-company-business-use",
+      "title": "Apply a professional, corporate ERP visual theme across the entire application. Use a dark navy and slate color palette with gold/amber accents for highlights and CTAs. Typography should be clean and modern. Layout should feel structured and enterprise-grade with a sidebar navigation pattern for dashboards, card-based information panels, and consistent spacing. The design must feel premium and trustworthy for multi-company business use.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Faz 1: İki ayrı giriş ekranı (Şirket Kayıt/Giriş + Personel Girişi) Internet Identity entegrasyonu ile",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Faz 1: Şirket kurulum ekranı (Adı, Vergi No, Sektör, Adres, Telefon, E-posta, Yetkili Kişi, Çalışan Sayısı, Kuruluş Yılı)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Faz 1: Hiyerarşik rol altyapısı (Şirket Sahibi → Yönetici → İdareci → Personel) ve özelleştirilebilir roller",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Faz 1: 12 haneli benzersiz personel kodu üretimi",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Faz 1: Multi-tenant mimari temeli (her şirket izole ortamda)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Faz 1: Türkçe (varsayılan) ve İngilizce dil desteği",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Faz 2: Şirket Sahibi dashboard, personel ekleme/çıkarma, rol atama, personelin birden fazla şirkette çalışabilmesi",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Faz 3+: ERP modülleri – İK, Muhasebe/Finans, Proje Yönetimi, Stok/Envanter, CRM, Üretim, Satın Alma/Tedarik, Görev/İş Akışı",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Create the backend data models and actor logic for multi-tenant company management. Each company must store: company name, tax number, sector, address, phone, email, authorized person name, employee count, and founding year. Each company must be uniquely identified and isolated from other companies (multi-tenant architecture). The company owner is tied to their Internet Identity principal.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Implement a hierarchical role system in the backend with the following built-in roles: Company Owner (single, top-level), Company Manager (Technical / Administrative subtypes), Company Administrator (Technical / Administrative subtypes), and Company Staff. Each company can also define custom roles. Roles are scoped per company. A user can belong to multiple companies with different roles in each. Role permissions are configured by the role one level above.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Implement staff account creation in the backend. When a staff member registers, generate a unique 12-character alphanumeric employee code (e.g., 'A3F9K2X7M1Q8'). This code is used for role assignment by company owners/managers. A staff account is linked to the staff member's Internet Identity principal.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Implement backend functions for company owners and managers to add or remove staff from their company, assign roles using the staff member's 12-character employee code, and update role assignments. A Company Manager can manage Company Administrator and Staff roles; a Company Owner can manage all roles.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "ERPVerse",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

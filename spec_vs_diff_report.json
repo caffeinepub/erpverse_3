@@ -1,0 +1,89 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-24T23:49:39.303Z",
+  "summary": "The diff implements a comprehensive ERPVerse Phase 1 application covering most requirements. Backend (main.mo) includes company management, role system, staff management, and employee code generation. Frontend includes landing page with dual portals, company setup, staff registration, dashboards, language support, and visual theme. Some omitted files (9 files due to limits) prevent full verification of certain requirements, but evidence from visible files is strong. A few gaps are identifiable.",
+  "missing_requirements": [
+    {
+      "id": "REQ-2",
+      "requirement": "Role permissions are configured by the role one level above (hierarchical permission configuration enforcement).",
+      "reason": "The backend main.mo shows default roles with parentRole fields defined, but the truncated backend code does not show enforcement that permission configuration is done by the role one level above. The hierarchical delegation of permission configuration is not clearly implemented in the visible code.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "No two staff members share the same employee code (uniqueness enforcement for 12-character alphanumeric employee codes).",
+      "reason": "The backend main.mo is truncated and the employee code generation logic is not visible in the diff. While the data model and Staff type include employeeCode, the generation and uniqueness enforcement logic cannot be confirmed from the visible portion.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Staff can navigate into a company panel appropriate to their role.",
+      "reason": "StaffDashboard page is listed as an added file but its content is omitted from the diff due to file limits. CompanyMembershipCard has an onEnter button but the routing logic connecting staff into a role-appropriate company panel view cannot be fully verified.",
+      "evidence": [
+        "frontend/src/components/CompanyMembershipCard.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "A 'projectManager' field is included in the Staff and UserProfile data models.",
+      "reason": "The build request specifies staff profile fields linked to Internet Identity principal but does not mention a 'projectManager' field as part of staff profile data. This field appears in both the Staff type and UserProfile type in main.mo without being requested.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "A Caffeine admin token initialization mechanism (_initializeAccessControlWithSecret) is included in the actor and used in useActor.ts.",
+      "reason": "The build request does not mention any admin token, secret parameter, or Caffeine-specific access control initialization. This appears to be framework scaffolding added beyond what was requested.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "A dedicated Role Management navigation item and view is included in the DashboardSidebar beyond staff management.",
+      "reason": "REQ-8 specifies navigation to staff management but the build request explicitly states advanced permission configuration UI and role permission editing are out of scope for this phase as non-goals. A dedicated roles management section in the sidebar goes beyond what was requested.",
+      "evidence": [
+        "frontend/src/components/DashboardSidebar.tsx",
+        "frontend/src/pages/CompanyOwnerDashboard.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.72,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/CompanyInfoCard.tsx",
+    "frontend/src/components/CompanyMembershipCard.tsx",
+    "frontend/src/components/DashboardSidebar.tsx",
+    "frontend/src/components/EmployeeCodeDisplay.tsx",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/LanguageToggle.tsx",
+    "frontend/src/components/PortalCard.tsx",
+    "frontend/src/contexts/LanguageContext.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/locales/en.json",
+    "frontend/src/locales/tr.json",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/CompanyOwnerDashboard.tsx",
+    "frontend/src/pages/CompanySetupPage.tsx",
+    "frontend/src/pages/LandingPage.tsx",
+    "frontend/src/pages/StaffDashboard.tsx",
+    "frontend/src/pages/StaffRegistrationPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

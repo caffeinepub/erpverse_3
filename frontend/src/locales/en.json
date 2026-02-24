@@ -1,0 +1,213 @@
+{
+  "app": {
+    "name": "ERPVerse",
+    "tagline": "Unified Business Management Platform",
+    "description": "Manage your company on a single platform. Multi-tenant, secure and scalable."
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "logout": "Logout",
+    "login": "Login",
+    "profile": "Profile"
+  },
+  "landing": {
+    "hero": {
+      "title": "Take Your Business to the Next Level",
+      "subtitle": "Manage all your company processes on a single platform with ERPVerse. Secure, scalable and multilingual.",
+      "badge": "Enterprise ERP Platform"
+    },
+    "ownerPortal": {
+      "title": "Company Login",
+      "subtitle": "Company Owner / Manager",
+      "description": "Register your company or log in to your existing account. Access all management tools.",
+      "loginBtn": "Company Login",
+      "registerBtn": "Register Company",
+      "loggingIn": "Logging in...",
+      "features": ["Company Management", "Staff Control", "Role Management"]
+    },
+    "staffPortal": {
+      "title": "Staff Login",
+      "subtitle": "Company Staff",
+      "description": "Log in to your staff account or create a new one. Access your assigned companies.",
+      "loginBtn": "Staff Login",
+      "registerBtn": "Staff Registration",
+      "loggingIn": "Logging in...",
+      "features": ["Multi-Company Support", "Role-Based Access", "Employee Code"]
+    },
+    "features": {
+      "title": "Why ERPVerse?",
+      "multiTenant": {
+        "title": "Multi-Tenant Architecture",
+        "desc": "Each company operates in its own isolated environment"
+      },
+      "roles": {
+        "title": "Hierarchical Roles",
+        "desc": "Flexible role and permission management system"
+      },
+      "multilang": {
+        "title": "Multilingual",
+        "desc": "Full Turkish and English support"
+      },
+      "secure": {
+        "title": "Secure Identity",
+        "desc": "Secure login with Internet Identity"
+      }
+    }
+  },
+  "companySetup": {
+    "title": "Company Setup",
+    "subtitle": "Register your company on ERPVerse",
+    "description": "Fill in the information below to add your company to the system.",
+    "fields": {
+      "name": "Company Name",
+      "namePlaceholder": "e.g. ABC Technology Inc.",
+      "taxNumber": "Tax Number",
+      "taxNumberPlaceholder": "10-digit tax number",
+      "sector": "Sector",
+      "sectorPlaceholder": "Select sector",
+      "address": "Address",
+      "addressPlaceholder": "Company address",
+      "countryCode": "Country Code",
+      "phone": "Phone",
+      "phonePlaceholder": "5XX XXX XX XX",
+      "email": "Email",
+      "emailPlaceholder": "info@company.com",
+      "authorizedPerson": "Authorized Person",
+      "authorizedPersonPlaceholder": "Full Name",
+      "employeeCount": "Employee Count",
+      "employeeCountPlaceholder": "Estimated employee count",
+      "foundingYear": "Founding Year",
+      "foundingYearPlaceholder": "e.g. 2010"
+    },
+    "sectors": [
+      "Technology", "Finance", "Healthcare", "Education", "Manufacturing",
+      "Retail", "Construction", "Logistics", "Tourism", "Other"
+    ],
+    "submitBtn": "Register Company",
+    "submitting": "Registering...",
+    "success": "Company created successfully!",
+    "errors": {
+      "nameRequired": "Company name is required",
+      "taxRequired": "Tax number is required",
+      "taxInvalid": "Enter a valid tax number",
+      "sectorRequired": "Sector selection is required",
+      "addressRequired": "Address is required",
+      "phoneRequired": "Phone number is required",
+      "emailRequired": "Email address is required",
+      "emailInvalid": "Enter a valid email address",
+      "authorizedRequired": "Authorized person name is required",
+      "employeeRequired": "Employee count is required",
+      "yearRequired": "Founding year is required",
+      "yearInvalid": "Enter a valid year"
+    }
+  },
+  "staffRegistration": {
+    "title": "Staff Registration",
+    "subtitle": "Welcome to ERPVerse",
+    "description": "Create your profile and get your employee code.",
+    "fields": {
+      "name": "Full Name",
+      "namePlaceholder": "Your first and last name",
+      "title": "Title",
+      "titlePlaceholder": "e.g. Software Developer"
+    },
+    "submitBtn": "Save Profile",
+    "submitting": "Saving...",
+    "codeTitle": "Your Employee Code",
+    "codeDesc": "Share this code with your company manager. They will use it to add you to the company system.",
+    "codeCopied": "Code copied!",
+    "copyBtn": "Copy",
+    "continueBtn": "Go to Dashboard",
+    "errors": {
+      "nameRequired": "Full name is required"
+    }
+  },
+  "dashboard": {
+    "owner": {
+      "title": "Company Dashboard",
+      "welcome": "Welcome",
+      "companyInfo": "Company Information",
+      "staffManagement": "Staff Management",
+      "roleManagement": "Role Management",
+      "settings": "Settings",
+      "overview": "Overview",
+      "totalStaff": "Total Staff",
+      "activeRoles": "Active Roles",
+      "companyId": "Company ID",
+      "sector": "Sector",
+      "founded": "Founded",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "taxNumber": "Tax Number",
+      "authorizedPerson": "Authorized Person",
+      "employeeCount": "Employee Count",
+      "addStaff": "Add Staff",
+      "removeStaff": "Remove Staff",
+      "staffList": "Staff List",
+      "noStaff": "No staff added yet",
+      "staffCode": "Employee Code",
+      "staffName": "Full Name",
+      "staffRole": "Role",
+      "staffActions": "Actions",
+      "addStaffTitle": "Add Staff",
+      "addStaffDesc": "Add staff to your company by entering their employee code",
+      "employeeCodeLabel": "Employee Code",
+      "employeeCodePlaceholder": "12-character employee code",
+      "roleLabel": "Role",
+      "rolePlaceholder": "Select role",
+      "addBtn": "Add",
+      "adding": "Adding...",
+      "removeConfirm": "Are you sure you want to remove this staff member from the company?",
+      "removeBtn": "Remove",
+      "removing": "Removing...",
+      "cancel": "Cancel",
+      "updateRole": "Update Role",
+      "updating": "Updating..."
+    },
+    "staff": {
+      "title": "Staff Dashboard",
+      "welcome": "Welcome",
+      "myCompanies": "My Companies",
+      "myProfile": "My Profile",
+      "myCode": "My Employee Code",
+      "noCompanies": "You haven't been assigned to any company yet",
+      "noCompaniesDesc": "Ask your company manager to add you to the system using your employee code.",
+      "role": "Role",
+      "enterCompany": "Enter Company",
+      "companyPanel": "Company Panel"
+    }
+  },
+  "roles": {
+    "companyOwner": "Company Owner",
+    "companyManager": "Company Manager",
+    "companyAdministrator": "Company Administrator",
+    "companyStaff": "Company Staff",
+    "unknown": "Unknown Role"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "search": "Search",
+    "filter": "Filter",
+    "noData": "No data found",
+    "success": "Operation successful",
+    "unauthorized": "You don't have permission to access this page",
+    "notFound": "Page not found"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "builtWith": "Built with love"
+  }
+}

@@ -1,0 +1,274 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-24T23:49:39.306Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 11,
+    "implemented": 7,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Create the backend data models and actor logic for multi-tenant company management. Each company must store: company name, tax number, sector, address, phone, email, authorized person name, employee count, and founding year. Each company must be uniquely identified and isolated from other companies (multi-tenant architecture). The company owner is tied to their Internet Identity principal.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-10",
+        "summary": "Implement Turkish (default) and English language support throughout the entire application. All UI text, labels, buttons, error messages, and notifications must be available in both languages. The user must be able to switch between languages via a language toggle in the app header.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/contexts/LanguageContext.tsx",
+          "frontend/src/locales/tr.json",
+          "frontend/src/locales/en.json",
+          "frontend/src/hooks/useTranslation.ts",
+          "frontend/src/components/LanguageToggle.tsx",
+          "frontend/src/components/Header.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/contexts/LanguageContext.tsx",
+          "frontend/src/locales/tr.json",
+          "frontend/src/locales/en.json",
+          "frontend/src/components/LanguageToggle.tsx",
+          "frontend/src/components/Header.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-11",
+        "summary": "Apply a professional, corporate ERP visual theme across the entire application. Use a dark navy and slate color palette with gold/amber accents for highlights and CTAs. Typography should be clean and modern. Layout should feel structured and enterprise-grade with a sidebar navigation pattern for dashboards, card-based information panels, and consistent spacing. The design must feel premium and trustworthy for multi-company business use.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js"
+        ],
+        "matchedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Implement a hierarchical role system in the backend with the following built-in roles: Company Owner (single, top-level), Company Manager (Technical / Administrative subtypes), Company Administrator (Technical / Administrative subtypes), and Company Staff. Each company can also define custom roles. Roles are scoped per company. A user can belong to multiple companies with different roles in each. Role permissions are configured by the role one level above.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Implement staff account creation in the backend. When a staff member registers, generate a unique 12-character alphanumeric employee code (e.g., 'A3F9K2X7M1Q8'). This code is used for role assignment by company owners/managers. A staff account is linked to the staff member's Internet Identity principal.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Implement backend functions for company owners and managers to add or remove staff from their company, assign roles using the staff member's 12-character employee code, and update role assignments. A Company Manager can manage Company Administrator and Staff roles; a Company Owner can manage all roles.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Build a landing page with two clearly separated login/registration portals: (1) Company Owner Portal – for registering a new company or logging in as a company owner via Internet Identity; (2) Staff Portal – for staff members to register or log in via Internet Identity. Both portals use Internet Identity for authentication.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/LandingPage.tsx",
+          "frontend/src/components/PortalCard.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/LandingPage.tsx",
+          "frontend/src/components/PortalCard.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-6",
+        "summary": "After a company owner authenticates for the first time (no company registered yet), display a Company Setup screen with a form collecting: Company Name, Tax Number, Sector, Address, Phone, Email, Authorized Person Name, Employee Count, and Founding Year. On successful submission, create the company record in the backend and redirect to the Company Owner Dashboard.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/CompanySetupPage.tsx",
+          "frontend/src/hooks/useCompanySetup.ts",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/CompanySetupPage.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-7",
+        "summary": "After a staff member authenticates for the first time (no staff profile yet), show a Staff Registration screen where they can complete their profile. Display their generated 12-character employee code prominently after registration so they can share it with company managers.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/StaffRegistrationPage.tsx",
+          "frontend/src/hooks/useStaffProfile.ts",
+          "frontend/src/components/EmployeeCodeDisplay.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/StaffRegistrationPage.tsx",
+          "frontend/src/components/EmployeeCodeDisplay.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-8",
+        "summary": "Build a Company Owner Dashboard that shows the company's basic information and provides navigation to staff management (add/remove staff, assign roles). This is the home screen after company setup is complete.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/CompanyOwnerDashboard.tsx",
+          "frontend/src/components/DashboardSidebar.tsx",
+          "frontend/src/components/CompanyInfoCard.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/CompanyOwnerDashboard.tsx",
+          "frontend/src/components/DashboardSidebar.tsx",
+          "frontend/src/components/CompanyInfoCard.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-9",
+        "summary": "Build a Staff Dashboard that shows all companies the staff member belongs to, along with their role in each company. If a staff member is assigned to multiple companies, each company's panel is accessible from this dashboard based on their assigned role.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/StaffDashboard.tsx",
+          "frontend/src/components/CompanyMembershipCard.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/StaffDashboard.tsx",
+          "frontend/src/components/CompanyMembershipCard.tsx",
+          "frontend/src/App.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/authorization/MixinAuthorization.mo",
+    "backend/authorization/access-control.mo",
+    "backend/main.mo",
+    "build-request.json",
+    "build-template/Dockerfile",
+    "build-template/LICENSE",
+    "build-template/README.md",
+    "build-template/deploy.sh",
+    "build-template/icp.yaml",
+    "build-template/package.json",
+    "build-template/pnpm-lock.yaml",
+    "build-template/pnpm-workspace.yaml",
+    "build-template/scripts/prune-unused-images.js",
+    "build-template/scripts/resize-images.js",
+    "build-template/src/backend/canister.yaml",
+    "build-template/src/backend/system-idl/aaaaa-aa.did",
+    "build-template/src/frontend/canister.yaml",
+    "build-template/src/frontend/components.json",
+    "build-template/src/frontend/env.json",
+    "build-template/src/frontend/eslint-rules/no-bigint-in-query-keys.js",
+    "build-template/src/frontend/eslint-rules/require-internet-identity-provider.js",
+    "build-template/src/frontend/eslint.config.js",
+    "build-template/src/frontend/package.json",
+    "build-template/src/frontend/postcss.config.js",
+    "build-template/src/frontend/src/components/ui/accordion.tsx",
+    "build-template/src/frontend/src/components/ui/alert-dialog.tsx",
+    "build-template/src/frontend/src/components/ui/alert.tsx",
+    "build-template/src/frontend/src/components/ui/aspect-ratio.tsx",
+    "build-template/src/frontend/src/components/ui/avatar.tsx",
+    "build-template/src/frontend/src/components/ui/badge.tsx",
+    "build-template/src/frontend/src/components/ui/breadcrumb.tsx",
+    "build-template/src/frontend/src/components/ui/button.tsx",
+    "build-template/src/frontend/src/components/ui/calendar.tsx",
+    "build-template/src/frontend/src/components/ui/card.tsx",
+    "build-template/src/frontend/src/components/ui/carousel.tsx",
+    "build-template/src/frontend/src/components/ui/chart.tsx",
+    "build-template/src/frontend/src/components/ui/checkbox.tsx",
+    "build-template/src/frontend/src/components/ui/collapsible.tsx",
+    "build-template/src/frontend/src/components/ui/command.tsx",
+    "build-template/src/frontend/src/components/ui/context-menu.tsx",
+    "build-template/src/frontend/src/components/ui/dialog.tsx",
+    "build-template/src/frontend/src/components/ui/drawer.tsx",
+    "build-template/src/frontend/src/components/ui/dropdown-menu.tsx",
+    "build-template/src/frontend/src/components/ui/form.tsx",
+    "build-template/src/frontend/src/components/ui/hover-card.tsx",
+    "build-template/src/frontend/src/components/ui/input-otp.tsx",
+    "build-template/src/frontend/src/components/ui/input.tsx",
+    "build-template/src/frontend/src/components/ui/label.tsx",
+    "build-template/src/frontend/src/components/ui/menubar.tsx",
+    "build-template/src/frontend/src/components/ui/navigation-menu.tsx",
+    "build-template/src/frontend/src/components/ui/pagination.tsx",
+    "build-template/src/frontend/src/components/ui/popover.tsx",
+    "build-template/src/frontend/src/components/ui/progress.tsx",
+    "build-template/src/frontend/src/components/ui/radio-group.tsx",
+    "build-template/src/frontend/src/components/ui/resizable.tsx",
+    "build-template/src/frontend/src/components/ui/scroll-area.tsx",
+    "build-template/src/frontend/src/components/ui/select.tsx",
+    "build-template/src/frontend/src/components/ui/separator.tsx",
+    "build-template/src/frontend/src/components/ui/sheet.tsx",
+    "build-template/src/frontend/src/components/ui/sidebar.tsx",
+    "build-template/src/frontend/src/components/ui/skeleton.tsx",
+    "build-template/src/frontend/src/components/ui/slider.tsx",
+    "build-template/src/frontend/src/components/ui/sonner.tsx",
+    "build-template/src/frontend/src/components/ui/switch.tsx",
+    "build-template/src/frontend/src/components/ui/table.tsx",
+    "build-template/src/frontend/src/components/ui/tabs.tsx",
+    "build-template/src/frontend/src/components/ui/textarea.tsx",
+    "build-template/src/frontend/src/components/ui/toggle-group.tsx",
+    "build-template/src/frontend/src/components/ui/toggle.tsx",
+    "build-template/src/frontend/src/components/ui/tooltip.tsx",
+    "build-template/src/frontend/src/hooks/use-mobile.tsx",
+    "build-template/src/frontend/src/lib/utils.ts",
+    "build-template/src/frontend/tsconfig.json",
+    "build-template/src/frontend/vite.config.js",
+    "build-template/tsconfig.json",
+    "caffeine.lock.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/public/assets/generated/erpverse-logo.dim_256x256.png",
+    "frontend/public/assets/generated/hero-bg.dim_1920x1080.png",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/CompanyInfoCard.tsx",
+    "frontend/src/components/CompanyMembershipCard.tsx",
+    "frontend/src/components/DashboardSidebar.tsx",
+    "frontend/src/components/EmployeeCodeDisplay.tsx",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/LanguageToggle.tsx",
+    "frontend/src/components/PortalCard.tsx",
+    "frontend/src/config.ts",
+    "frontend/src/contexts/LanguageContext.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/locales/en.json",
+    "frontend/src/locales/tr.json",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/CompanyOwnerDashboard.tsx",
+    "frontend/src/pages/CompanySetupPage.tsx",
+    "frontend/src/pages/LandingPage.tsx",
+    "frontend/src/pages/StaffDashboard.tsx",
+    "frontend/src/pages/StaffRegistrationPage.tsx",
+    "frontend/src/ui-summary.json",
+    "frontend/src/utils/StorageClient.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

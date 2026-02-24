@@ -1,0 +1,154 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-build-a-landing-page-with-two-clearly-separated-login-registration-portals-1-company-owner-portal-for-registering-a-new-company-or-logging-in-as-a-company-owner-via-internet-identity-2-staff-portal-for-staff-members-to-register-or-log-in-via-internet-identity-both-portals-use-internet-identity-for-authentication",
+      "featureTitle": "Build a landing page with two clearly separated login/registration portals: (1) Company Owner Portal – for registering a new company or logging in as a company owner via Internet Identity; (2) Staff Portal – for staff members to register or log in via Internet Identity. Both portals use Internet Identity for authentication.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/PortalCard.tsx",
+        "frontend/src/pages/LandingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-after-a-company-owner-authenticates-for-the-first-time-no-company-registered-yet-display-a-company-setup-screen-with-a-form-collecting-company-name-tax-number-sector-address-phone-email-authorized-person-name-employee-count-and-founding-year-on-successful-submission-create-the-company-record-in-the-backend-and-redirect-to-the-company-owner-dashboard",
+      "featureTitle": "After a company owner authenticates for the first time (no company registered yet), display a Company Setup screen with a form collecting: Company Name, Tax Number, Sector, Address, Phone, Email, Authorized Person Name, Employee Count, and Founding Year. On successful submission, create the company record in the backend and redirect to the Company Owner Dashboard.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/CompanySetupPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-after-a-staff-member-authenticates-for-the-first-time-no-staff-profile-yet-show-a-staff-registration-screen-where-they-can-complete-their-profile-display-their-generated-12-character-employee-code-prominently-after-registration-so-they-can-share-it-with-company-managers",
+      "featureTitle": "After a staff member authenticates for the first time (no staff profile yet), show a Staff Registration screen where they can complete their profile. Display their generated 12-character employee code prominently after registration so they can share it with company managers.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/EmployeeCodeDisplay.tsx",
+        "frontend/src/pages/StaffRegistrationPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-company-owner-dashboard-that-shows-the-company-s-basic-information-and-provides-navigation-to-staff-management-add-remove-staff-assign-roles-this-is-the-home-screen-after-company-setup-is-complete",
+      "featureTitle": "Build a Company Owner Dashboard that shows the company's basic information and provides navigation to staff management (add/remove staff, assign roles). This is the home screen after company setup is complete.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/CompanyInfoCard.tsx",
+        "frontend/src/components/DashboardSidebar.tsx",
+        "frontend/src/pages/CompanyOwnerDashboard.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-staff-dashboard-that-shows-all-companies-the-staff-member-belongs-to-along-with-their-role-in-each-company-if-a-staff-member-is-assigned-to-multiple-companies-each-company-s-panel-is-accessible-from-this-dashboard-based-on-their-assigned-role",
+      "featureTitle": "Build a Staff Dashboard that shows all companies the staff member belongs to, along with their role in each company. If a staff member is assigned to multiple companies, each company's panel is accessible from this dashboard based on their assigned role.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/CompanyMembershipCard.tsx",
+        "frontend/src/pages/StaffDashboard.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-turkish-default-and-english-language-support-throughout-the-entire-application-all-ui-text-labels-buttons-error-messages-and-notifications-must-be-available-in-both-languages-the-user-must-be-able-to-switch-between-languages-via-a-language-toggle-in-the-app-header",
+      "featureTitle": "Implement Turkish (default) and English language support throughout the entire application. All UI text, labels, buttons, error messages, and notifications must be available in both languages. The user must be able to switch between languages via a language toggle in the app header.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Header.tsx",
+        "frontend/src/components/LanguageToggle.tsx",
+        "frontend/src/contexts/LanguageContext.tsx",
+        "frontend/src/locales/en.json",
+        "frontend/src/locales/tr.json"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-professional-corporate-erp-visual-theme-across-the-entire-application-use-a-dark-navy-and-slate-color-palette-with-gold-amber-accents-for-highlights-and-ctas-typography-should-be-clean-and-modern-layout-should-feel-structured-and-enterprise-grade-with-a-sidebar-navigation-pattern-for-dashboards-card-based-information-panels-and-consistent-spacing-the-design-must-feel-premium-and-trustworthy-for-multi-company-business-use",
+      "featureTitle": "Apply a professional, corporate ERP visual theme across the entire application. Use a dark navy and slate color palette with gold/amber accents for highlights and CTAs. Typography should be clean and modern. Layout should feel structured and enterprise-grade with a sidebar navigation pattern for dashboards, card-based information panels, and consistent spacing. The design must feel premium and trustworthy for multi-company business use.",
+      "files": [
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

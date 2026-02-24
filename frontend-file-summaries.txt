@@ -1,0 +1,4 @@
+{
+  "frontend/src/App.tsx": "Root application component that manages authentication state, portal mode (company vs staff), and view routing logic. Wraps the entire app in LanguageProvider and conditionally renders the correct page based on authentication status and backend data.",
+  "frontend/src/pages/StaffDashboard.tsx": "Staff dashboard page showing the staff member's assigned company with their role, plus a profile tab displaying their employee code with copy functionality. Handles the case where no company is assigned yet by showing the employee code prominently."
+}
