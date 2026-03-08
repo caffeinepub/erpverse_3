@@ -11,10 +11,10 @@ import Nat32 "mo:core/Nat32";
 
 import AccessControl "authorization/access-control";
 import MixinAuthorization "authorization/MixinAuthorization";
-import Migration "migration";
+
 
 // Specify migration module in with-clause.
-(with migration = Migration.run)
+
 actor {
   module ArrayUtils {
     public func contains(array : [Nat], element : Nat) : Bool {

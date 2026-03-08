@@ -52,7 +52,11 @@ import CRMModulePage from "./CRMModulePage";
 // ERP Module Pages
 import HRModulePage from "./HRModulePage";
 import InventoryModulePage from "./InventoryModulePage";
+import ManufacturingModulePage from "./ManufacturingModulePage";
+import ProcurementModulePage from "./ProcurementModulePage";
 import ProjectManagementModulePage from "./ProjectManagementModulePage";
+import ReportingModulePage from "./ReportingModulePage";
+import WorkflowModulePage from "./WorkflowModulePage";
 
 interface CompanyOwnerDashboardProps {
   companyId: string;
@@ -66,6 +70,10 @@ const ERP_MODULES = [
   { name: "ProjectManagement", label: "Proje Yönetimi" },
   { name: "Inventory", label: "Stok/Envanter" },
   { name: "CRM", label: "CRM" },
+  { name: "Procurement", label: "Satın Alma" },
+  { name: "Manufacturing", label: "Üretim" },
+  { name: "Workflow", label: "İş Akışları" },
+  { name: "Reporting", label: "Raporlama" },
 ];
 
 function getRoleName(roleCode: bigint): string {
@@ -1141,6 +1149,18 @@ export default function CompanyOwnerDashboard({
             <InventoryModulePage companyId={companyId} />
           )}
           {activeView === "crm" && <CRMModulePage companyId={companyId} />}
+          {activeView === "procurement" && (
+            <ProcurementModulePage companyId={companyId} />
+          )}
+          {activeView === "manufacturing" && (
+            <ManufacturingModulePage companyId={companyId} />
+          )}
+          {activeView === "workflow" && (
+            <WorkflowModulePage companyId={companyId} />
+          )}
+          {activeView === "reporting" && (
+            <ReportingModulePage companyId={companyId} />
+          )}
         </main>
       </div>
 

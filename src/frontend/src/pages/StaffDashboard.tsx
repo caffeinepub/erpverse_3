@@ -22,15 +22,74 @@ function getRoleName(roleCode: bigint, t: (key: string) => string): string {
   return t("roles.unknown");
 }
 
+const MODULE_LABELS: Record<string, string> = {
+  hr: "İnsan Kaynakları",
+  accounting: "Muhasebe",
+  projects: "Proje Yönetimi",
+  inventory: "Stok/Envanter",
+  crm: "CRM",
+  purchasing: "Satın Alma",
+  production: "Üretim",
+  tasks: "Görev Yönetimi",
+};
+
+const MODULE_COLORS: Record<
+  string,
+  { bg: string; color: string; border: string }
+> = {
+  hr: {
+    bg: "oklch(0.93 0.04 280)",
+    color: "oklch(0.35 0.18 280)",
+    border: "oklch(0.82 0.1 280)",
+  },
+  accounting: {
+    bg: "oklch(0.92 0.06 145)",
+    color: "oklch(0.38 0.15 145)",
+    border: "oklch(0.8 0.1 145)",
+  },
+  projects: {
+    bg: "oklch(0.94 0.05 220)",
+    color: "oklch(0.38 0.18 220)",
+    border: "oklch(0.82 0.1 220)",
+  },
+  inventory: {
+    bg: "oklch(0.94 0.06 65)",
+    color: "oklch(0.42 0.16 50)",
+    border: "oklch(0.84 0.1 65)",
+  },
+  crm: {
+    bg: "oklch(0.94 0.04 330)",
+    color: "oklch(0.42 0.18 330)",
+    border: "oklch(0.84 0.1 330)",
+  },
+  purchasing: {
+    bg: "oklch(0.94 0.05 190)",
+    color: "oklch(0.38 0.18 190)",
+    border: "oklch(0.82 0.1 190)",
+  },
+  production: {
+    bg: "oklch(0.94 0.04 25)",
+    color: "oklch(0.45 0.18 25)",
+    border: "oklch(0.84 0.1 25)",
+  },
+  tasks: {
+    bg: "oklch(0.93 0.03 300)",
+    color: "oklch(0.38 0.16 300)",
+    border: "oklch(0.82 0.09 300)",
+  },
+};
+
 interface StaffCompanyCardProps {
   companyId: string;
   roleCode: bigint;
+  grantedModules: Array<string>;
   onEnter: () => void;
 }
 
 function StaffCompanyCard({
   companyId,
   roleCode,
+  grantedModules,
   onEnter,
 }: StaffCompanyCardProps) {
   const { t } = useLanguage();
@@ -58,13 +117,76 @@ function StaffCompanyCard({
 
   if (!company) return null;
 
+  const isOwnerOrManager = Number(roleCode) === 1 || Number(roleCode) === 2;
+  const hasFullAccess = isOwnerOrManager && grantedModules.length === 0;
+
   return (
-    <CompanyMembershipCard
-      companyName={company.name}
-      companyId={company.id}
-      roleName={getRoleName(roleCode, t)}
-      onEnter={onEnter}
-    />
+    <div
+      className="rounded-xl overflow-hidden"
+      style={{
+        backgroundColor: "oklch(1 0 0)",
+        border: "1px solid oklch(0.88 0.01 270)",
+        boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+      }}
+    >
+      <CompanyMembershipCard
+        companyName={company.name}
+        companyId={company.id}
+        roleName={getRoleName(roleCode, t)}
+        onEnter={onEnter}
+      />
+      {/* Module badges */}
+      <div
+        className="px-4 pb-3 pt-1"
+        style={{ borderTop: "1px solid oklch(0.93 0.005 270)" }}
+      >
+        <p
+          className="text-xs font-semibold uppercase tracking-wider mb-2"
+          style={{ color: "oklch(0.55 0.01 270)" }}
+        >
+          Erişim
+        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {hasFullAccess ? (
+            <span
+              className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold"
+              style={{
+                backgroundColor: "oklch(0.92 0.06 145)",
+                color: "oklch(0.38 0.15 145)",
+                border: "1px solid oklch(0.8 0.1 145)",
+              }}
+            >
+              ✓ Tam Erişim
+            </span>
+          ) : grantedModules.length > 0 ? (
+            grantedModules.map((mod) => {
+              const colors = MODULE_COLORS[mod] ?? {
+                bg: "oklch(0.93 0.04 280)",
+                color: "oklch(0.35 0.18 280)",
+                border: "oklch(0.82 0.1 280)",
+              };
+              return (
+                <span
+                  key={mod}
+                  className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"
+                  style={{
+                    backgroundColor: colors.bg,
+                    color: colors.color,
+                    border: `1px solid ${colors.border}`,
+                  }}
+                >
+                  {MODULE_LABELS[mod] ?? mod}
+                </span>
+              );
+            })
+          ) : (
+            <span className="text-xs" style={{ color: "oklch(0.6 0.01 270)" }}>
+              Modül atanmamış
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -216,6 +338,7 @@ export default function StaffDashboard({
                           key={membership.companyId}
                           companyId={membership.companyId}
                           roleCode={membership.roleCode}
+                          grantedModules={membership.grantedModules}
                           onEnter={() => onEnterCompany?.(membership.companyId)}
                         />
                       ))}
@@ -225,6 +348,7 @@ export default function StaffDashboard({
                     <StaffCompanyCard
                       companyId={profile!.companyId}
                       roleCode={profile!.roleCode}
+                      grantedModules={[]}
                       onEnter={() => onEnterCompany?.(profile!.companyId)}
                     />
                   )}

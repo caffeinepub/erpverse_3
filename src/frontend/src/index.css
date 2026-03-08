@@ -259,6 +259,27 @@ thead th {
   backdrop-filter: blur(2px);
 }
 
+/* ── Force solid backgrounds on all overlay/portal elements ────────── */
+[data-radix-popper-content-wrapper] {
+  z-index: 9999 !important;
+}
+[role="listbox"],
+[data-radix-select-content],
+[data-radix-dropdown-menu-content],
+[data-radix-popover-content] {
+  background-color: white !important;
+  color: oklch(0.12 0.012 270) !important;
+  border: 1px solid oklch(0.88 0.01 270) !important;
+}
+[role="option"] {
+  color: oklch(0.12 0.012 270) !important;
+}
+[role="option"]:hover,
+[role="option"][data-highlighted] {
+  background-color: oklch(0.95 0.015 280) !important;
+  color: oklch(0.35 0.18 280) !important;
+}
+
 @layer components {
   /* ── Core ERP card ────────────────────────────────────────────── */
   .erp-card {

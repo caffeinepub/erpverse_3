@@ -16,16 +16,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import {
+  ArrowLeft,
   Calendar,
   CheckSquare,
   ChevronRight,
@@ -498,7 +491,7 @@ export default function ProjectManagementModulePage({
                 </div>
               </div>
 
-              {/* Tasks */}
+              {/* Tasks – Kanban Board */}
               <div className="p-5">
                 <div className="flex items-center justify-between mb-4">
                   <h3
@@ -514,120 +507,175 @@ export default function ProjectManagementModulePage({
                     />
                     Görevler ({projectTasks.length})
                   </h3>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => {
-                      setTaskForm({ title: "", dueDate: "" });
-                      setShowTaskDialog(true);
-                    }}
-                    data-ocid="projects.add_task.button"
-                    style={{
-                      color: "oklch(0.35 0.18 280)",
-                      borderColor: "oklch(0.82 0.08 280)",
-                      backgroundColor: "oklch(0.96 0.015 280)",
-                    }}
-                  >
-                    <Plus className="w-4 h-4 mr-1" />
-                    Görev Ekle
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setSelectedProject(null)}
+                      data-ocid="projects.back.button"
+                      style={{ color: "oklch(0.5 0.01 270)" }}
+                    >
+                      <ArrowLeft className="w-4 h-4 mr-1" />
+                      Geri
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => {
+                        setTaskForm({ title: "", dueDate: "" });
+                        setShowTaskDialog(true);
+                      }}
+                      data-ocid="projects.add_task.button"
+                      style={{
+                        color: "oklch(0.35 0.18 280)",
+                        borderColor: "oklch(0.82 0.08 280)",
+                        backgroundColor: "oklch(0.96 0.015 280)",
+                      }}
+                    >
+                      <Plus className="w-4 h-4 mr-1" />
+                      Görev Ekle
+                    </Button>
+                  </div>
                 </div>
                 {isLoading ? (
-                  <div className="space-y-3">
-                    {[1, 2].map((i) => (
-                      <Skeleton key={i} className="h-12 w-full" />
+                  <div className="grid grid-cols-3 gap-3">
+                    {[1, 2, 3].map((i) => (
+                      <Skeleton key={i} className="h-32 w-full rounded-xl" />
                     ))}
                   </div>
                 ) : projectTasks.length > 0 ? (
-                  <Table>
-                    <TableHeader>
-                      <TableRow
-                        style={{ backgroundColor: "oklch(0.97 0.005 270)" }}
-                      >
-                        {[
-                          "Görev",
-                          "Atanan",
-                          "Son Tarih",
-                          "Durum",
-                          "actions",
-                        ].map((h) => (
-                          <TableHead
-                            key={h}
-                            style={{
-                              color: "oklch(0.45 0.01 270)",
-                              fontWeight: 600,
-                            }}
-                          >
-                            {h}
-                          </TableHead>
-                        ))}
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {projectTasks.map((task, i) => (
-                        <TableRow
-                          key={task.id}
-                          data-ocid={`projects.task.item.${i + 1}`}
-                          style={{ backgroundColor: "oklch(1 0 0)" }}
-                          onMouseEnter={(e) => {
-                            (
-                              e.currentTarget as HTMLTableRowElement
-                            ).style.backgroundColor = "oklch(0.97 0.005 280)";
-                          }}
-                          onMouseLeave={(e) => {
-                            (
-                              e.currentTarget as HTMLTableRowElement
-                            ).style.backgroundColor = "oklch(1 0 0)";
+                  /* Kanban columns */
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {TASK_STATUSES.map((col) => {
+                      const colTasks = projectTasks.filter(
+                        (t) => t.status === col.value,
+                      );
+                      return (
+                        <div
+                          key={col.value}
+                          className="rounded-xl flex flex-col gap-2 p-3"
+                          style={{
+                            backgroundColor: col.bg,
+                            border: `1px solid ${col.border}`,
+                            minHeight: "120px",
                           }}
                         >
-                          <TableCell
-                            className="font-semibold"
-                            style={{ color: "oklch(0.12 0.012 270)" }}
-                          >
-                            {task.title}
-                          </TableCell>
-                          <TableCell className="text-sm">
-                            <StaffNameDisplay principal={task.assignee} />
-                          </TableCell>
-                          <TableCell style={{ color: "oklch(0.5 0.01 270)" }}>
-                            {task.dueDate}
-                          </TableCell>
-                          <TableCell>
-                            <Select
-                              value={task.status}
-                              onValueChange={(v) => updateTaskStatus(task, v)}
+                          {/* Column header */}
+                          <div className="flex items-center justify-between mb-1">
+                            <span
+                              className="text-xs font-bold uppercase tracking-wider"
+                              style={{ color: col.color }}
                             >
-                              <SelectTrigger
-                                className="w-36 h-7 text-xs"
-                                data-ocid={`projects.task.status.select.${i + 1}`}
+                              {col.label}
+                            </span>
+                            <span
+                              className="text-xs font-semibold px-1.5 py-0.5 rounded-full"
+                              style={{
+                                backgroundColor: "rgba(255,255,255,0.6)",
+                                color: col.color,
+                              }}
+                            >
+                              {colTasks.length}
+                            </span>
+                          </div>
+                          {/* Task cards */}
+                          {colTasks.length === 0 ? (
+                            <p
+                              className="text-center text-xs py-4 opacity-50"
+                              style={{ color: col.color }}
+                            >
+                              Görev yok
+                            </p>
+                          ) : (
+                            colTasks.map((task, i) => (
+                              <div
+                                key={task.id}
+                                data-ocid={`projects.task.item.${i + 1}`}
+                                className="rounded-lg p-3 flex flex-col gap-2"
+                                style={{
+                                  backgroundColor: "oklch(1 0 0)",
+                                  border: "1px solid oklch(0.91 0.005 270)",
+                                  boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                                }}
                               >
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {TASK_STATUSES.map((s) => (
-                                  <SelectItem key={s.value} value={s.value}>
-                                    {s.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => handleRemoveTask(task.id)}
-                              data-ocid={`projects.task.delete_button.${i + 1}`}
-                              disabled={removeProjectTask.isPending}
-                              style={{ color: "oklch(0.55 0.2 25)" }}
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                                <p
+                                  className="font-semibold text-sm leading-snug"
+                                  style={{ color: "oklch(0.12 0.012 270)" }}
+                                >
+                                  {task.title}
+                                </p>
+                                {task.assignee && (
+                                  <div
+                                    className="text-xs"
+                                    style={{ color: "oklch(0.5 0.01 270)" }}
+                                  >
+                                    <StaffNameDisplay
+                                      principal={task.assignee}
+                                    />
+                                  </div>
+                                )}
+                                {task.dueDate && (
+                                  <div
+                                    className="flex items-center gap-1 text-xs"
+                                    style={{ color: "oklch(0.55 0.01 270)" }}
+                                  >
+                                    <Calendar className="w-3 h-3" />
+                                    {task.dueDate}
+                                  </div>
+                                )}
+                                {/* Status change + delete row */}
+                                <div className="flex items-center justify-between gap-1 mt-1">
+                                  <Select
+                                    value={task.status}
+                                    onValueChange={(v) =>
+                                      updateTaskStatus(task, v)
+                                    }
+                                  >
+                                    <SelectTrigger
+                                      className="h-6 text-xs flex-1 min-w-0"
+                                      data-ocid={`projects.task.status.select.${i + 1}`}
+                                      style={{
+                                        backgroundColor:
+                                          "oklch(0.97 0.005 270)",
+                                        borderColor: "oklch(0.88 0.01 270)",
+                                        color: "oklch(0.4 0.01 270)",
+                                        fontSize: "10px",
+                                        paddingLeft: "6px",
+                                        paddingRight: "4px",
+                                      }}
+                                    >
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {TASK_STATUSES.map((s) => (
+                                        <SelectItem
+                                          key={s.value}
+                                          value={s.value}
+                                        >
+                                          {s.label}
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => handleRemoveTask(task.id)}
+                                    data-ocid={`projects.task.delete_button.${i + 1}`}
+                                    disabled={removeProjectTask.isPending}
+                                    className="h-6 w-6 shrink-0"
+                                    style={{ color: "oklch(0.55 0.2 25)" }}
+                                  >
+                                    <Trash2 className="w-3 h-3" />
+                                  </Button>
+                                </div>
+                              </div>
+                            ))
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
                 ) : (
                   <div
                     className="text-center py-8 text-sm"

@@ -1,15 +1,19 @@
 import { cn } from "@/lib/utils";
 import {
+  BarChart2,
   Building2,
   ChevronRight,
   DollarSign,
+  Factory,
   FolderKanban,
   Handshake,
   LayoutDashboard,
   Package,
   Settings,
   Shield,
+  ShoppingCart,
   Users,
+  Workflow,
 } from "lucide-react";
 import type React from "react";
 
@@ -24,7 +28,11 @@ export type SidebarView =
   | "accounting"
   | "projects"
   | "inventory"
-  | "crm";
+  | "crm"
+  | "procurement"
+  | "manufacturing"
+  | "workflow"
+  | "reporting";
 
 export interface SidebarProps {
   activeView: SidebarView;
@@ -77,6 +85,38 @@ const ERP_MODULES = [
     moduleName: "CRM",
     accent: "oklch(0.56 0.18 330)",
     accentBg: "oklch(0.94 0.04 320)",
+  },
+  {
+    view: "procurement" as SidebarView,
+    label: "Satın Alma",
+    icon: ShoppingCart,
+    moduleName: "Procurement",
+    accent: "oklch(0.45 0.18 190)",
+    accentBg: "oklch(0.93 0.04 190)",
+  },
+  {
+    view: "manufacturing" as SidebarView,
+    label: "Üretim",
+    icon: Factory,
+    moduleName: "Manufacturing",
+    accent: "oklch(0.5 0.18 25)",
+    accentBg: "oklch(0.94 0.04 25)",
+  },
+  {
+    view: "workflow" as SidebarView,
+    label: "İş Akışları",
+    icon: Workflow,
+    moduleName: "Workflow",
+    accent: "oklch(0.45 0.18 300)",
+    accentBg: "oklch(0.93 0.04 300)",
+  },
+  {
+    view: "reporting" as SidebarView,
+    label: "Raporlama",
+    icon: BarChart2,
+    moduleName: "Reporting",
+    accent: "oklch(0.42 0.15 145)",
+    accentBg: "oklch(0.92 0.04 145)",
   },
 ];
 

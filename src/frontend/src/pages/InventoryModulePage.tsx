@@ -86,8 +86,45 @@ const BTN_PRIMARY_STYLE: React.CSSProperties = {
   border: "none",
 };
 
-// Low stock threshold (no longer stored in backend, use local constant)
-const LOW_STOCK_THRESHOLD = 5;
+// Stock level thresholds
+const CRITICAL_STOCK_THRESHOLD = 5;
+const LOW_STOCK_THRESHOLD = 20;
+
+type StockLevel = "critical" | "low" | "normal";
+
+function getStockLevel(qty: bigint): StockLevel {
+  const n = Number(qty);
+  if (n < CRITICAL_STOCK_THRESHOLD) return "critical";
+  if (n < LOW_STOCK_THRESHOLD) return "low";
+  return "normal";
+}
+
+const STOCK_LEVEL_CONFIG = {
+  critical: {
+    label: "Kritik",
+    bg: "oklch(0.95 0.04 25)",
+    color: "oklch(0.45 0.18 25)",
+    border: "oklch(0.85 0.1 25)",
+    rowBg: "oklch(0.98 0.015 25)",
+    rowBgHover: "oklch(0.96 0.02 25)",
+  },
+  low: {
+    label: "Düşük",
+    bg: "oklch(0.94 0.07 65)",
+    color: "oklch(0.42 0.16 50)",
+    border: "oklch(0.84 0.1 65)",
+    rowBg: "oklch(0.985 0.01 65)",
+    rowBgHover: "oklch(0.97 0.015 65)",
+  },
+  normal: {
+    label: "Normal",
+    bg: "oklch(0.92 0.06 145)",
+    color: "oklch(0.38 0.15 145)",
+    border: "oklch(0.8 0.1 145)",
+    rowBg: "oklch(1 0 0)",
+    rowBgHover: "oklch(0.97 0.005 280)",
+  },
+};
 
 export default function InventoryModulePage({
   companyId,
@@ -220,7 +257,7 @@ export default function InventoryModulePage({
   };
 
   const isLowStock = (p: Product) =>
-    Number(p.quantityOnHand) <= LOW_STOCK_THRESHOLD;
+    getStockLevel(p.quantityOnHand) !== "normal";
   const lowStockCount = products.filter(isLowStock).length;
   const filteredMovements = selectedProductId
     ? movements.filter((m) => m.productId === selectedProductId)
@@ -450,11 +487,12 @@ export default function InventoryModulePage({
                       "Kategori",
                       "Birim Fiyat",
                       "Stok",
+                      "Seviye",
                       "İşlem",
                     ].map((h, i) => (
                       <TableHead
                         key={h}
-                        className={i === 5 ? "text-right" : ""}
+                        className={i === 6 ? "text-right" : ""}
                         style={{
                           color: "oklch(0.45 0.01 270)",
                           fontWeight: 600,
@@ -466,111 +504,118 @@ export default function InventoryModulePage({
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {products.map((p, i) => (
-                    <TableRow
-                      key={p.id}
-                      data-ocid={`inventory.product.item.${i + 1}`}
-                      style={{
-                        backgroundColor: isLowStock(p)
-                          ? "oklch(0.98 0.015 25)"
-                          : "oklch(1 0 0)",
-                      }}
-                      onMouseEnter={(e) => {
-                        (
-                          e.currentTarget as HTMLTableRowElement
-                        ).style.backgroundColor = isLowStock(p)
-                          ? "oklch(0.96 0.02 25)"
-                          : "oklch(0.97 0.005 280)";
-                      }}
-                      onMouseLeave={(e) => {
-                        (
-                          e.currentTarget as HTMLTableRowElement
-                        ).style.backgroundColor = isLowStock(p)
-                          ? "oklch(0.98 0.015 25)"
-                          : "oklch(1 0 0)";
-                      }}
-                    >
-                      <TableCell
-                        className="font-semibold"
-                        style={{ color: "oklch(0.12 0.012 270)" }}
-                      >
-                        <div className="flex items-center gap-2">
-                          {p.name}
-                          {isLowStock(p) && (
-                            <AlertTriangle
-                              className="w-3.5 h-3.5"
-                              style={{ color: "oklch(0.45 0.18 25)" }}
-                            />
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell
-                        className="font-mono text-sm"
-                        style={{ color: "oklch(0.5 0.01 270)" }}
-                      >
-                        {p.sku}
-                      </TableCell>
-                      <TableCell>
-                        <span
-                          className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium"
-                          style={{
-                            backgroundColor: "oklch(0.93 0.025 280)",
-                            color: "oklch(0.35 0.18 280)",
-                            border: "1px solid oklch(0.82 0.08 280)",
-                          }}
-                        >
-                          {p.category}
-                        </span>
-                      </TableCell>
-                      <TableCell
+                  {products.map((p, i) => {
+                    const level = getStockLevel(p.quantityOnHand);
+                    const levelCfg = STOCK_LEVEL_CONFIG[level];
+                    return (
+                      <TableRow
+                        key={p.id}
+                        data-ocid={`inventory.product.item.${i + 1}`}
                         style={{
-                          color: "oklch(0.25 0.01 270)",
-                          fontWeight: 600,
+                          backgroundColor: levelCfg.rowBg,
+                        }}
+                        onMouseEnter={(e) => {
+                          (
+                            e.currentTarget as HTMLTableRowElement
+                          ).style.backgroundColor = levelCfg.rowBgHover;
+                        }}
+                        onMouseLeave={(e) => {
+                          (
+                            e.currentTarget as HTMLTableRowElement
+                          ).style.backgroundColor = levelCfg.rowBg;
                         }}
                       >
-                        {Number(p.unitPrice).toLocaleString("tr-TR")} ₺
-                      </TableCell>
-                      <TableCell>
-                        <span
-                          className="font-bold"
+                        <TableCell
+                          className="font-semibold"
+                          style={{ color: "oklch(0.12 0.012 270)" }}
+                        >
+                          <div className="flex items-center gap-2">
+                            {p.name}
+                            {level === "critical" && (
+                              <AlertTriangle
+                                className="w-3.5 h-3.5"
+                                style={{ color: "oklch(0.45 0.18 25)" }}
+                              />
+                            )}
+                          </div>
+                        </TableCell>
+                        <TableCell
+                          className="font-mono text-sm"
+                          style={{ color: "oklch(0.5 0.01 270)" }}
+                        >
+                          {p.sku}
+                        </TableCell>
+                        <TableCell>
+                          <span
+                            className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium"
+                            style={{
+                              backgroundColor: "oklch(0.93 0.025 280)",
+                              color: "oklch(0.35 0.18 280)",
+                              border: "1px solid oklch(0.82 0.08 280)",
+                            }}
+                          >
+                            {p.category}
+                          </span>
+                        </TableCell>
+                        <TableCell
                           style={{
-                            color: isLowStock(p)
-                              ? "oklch(0.45 0.18 25)"
-                              : "oklch(0.38 0.15 145)",
+                            color: "oklch(0.25 0.01 270)",
+                            fontWeight: 600,
                           }}
                         >
-                          {String(p.quantityOnHand)}
-                        </span>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end gap-1">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => openEditProduct(p)}
-                            data-ocid={`inventory.product.edit_button.${i + 1}`}
-                            style={{ color: "oklch(0.45 0.22 280)" }}
+                          {Number(p.unitPrice).toLocaleString("tr-TR")} ₺
+                        </TableCell>
+                        <TableCell>
+                          <span
+                            className="font-bold"
+                            style={{ color: levelCfg.color }}
                           >
-                            <Edit2 className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => handleRemoveProduct(p.id)}
-                            data-ocid={`inventory.product.delete_button.${i + 1}`}
-                            disabled={removeProduct.isPending}
-                            style={{ color: "oklch(0.55 0.2 25)" }}
+                            {String(p.quantityOnHand)}
+                          </span>
+                        </TableCell>
+                        {/* Stock level badge */}
+                        <TableCell>
+                          <span
+                            className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold"
+                            style={{
+                              backgroundColor: levelCfg.bg,
+                              color: levelCfg.color,
+                              border: `1px solid ${levelCfg.border}`,
+                            }}
                           >
-                            {removeProduct.isPending ? (
-                              <Loader2 className="w-4 h-4 animate-spin" />
-                            ) : (
-                              <Trash2 className="w-4 h-4" />
-                            )}
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                            {levelCfg.label}
+                          </span>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex justify-end gap-1">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => openEditProduct(p)}
+                              data-ocid={`inventory.product.edit_button.${i + 1}`}
+                              style={{ color: "oklch(0.45 0.22 280)" }}
+                            >
+                              <Edit2 className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleRemoveProduct(p.id)}
+                              data-ocid={`inventory.product.delete_button.${i + 1}`}
+                              disabled={removeProduct.isPending}
+                              style={{ color: "oklch(0.55 0.2 25)" }}
+                            >
+                              {removeProduct.isPending ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                              ) : (
+                                <Trash2 className="w-4 h-4" />
+                              )}
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             )}
