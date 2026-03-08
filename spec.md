@@ -1,23 +1,64 @@
-# Specification
+# ERPVerse – Unified Business Management Platform
 
-## Summary
-**Goal:** Build Phase 1 of ERPVerse — a multi-tenant ERP foundation covering authentication via Internet Identity, company setup, hierarchical role infrastructure, and staff management dashboards.
+## Current State
 
-**Planned changes:**
+- Multi-tenant ERP platform with Internet Identity authentication
+- Two login portals: Company Owner/Setup and Staff
+- Backend: Motoko with full ERP modules (HR, Accounting, Project, Inventory, CRM) all backend-connected
+- Frontend: React + TypeScript, open/light theme, multi-language (TR, EN, DE, FR, ES, AR, RU, ZH, JA, PT)
+- Staff type holds single `companyId` — no multi-company membership
+- Company roles are hardcoded defaults only — no custom role creation
+- Staff Dashboard does not route to ERP module pages
+- FinancialSummary type defined but never computed or displayed
+- Project task assignee shown as Principal ID, not name
+- Dashboard overview lacks aggregated ERP statistics
+- Internet Identity redirect sometimes loses portalMode from sessionStorage causing login loop
 
-### Backend (Motoko — single actor)
-- Multi-tenant company data model storing: company name, tax number, sector, address, phone, email, authorized person name, employee count, and founding year; each company uniquely identified and scoped to its owner's Internet Identity principal
-- Hierarchical role system per company with built-in roles: Company Owner, Company Manager (Technical/Administrative), Company Administrator (Technical/Administrative), and Company Staff; support for custom roles per company
-- Staff profile model linked to Internet Identity principal, with auto-generated unique 12-character alphanumeric employee code on registration
-- Backend functions for owners and managers to add/remove staff by employee code and assign/update roles according to their own role level
+## Requested Changes (Diff)
 
-### Frontend
-- Landing page with two distinct portals: Company Owner Portal and Staff Portal, both using Internet Identity for authentication
-- Company Setup screen (shown to new owners on first login) with all required company fields, validated before submission, redirecting to Company Owner Dashboard on success
-- Staff Registration screen (shown to new staff on first login) displaying the generated 12-character employee code prominently after registration
-- Company Owner Dashboard showing company info and navigation to staff management (add/remove staff, assign roles)
-- Staff Dashboard listing all companies the staff member belongs to with their role in each, and navigation into each company panel
-- Turkish (default) and English language support throughout, with TR/EN toggle in the header for instant language switching
-- Professional dark navy and slate color palette with gold/amber accents, sidebar navigation on dashboards, card-based panels, and enterprise-grade layout
+### Add
+- Multi-company membership for Staff: a single person can belong to multiple companies with different roles (replace `companyId: Text` + `roleCode: Nat` with `memberships: [{ companyId, roleCode, grantedModules }]` in backend and new query functions)
+- Custom role management: Company Owner/Manager can add and delete custom roles per company (backend: `companyRoles` map, `addCustomRole`, `removeCustomRole`, `listCompanyRoles` functions)
+- Staff Dashboard: company selector showing all companies the staff belongs to, then ERP module navigation based on granted modules
+- Financial Summary computation: `getFinancialSummary(companyId)` query returning totalIncome, totalExpenses, netBalance, invoiceCount, paidInvoiceCount
+- Staff name lookup: `getStaffName(principal)` query to display names instead of Principal IDs in project tasks
+- Dashboard overview stats: total employees (HR), open projects, low-stock products, pending invoices, total CRM customers
 
-**User-visible outcome:** Users can authenticate via Internet Identity as either a company owner or staff member. Owners can register their company, manage staff, and assign roles. Staff can complete their profile, view their employee code, and see all companies and roles they belong to. The entire interface is available in Turkish and English with a professional corporate ERP visual style.
+### Modify
+- `Staff` type: add `memberships` array field; keep `companyId` and `roleCode` as derived/compat fields for backward compat
+- `addStaffToCompany`: update to add membership entry instead of overwriting companyId
+- `removeStaffFromCompany`: remove specific membership, not set companyId="unassigned"
+- `getStaffForCompany`: use memberships array for lookup
+- `isCallerCompanyMember` / `getCallerCompanyRole`: use memberships array
+- `isRegisteredAsCompany`: unchanged
+- App.tsx login flow: make portalMode persistence more robust — store before calling login(), read immediately after II returns
+- StaffDashboard: show company list with Enter button, then inside each company show ERP module tiles based on grantedModules
+- AccountingModulePage: add FinancialSummary panel at top using new query
+- ProjectManagementModulePage: resolve assignee Principal to staff name using getStaffName
+- CompanyOwnerDashboard overview: add ERP summary cards
+
+### Remove
+- Nothing removed
+
+## Implementation Plan
+
+1. **Backend (Motoko)**:
+   - Add `CompanyMembership` type: `{ companyId: Text; roleCode: Nat; grantedModules: [Text] }`
+   - Extend `Staff` with `memberships: [CompanyMembership]` (keep `companyId`/`roleCode` for compatibility, derived from first membership)
+   - Add `companyRoles` map: `Map<CompanyId, [Role]>`
+   - Add `addCustomRole(companyId, role)`, `removeCustomRole(companyId, roleName)`, `listCompanyRoles(companyId)` functions
+   - Update `addStaffToCompany` to push to memberships array
+   - Update `removeStaffFromCompany` to filter memberships
+   - Update `getStaffForCompany` to use memberships
+   - Update `isCallerCompanyMember` / `getCallerCompanyRole` to check memberships
+   - Add `getFinancialSummary(companyId)` query
+   - Add `getStaffName(principal)` query
+   - Add `getDashboardSummary(companyId)` returning HR/project/inventory/CRM stats
+
+2. **Frontend**:
+   - Update App.tsx: store portalMode before login(), improved sessionStorage reliability
+   - Update StaffDashboard: multi-company view with ERP module tiles per company
+   - Update CompanyOwnerDashboard overview: add ERP stats cards
+   - Add CustomRoleManager component to staff management view
+   - Update AccountingModulePage: FinancialSummary panel
+   - Update ProjectManagementModulePage: staff name resolution

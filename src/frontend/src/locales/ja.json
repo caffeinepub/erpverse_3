@@ -1,0 +1,225 @@
+{
+  "app": {
+    "name": "ERPVerse",
+    "tagline": "統合ビジネス管理プラットフォーム",
+    "description": "単一プラットフォームで企業を管理。マルチテナント、安全でスケーラブル。"
+  },
+  "nav": {
+    "home": "ホーム",
+    "dashboard": "ダッシュボード",
+    "logout": "ログアウト",
+    "login": "ログイン",
+    "profile": "プロフィール"
+  },
+  "landing": {
+    "hero": {
+      "title": "ビジネスを次のレベルへ",
+      "subtitle": "ERPVerseで企業のすべてのプロセスを単一プラットフォームで管理。安全、スケーラブル、多言語対応。",
+      "badge": "エンタープライズERPプラットフォーム"
+    },
+    "ownerPortal": {
+      "title": "企業ログイン",
+      "subtitle": "企業オーナー / マネージャー",
+      "description": "企業を登録するか、既存のアカウントにログインしてください。",
+      "loginBtn": "企業ログイン",
+      "registerBtn": "企業登録",
+      "loggingIn": "ログイン中...",
+      "features": ["企業管理", "スタッフ管理", "ロール管理"]
+    },
+    "staffPortal": {
+      "title": "スタッフログイン",
+      "subtitle": "企業スタッフ",
+      "description": "スタッフアカウントにログインするか、新しいアカウントを作成してください。",
+      "loginBtn": "スタッフログイン",
+      "registerBtn": "スタッフ登録",
+      "loggingIn": "ログイン中...",
+      "features": [
+        "マルチ企業サポート",
+        "ロールベースのアクセス",
+        "従業員コード"
+      ]
+    },
+    "features": {
+      "title": "なぜERPVerse？",
+      "multiTenant": {
+        "title": "マルチテナントアーキテクチャ",
+        "desc": "各企業が独自の隔離された環境で動作"
+      },
+      "roles": {
+        "title": "階層的ロール",
+        "desc": "柔軟なロールと権限管理システム"
+      },
+      "multilang": {
+        "title": "多言語対応",
+        "desc": "複数言語の完全サポート"
+      },
+      "secure": {
+        "title": "セキュアな認証",
+        "desc": "Internet Identityによる安全なログイン"
+      }
+    }
+  },
+  "companySetup": {
+    "title": "企業設定",
+    "subtitle": "ERPVerseに企業を登録",
+    "description": "以下の情報を入力して企業をシステムに追加してください。",
+    "fields": {
+      "name": "企業名",
+      "namePlaceholder": "例：ABC テクノロジー株式会社",
+      "taxNumber": "税番号",
+      "taxNumberPlaceholder": "10桁の税番号",
+      "sector": "業種",
+      "sectorPlaceholder": "業種を選択",
+      "address": "住所",
+      "addressPlaceholder": "企業住所",
+      "countryCode": "国コード",
+      "phone": "電話",
+      "phonePlaceholder": "電話番号",
+      "email": "メール",
+      "emailPlaceholder": "info@company.jp",
+      "authorizedPerson": "権限者",
+      "authorizedPersonPlaceholder": "氏名",
+      "employeeCount": "従業員数",
+      "employeeCountPlaceholder": "推定従業員数",
+      "foundingYear": "設立年",
+      "foundingYearPlaceholder": "例：2010"
+    },
+    "sectors": [
+      "テクノロジー",
+      "金融",
+      "医療",
+      "教育",
+      "製造",
+      "小売",
+      "建設",
+      "物流",
+      "観光",
+      "その他"
+    ],
+    "submitBtn": "企業を登録",
+    "submitting": "登録中...",
+    "success": "企業が正常に作成されました！",
+    "errors": {
+      "nameRequired": "企業名は必須です",
+      "taxRequired": "税番号は必須です",
+      "taxInvalid": "有効な税番号を入力してください",
+      "sectorRequired": "業種の選択は必須です",
+      "addressRequired": "住所は必須です",
+      "phoneRequired": "電話番号は必須です",
+      "emailRequired": "メールアドレスは必須です",
+      "emailInvalid": "有効なメールアドレスを入力してください",
+      "authorizedRequired": "権限者名は必須です",
+      "employeeRequired": "従業員数は必須です",
+      "yearRequired": "設立年は必須です",
+      "yearInvalid": "有効な年を入力してください"
+    }
+  },
+  "staffRegistration": {
+    "title": "スタッフ登録",
+    "subtitle": "ERPVerseへようこそ",
+    "description": "プロフィールを作成して従業員コードを取得してください。",
+    "fields": {
+      "name": "氏名",
+      "namePlaceholder": "氏名を入力",
+      "title": "役職",
+      "titlePlaceholder": "例：ソフトウェアエンジニア"
+    },
+    "submitBtn": "プロフィールを保存",
+    "submitting": "保存中...",
+    "codeTitle": "従業員コード",
+    "codeDesc": "このコードを企業マネージャーと共有してください。企業システムへの追加に使用されます。",
+    "codeCopied": "コードをコピーしました！",
+    "copyBtn": "コピー",
+    "continueBtn": "ダッシュボードへ",
+    "errors": {
+      "nameRequired": "氏名は必須です"
+    }
+  },
+  "dashboard": {
+    "owner": {
+      "title": "企業ダッシュボード",
+      "welcome": "ようこそ",
+      "companyInfo": "企業情報",
+      "staffManagement": "スタッフ管理",
+      "roleManagement": "ロール管理",
+      "settings": "設定",
+      "overview": "概要",
+      "totalStaff": "総スタッフ数",
+      "activeRoles": "アクティブロール",
+      "companyId": "企業ID",
+      "sector": "業種",
+      "founded": "設立",
+      "email": "メール",
+      "phone": "電話",
+      "address": "住所",
+      "taxNumber": "税番号",
+      "authorizedPerson": "権限者",
+      "employeeCount": "従業員数",
+      "addStaff": "スタッフを追加",
+      "removeStaff": "スタッフを削除",
+      "staffList": "スタッフリスト",
+      "noStaff": "まだスタッフが追加されていません",
+      "staffCode": "従業員コード",
+      "staffName": "氏名",
+      "staffRole": "ロール",
+      "staffActions": "アクション",
+      "addStaffTitle": "スタッフを追加",
+      "addStaffDesc": "従業員コードを入力して企業にスタッフを追加",
+      "employeeCodeLabel": "従業員コード",
+      "employeeCodePlaceholder": "12文字の従業員コード",
+      "roleLabel": "ロール",
+      "rolePlaceholder": "ロールを選択",
+      "addBtn": "追加",
+      "adding": "追加中...",
+      "removeConfirm": "このスタッフメンバーを企業から削除してもよろしいですか？",
+      "removeBtn": "削除",
+      "removing": "削除中...",
+      "cancel": "キャンセル",
+      "updateRole": "ロールを更新",
+      "updating": "更新中..."
+    },
+    "staff": {
+      "title": "スタッフダッシュボード",
+      "welcome": "ようこそ",
+      "myCompanies": "私の企業",
+      "myProfile": "私のプロフィール",
+      "myCode": "私の従業員コード",
+      "noCompanies": "まだどの企業にも割り当てられていません",
+      "noCompaniesDesc": "企業マネージャーに従業員コードを使ってシステムに追加するよう依頼してください。",
+      "role": "ロール",
+      "enterCompany": "企業に入る",
+      "companyPanel": "企業パネル"
+    }
+  },
+  "roles": {
+    "companyOwner": "企業オーナー",
+    "companyManager": "企業マネージャー",
+    "companyAdministrator": "企業管理者",
+    "companyStaff": "企業スタッフ",
+    "unknown": "不明なロール"
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "retry": "再試行",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "close": "閉じる",
+    "back": "戻る",
+    "next": "次へ",
+    "confirm": "確認",
+    "delete": "削除",
+    "edit": "編集",
+    "view": "表示",
+    "search": "検索",
+    "filter": "フィルター",
+    "noData": "データが見つかりません",
+    "success": "操作が成功しました",
+    "unauthorized": "このページへのアクセス権限がありません",
+    "notFound": "ページが見つかりません"
+  },
+  "footer": {
+    "rights": "全著作権所有",
+    "builtWith": "愛を込めて作成"
+  }
+}

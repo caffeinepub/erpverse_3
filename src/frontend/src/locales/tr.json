@@ -1,0 +1,221 @@
+{
+  "app": {
+    "name": "ERPVerse",
+    "tagline": "Birleşik İş Yönetim Platformu",
+    "description": "Şirketinizi tek platformda yönetin. Çok kiracılı, güvenli ve ölçeklenebilir."
+  },
+  "nav": {
+    "home": "Ana Sayfa",
+    "dashboard": "Panel",
+    "logout": "Çıkış Yap",
+    "login": "Giriş Yap",
+    "profile": "Profil"
+  },
+  "landing": {
+    "hero": {
+      "title": "İşinizi Bir Sonraki Seviyeye Taşıyın",
+      "subtitle": "ERPVerse ile şirketinizin tüm süreçlerini tek platformda yönetin. Güvenli, ölçeklenebilir ve çok dilli.",
+      "badge": "Kurumsal ERP Platformu"
+    },
+    "ownerPortal": {
+      "title": "Şirket Girişi",
+      "subtitle": "Şirket Sahibi / Yönetici",
+      "description": "Şirketinizi kaydedin veya mevcut hesabınıza giriş yapın. Tüm yönetim araçlarına erişin.",
+      "loginBtn": "Şirket Girişi Yap",
+      "registerBtn": "Şirket Kaydı Oluştur",
+      "loggingIn": "Giriş yapılıyor...",
+      "features": ["Şirket Yönetimi", "Personel Kontrolü", "Rol Yönetimi"]
+    },
+    "staffPortal": {
+      "title": "Personel Girişi",
+      "subtitle": "Şirket Personeli",
+      "description": "Personel hesabınıza giriş yapın veya yeni hesap oluşturun. Atanan şirketlerinize erişin.",
+      "loginBtn": "Personel Girişi Yap",
+      "registerBtn": "Personel Kaydı Oluştur",
+      "loggingIn": "Giriş yapılıyor...",
+      "features": ["Çoklu Şirket Desteği", "Rol Bazlı Erişim", "Personel Kodu"]
+    },
+    "features": {
+      "title": "Neden ERPVerse?",
+      "multiTenant": {
+        "title": "Çok Kiracılı Mimari",
+        "desc": "Her şirket kendi izole ortamında çalışır"
+      },
+      "roles": {
+        "title": "Hiyerarşik Roller",
+        "desc": "Esnek rol ve yetki yönetimi sistemi"
+      },
+      "multilang": {
+        "title": "Çok Dilli",
+        "desc": "Türkçe ve İngilizce tam destek"
+      },
+      "secure": {
+        "title": "Güvenli Kimlik",
+        "desc": "Internet Identity ile güvenli giriş"
+      }
+    }
+  },
+  "companySetup": {
+    "title": "Şirket Kurulumu",
+    "subtitle": "Şirketinizi ERPVerse'e kaydedin",
+    "description": "Aşağıdaki bilgileri doldurarak şirketinizi sisteme ekleyin.",
+    "fields": {
+      "name": "Şirket Adı",
+      "namePlaceholder": "Örn: ABC Teknoloji A.Ş.",
+      "taxNumber": "Vergi Numarası",
+      "taxNumberPlaceholder": "10 haneli vergi numarası",
+      "sector": "Sektör",
+      "sectorPlaceholder": "Sektör seçin",
+      "address": "Adres",
+      "addressPlaceholder": "Şirket adresi",
+      "countryCode": "Ülke Kodu",
+      "phone": "Telefon",
+      "phonePlaceholder": "5XX XXX XX XX",
+      "email": "E-posta",
+      "emailPlaceholder": "info@sirket.com",
+      "authorizedPerson": "Yetkili Kişi",
+      "authorizedPersonPlaceholder": "Ad Soyad",
+      "employeeCount": "Çalışan Sayısı",
+      "employeeCountPlaceholder": "Tahmini çalışan sayısı",
+      "foundingYear": "Kuruluş Yılı",
+      "foundingYearPlaceholder": "Örn: 2010"
+    },
+    "sectors": [
+      "Teknoloji",
+      "Finans",
+      "Sağlık",
+      "Eğitim",
+      "Üretim",
+      "Perakende",
+      "İnşaat",
+      "Lojistik",
+      "Turizm",
+      "Diğer"
+    ],
+    "submitBtn": "Şirketi Kaydet",
+    "submitting": "Kaydediliyor...",
+    "success": "Şirket başarıyla oluşturuldu!",
+    "errors": {
+      "nameRequired": "Şirket adı zorunludur",
+      "taxRequired": "Vergi numarası zorunludur",
+      "taxInvalid": "Geçerli bir vergi numarası girin",
+      "sectorRequired": "Sektör seçimi zorunludur",
+      "addressRequired": "Adres zorunludur",
+      "phoneRequired": "Telefon numarası zorunludur",
+      "emailRequired": "E-posta adresi zorunludur",
+      "emailInvalid": "Geçerli bir e-posta adresi girin",
+      "authorizedRequired": "Yetkili kişi adı zorunludur",
+      "employeeRequired": "Çalışan sayısı zorunludur",
+      "yearRequired": "Kuruluş yılı zorunludur",
+      "yearInvalid": "Geçerli bir yıl girin"
+    }
+  },
+  "staffRegistration": {
+    "title": "Personel Kaydı",
+    "subtitle": "ERPVerse'e hoş geldiniz",
+    "description": "Profilinizi oluşturun ve personel kodunuzu alın.",
+    "fields": {
+      "name": "Ad Soyad",
+      "namePlaceholder": "Adınız ve soyadınız",
+      "title": "Unvan",
+      "titlePlaceholder": "Örn: Yazılım Geliştirici"
+    },
+    "submitBtn": "Profili Kaydet",
+    "submitting": "Kaydediliyor...",
+    "codeTitle": "Personel Kodunuz",
+    "codeDesc": "Bu kodu şirket yöneticinizle paylaşın. Sizi şirket sistemine eklemek için kullanacaklar.",
+    "codeCopied": "Kod kopyalandı!",
+    "copyBtn": "Kopyala",
+    "continueBtn": "Panele Git",
+    "errors": {
+      "nameRequired": "Ad soyad zorunludur"
+    }
+  },
+  "dashboard": {
+    "owner": {
+      "title": "Şirket Paneli",
+      "welcome": "Hoş geldiniz",
+      "companyInfo": "Şirket Bilgileri",
+      "staffManagement": "Personel Yönetimi",
+      "roleManagement": "Rol Yönetimi",
+      "settings": "Ayarlar",
+      "overview": "Genel Bakış",
+      "totalStaff": "Toplam Personel",
+      "activeRoles": "Aktif Roller",
+      "companyId": "Şirket ID",
+      "sector": "Sektör",
+      "founded": "Kuruluş",
+      "email": "E-posta",
+      "phone": "Telefon",
+      "address": "Adres",
+      "taxNumber": "Vergi No",
+      "authorizedPerson": "Yetkili Kişi",
+      "employeeCount": "Çalışan Sayısı",
+      "addStaff": "Personel Ekle",
+      "removeStaff": "Personel Çıkar",
+      "staffList": "Personel Listesi",
+      "noStaff": "Henüz personel eklenmemiş",
+      "staffCode": "Personel Kodu",
+      "staffName": "Ad Soyad",
+      "staffRole": "Rol",
+      "staffActions": "İşlemler",
+      "addStaffTitle": "Personel Ekle",
+      "addStaffDesc": "Personel kodunu girerek şirketinize personel ekleyin",
+      "employeeCodeLabel": "Personel Kodu",
+      "employeeCodePlaceholder": "12 haneli personel kodu",
+      "roleLabel": "Rol",
+      "rolePlaceholder": "Rol seçin",
+      "addBtn": "Ekle",
+      "adding": "Ekleniyor...",
+      "removeConfirm": "Bu personeli şirketten çıkarmak istediğinizden emin misiniz?",
+      "removeBtn": "Çıkar",
+      "removing": "Çıkarılıyor...",
+      "cancel": "İptal",
+      "updateRole": "Rol Güncelle",
+      "updating": "Güncelleniyor..."
+    },
+    "staff": {
+      "title": "Personel Paneli",
+      "welcome": "Hoş geldiniz",
+      "myCompanies": "Şirketlerim",
+      "myProfile": "Profilim",
+      "myCode": "Personel Kodum",
+      "noCompanies": "Henüz bir şirkete atanmadınız",
+      "noCompaniesDesc": "Şirket yöneticinizden personel kodunuzu kullanarak sizi sisteme eklemesini isteyin.",
+      "role": "Rol",
+      "enterCompany": "Şirkete Gir",
+      "companyPanel": "Şirket Paneli"
+    }
+  },
+  "roles": {
+    "companyOwner": "Şirket Sahibi",
+    "companyManager": "Şirket Yöneticisi",
+    "companyAdministrator": "Şirket İdarecisi",
+    "companyStaff": "Şirket Personeli",
+    "unknown": "Bilinmeyen Rol"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu",
+    "retry": "Tekrar Dene",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "close": "Kapat",
+    "back": "Geri",
+    "next": "İleri",
+    "confirm": "Onayla",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "view": "Görüntüle",
+    "search": "Ara",
+    "filter": "Filtrele",
+    "noData": "Veri bulunamadı",
+    "success": "İşlem başarılı",
+    "unauthorized": "Bu sayfaya erişim yetkiniz yok",
+    "notFound": "Sayfa bulunamadı"
+  },
+  "footer": {
+    "rights": "Tüm hakları saklıdır",
+    "builtWith": "Sevgiyle yapıldı"
+  }
+}

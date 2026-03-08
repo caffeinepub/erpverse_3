@@ -1,0 +1,229 @@
+{
+  "app": {
+    "name": "ERPVerse",
+    "tagline": "Plataforma Unificada de Gestión Empresarial",
+    "description": "Administre su empresa en una sola plataforma. Multiusuario, seguro y escalable."
+  },
+  "nav": {
+    "home": "Inicio",
+    "dashboard": "Panel",
+    "logout": "Cerrar sesión",
+    "login": "Iniciar sesión",
+    "profile": "Perfil"
+  },
+  "landing": {
+    "hero": {
+      "title": "Lleve Su Negocio al Siguiente Nivel",
+      "subtitle": "Administre todos los procesos de su empresa en una sola plataforma con ERPVerse. Seguro, escalable y multilingüe.",
+      "badge": "Plataforma ERP Empresarial"
+    },
+    "ownerPortal": {
+      "title": "Acceso Empresa",
+      "subtitle": "Propietario / Gerente de empresa",
+      "description": "Registre su empresa o inicie sesión en su cuenta existente.",
+      "loginBtn": "Acceso Empresa",
+      "registerBtn": "Registrar empresa",
+      "loggingIn": "Iniciando sesión...",
+      "features": [
+        "Gestión empresarial",
+        "Control de personal",
+        "Gestión de roles"
+      ]
+    },
+    "staffPortal": {
+      "title": "Acceso Personal",
+      "subtitle": "Personal de la empresa",
+      "description": "Inicie sesión en su cuenta de personal o cree una nueva.",
+      "loginBtn": "Acceso Personal",
+      "registerBtn": "Registro de Personal",
+      "loggingIn": "Iniciando sesión...",
+      "features": [
+        "Soporte multi-empresa",
+        "Acceso basado en roles",
+        "Código de empleado"
+      ]
+    },
+    "features": {
+      "title": "¿Por qué ERPVerse?",
+      "multiTenant": {
+        "title": "Arquitectura Multiusuario",
+        "desc": "Cada empresa opera en su propio entorno aislado"
+      },
+      "roles": {
+        "title": "Roles Jerárquicos",
+        "desc": "Sistema flexible de gestión de roles y permisos"
+      },
+      "multilang": {
+        "title": "Multilingüe",
+        "desc": "Soporte completo de múltiples idiomas"
+      },
+      "secure": {
+        "title": "Identidad Segura",
+        "desc": "Inicio de sesión seguro con Internet Identity"
+      }
+    }
+  },
+  "companySetup": {
+    "title": "Configuración de Empresa",
+    "subtitle": "Registre su empresa en ERPVerse",
+    "description": "Complete la información a continuación para agregar su empresa al sistema.",
+    "fields": {
+      "name": "Nombre de la empresa",
+      "namePlaceholder": "ej. ABC Tecnología S.A.",
+      "taxNumber": "Número fiscal",
+      "taxNumberPlaceholder": "Número fiscal de 10 dígitos",
+      "sector": "Sector",
+      "sectorPlaceholder": "Seleccionar sector",
+      "address": "Dirección",
+      "addressPlaceholder": "Dirección de la empresa",
+      "countryCode": "Código de país",
+      "phone": "Teléfono",
+      "phonePlaceholder": "Número de teléfono",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "info@empresa.com",
+      "authorizedPerson": "Persona autorizada",
+      "authorizedPersonPlaceholder": "Nombre completo",
+      "employeeCount": "Número de empleados",
+      "employeeCountPlaceholder": "Número estimado de empleados",
+      "foundingYear": "Año de fundación",
+      "foundingYearPlaceholder": "ej. 2010"
+    },
+    "sectors": [
+      "Tecnología",
+      "Finanzas",
+      "Salud",
+      "Educación",
+      "Manufactura",
+      "Comercio minorista",
+      "Construcción",
+      "Logística",
+      "Turismo",
+      "Otro"
+    ],
+    "submitBtn": "Registrar empresa",
+    "submitting": "Registrando...",
+    "success": "¡Empresa creada exitosamente!",
+    "errors": {
+      "nameRequired": "El nombre de la empresa es obligatorio",
+      "taxRequired": "El número fiscal es obligatorio",
+      "taxInvalid": "Ingrese un número fiscal válido",
+      "sectorRequired": "La selección de sector es obligatoria",
+      "addressRequired": "La dirección es obligatoria",
+      "phoneRequired": "El número de teléfono es obligatorio",
+      "emailRequired": "La dirección de correo electrónico es obligatoria",
+      "emailInvalid": "Ingrese una dirección de correo electrónico válida",
+      "authorizedRequired": "El nombre de la persona autorizada es obligatorio",
+      "employeeRequired": "El número de empleados es obligatorio",
+      "yearRequired": "El año de fundación es obligatorio",
+      "yearInvalid": "Ingrese un año válido"
+    }
+  },
+  "staffRegistration": {
+    "title": "Registro de Personal",
+    "subtitle": "Bienvenido a ERPVerse",
+    "description": "Cree su perfil y obtenga su código de empleado.",
+    "fields": {
+      "name": "Nombre completo",
+      "namePlaceholder": "Su nombre y apellido",
+      "title": "Título",
+      "titlePlaceholder": "ej. Desarrollador de software"
+    },
+    "submitBtn": "Guardar perfil",
+    "submitting": "Guardando...",
+    "codeTitle": "Su Código de Empleado",
+    "codeDesc": "Comparta este código con su gerente de empresa. Lo usarán para agregarle al sistema de la empresa.",
+    "codeCopied": "¡Código copiado!",
+    "copyBtn": "Copiar",
+    "continueBtn": "Ir al panel",
+    "errors": {
+      "nameRequired": "El nombre completo es obligatorio"
+    }
+  },
+  "dashboard": {
+    "owner": {
+      "title": "Panel de Empresa",
+      "welcome": "Bienvenido",
+      "companyInfo": "Información de la empresa",
+      "staffManagement": "Gestión de personal",
+      "roleManagement": "Gestión de roles",
+      "settings": "Configuración",
+      "overview": "Resumen",
+      "totalStaff": "Personal total",
+      "activeRoles": "Roles activos",
+      "companyId": "ID de empresa",
+      "sector": "Sector",
+      "founded": "Fundada",
+      "email": "Correo electrónico",
+      "phone": "Teléfono",
+      "address": "Dirección",
+      "taxNumber": "Número fiscal",
+      "authorizedPerson": "Persona autorizada",
+      "employeeCount": "Número de empleados",
+      "addStaff": "Agregar personal",
+      "removeStaff": "Eliminar personal",
+      "staffList": "Lista de personal",
+      "noStaff": "Aún no se ha agregado personal",
+      "staffCode": "Código de empleado",
+      "staffName": "Nombre completo",
+      "staffRole": "Rol",
+      "staffActions": "Acciones",
+      "addStaffTitle": "Agregar personal",
+      "addStaffDesc": "Agregue personal a su empresa ingresando su código de empleado",
+      "employeeCodeLabel": "Código de empleado",
+      "employeeCodePlaceholder": "Código de empleado de 12 caracteres",
+      "roleLabel": "Rol",
+      "rolePlaceholder": "Seleccionar rol",
+      "addBtn": "Agregar",
+      "adding": "Agregando...",
+      "removeConfirm": "¿Está seguro de que desea eliminar a este miembro del personal de la empresa?",
+      "removeBtn": "Eliminar",
+      "removing": "Eliminando...",
+      "cancel": "Cancelar",
+      "updateRole": "Actualizar rol",
+      "updating": "Actualizando..."
+    },
+    "staff": {
+      "title": "Panel de Personal",
+      "welcome": "Bienvenido",
+      "myCompanies": "Mis empresas",
+      "myProfile": "Mi perfil",
+      "myCode": "Mi código de empleado",
+      "noCompanies": "Aún no ha sido asignado a ninguna empresa",
+      "noCompaniesDesc": "Pida a su gerente de empresa que le agregue al sistema usando su código de empleado.",
+      "role": "Rol",
+      "enterCompany": "Entrar a la empresa",
+      "companyPanel": "Panel de empresa"
+    }
+  },
+  "roles": {
+    "companyOwner": "Propietario de la empresa",
+    "companyManager": "Gerente de la empresa",
+    "companyAdministrator": "Administrador de la empresa",
+    "companyStaff": "Personal de la empresa",
+    "unknown": "Rol desconocido"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "retry": "Reintentar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "confirm": "Confirmar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "view": "Ver",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "noData": "No se encontraron datos",
+    "success": "Operación exitosa",
+    "unauthorized": "No tiene permiso para acceder a esta página",
+    "notFound": "Página no encontrada"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados",
+    "builtWith": "Construido con amor"
+  }
+}

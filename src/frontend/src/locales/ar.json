@@ -1,0 +1,225 @@
+{
+  "app": {
+    "name": "ERPVerse",
+    "tagline": "منصة إدارة الأعمال الموحدة",
+    "description": "إدارة شركتك على منصة واحدة. متعددة المستأجرين، آمنة وقابلة للتطوير."
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "dashboard": "لوحة التحكم",
+    "logout": "تسجيل الخروج",
+    "login": "تسجيل الدخول",
+    "profile": "الملف الشخصي"
+  },
+  "landing": {
+    "hero": {
+      "title": "ارفع عملك إلى المستوى التالي",
+      "subtitle": "إدارة جميع عمليات شركتك على منصة واحدة مع ERPVerse. آمن، قابل للتطوير ومتعدد اللغات.",
+      "badge": "منصة ERP المؤسسية"
+    },
+    "ownerPortal": {
+      "title": "دخول الشركة",
+      "subtitle": "مالك / مدير الشركة",
+      "description": "سجّل شركتك أو سجّل الدخول إلى حسابك الموجود.",
+      "loginBtn": "دخول الشركة",
+      "registerBtn": "تسجيل الشركة",
+      "loggingIn": "جارٍ تسجيل الدخول...",
+      "features": ["إدارة الشركة", "التحكم في الموظفين", "إدارة الأدوار"]
+    },
+    "staffPortal": {
+      "title": "دخول الموظفين",
+      "subtitle": "موظفو الشركة",
+      "description": "سجّل الدخول إلى حساب الموظف أو أنشئ حسابًا جديدًا.",
+      "loginBtn": "دخول الموظفين",
+      "registerBtn": "تسجيل الموظف",
+      "loggingIn": "جارٍ تسجيل الدخول...",
+      "features": [
+        "دعم متعدد الشركات",
+        "الوصول القائم على الأدوار",
+        "رمز الموظف"
+      ]
+    },
+    "features": {
+      "title": "لماذا ERPVerse؟",
+      "multiTenant": {
+        "title": "هيكل متعدد المستأجرين",
+        "desc": "تعمل كل شركة في بيئتها المعزولة الخاصة"
+      },
+      "roles": {
+        "title": "أدوار هرمية",
+        "desc": "نظام مرن لإدارة الأدوار والصلاحيات"
+      },
+      "multilang": {
+        "title": "متعدد اللغات",
+        "desc": "دعم كامل للغات متعددة"
+      },
+      "secure": {
+        "title": "هوية آمنة",
+        "desc": "تسجيل دخول آمن مع Internet Identity"
+      }
+    }
+  },
+  "companySetup": {
+    "title": "إعداد الشركة",
+    "subtitle": "سجّل شركتك على ERPVerse",
+    "description": "أكمل المعلومات أدناه لإضافة شركتك إلى النظام.",
+    "fields": {
+      "name": "اسم الشركة",
+      "namePlaceholder": "مثال: شركة ABC للتكنولوجيا",
+      "taxNumber": "الرقم الضريبي",
+      "taxNumberPlaceholder": "رقم ضريبي مكون من 10 أرقام",
+      "sector": "القطاع",
+      "sectorPlaceholder": "اختر القطاع",
+      "address": "العنوان",
+      "addressPlaceholder": "عنوان الشركة",
+      "countryCode": "رمز الدولة",
+      "phone": "الهاتف",
+      "phonePlaceholder": "رقم الهاتف",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "info@company.com",
+      "authorizedPerson": "الشخص المفوض",
+      "authorizedPersonPlaceholder": "الاسم الكامل",
+      "employeeCount": "عدد الموظفين",
+      "employeeCountPlaceholder": "العدد التقريبي للموظفين",
+      "foundingYear": "سنة التأسيس",
+      "foundingYearPlaceholder": "مثال: 2010"
+    },
+    "sectors": [
+      "التكنولوجيا",
+      "المالية",
+      "الرعاية الصحية",
+      "التعليم",
+      "التصنيع",
+      "التجزئة",
+      "البناء",
+      "اللوجستيك",
+      "السياحة",
+      "أخرى"
+    ],
+    "submitBtn": "تسجيل الشركة",
+    "submitting": "جارٍ التسجيل...",
+    "success": "تم إنشاء الشركة بنجاح!",
+    "errors": {
+      "nameRequired": "اسم الشركة مطلوب",
+      "taxRequired": "الرقم الضريبي مطلوب",
+      "taxInvalid": "أدخل رقمًا ضريبيًا صحيحًا",
+      "sectorRequired": "اختيار القطاع مطلوب",
+      "addressRequired": "العنوان مطلوب",
+      "phoneRequired": "رقم الهاتف مطلوب",
+      "emailRequired": "عنوان البريد الإلكتروني مطلوب",
+      "emailInvalid": "أدخل عنوان بريد إلكتروني صحيحًا",
+      "authorizedRequired": "اسم الشخص المفوض مطلوب",
+      "employeeRequired": "عدد الموظفين مطلوب",
+      "yearRequired": "سنة التأسيس مطلوبة",
+      "yearInvalid": "أدخل سنة صحيحة"
+    }
+  },
+  "staffRegistration": {
+    "title": "تسجيل الموظف",
+    "subtitle": "مرحبًا بك في ERPVerse",
+    "description": "أنشئ ملفك الشخصي واحصل على رمز موظفك.",
+    "fields": {
+      "name": "الاسم الكامل",
+      "namePlaceholder": "اسمك الأول والأخير",
+      "title": "المسمى الوظيفي",
+      "titlePlaceholder": "مثال: مطور برمجيات"
+    },
+    "submitBtn": "حفظ الملف الشخصي",
+    "submitting": "جارٍ الحفظ...",
+    "codeTitle": "رمز موظفك",
+    "codeDesc": "شارك هذا الرمز مع مدير شركتك. سيستخدمه لإضافتك إلى نظام الشركة.",
+    "codeCopied": "تم نسخ الرمز!",
+    "copyBtn": "نسخ",
+    "continueBtn": "الذهاب إلى لوحة التحكم",
+    "errors": {
+      "nameRequired": "الاسم الكامل مطلوب"
+    }
+  },
+  "dashboard": {
+    "owner": {
+      "title": "لوحة تحكم الشركة",
+      "welcome": "مرحبًا",
+      "companyInfo": "معلومات الشركة",
+      "staffManagement": "إدارة الموظفين",
+      "roleManagement": "إدارة الأدوار",
+      "settings": "الإعدادات",
+      "overview": "نظرة عامة",
+      "totalStaff": "إجمالي الموظفين",
+      "activeRoles": "الأدوار النشطة",
+      "companyId": "معرف الشركة",
+      "sector": "القطاع",
+      "founded": "تأسست",
+      "email": "البريد الإلكتروني",
+      "phone": "الهاتف",
+      "address": "العنوان",
+      "taxNumber": "الرقم الضريبي",
+      "authorizedPerson": "الشخص المفوض",
+      "employeeCount": "عدد الموظفين",
+      "addStaff": "إضافة موظف",
+      "removeStaff": "إزالة موظف",
+      "staffList": "قائمة الموظفين",
+      "noStaff": "لم يتم إضافة موظفين بعد",
+      "staffCode": "رمز الموظف",
+      "staffName": "الاسم الكامل",
+      "staffRole": "الدور",
+      "staffActions": "الإجراءات",
+      "addStaffTitle": "إضافة موظف",
+      "addStaffDesc": "أضف موظفًا إلى شركتك بإدخال رمز موظفه",
+      "employeeCodeLabel": "رمز الموظف",
+      "employeeCodePlaceholder": "رمز موظف مكون من 12 حرفًا",
+      "roleLabel": "الدور",
+      "rolePlaceholder": "اختر دورًا",
+      "addBtn": "إضافة",
+      "adding": "جارٍ الإضافة...",
+      "removeConfirm": "هل أنت متأكد أنك تريد إزالة هذا الموظف من الشركة؟",
+      "removeBtn": "إزالة",
+      "removing": "جارٍ الإزالة...",
+      "cancel": "إلغاء",
+      "updateRole": "تحديث الدور",
+      "updating": "جارٍ التحديث..."
+    },
+    "staff": {
+      "title": "لوحة تحكم الموظف",
+      "welcome": "مرحبًا",
+      "myCompanies": "شركاتي",
+      "myProfile": "ملفي الشخصي",
+      "myCode": "رمز موظفي",
+      "noCompanies": "لم تُعيَّن بعد لأي شركة",
+      "noCompaniesDesc": "اطلب من مدير شركتك إضافتك إلى النظام باستخدام رمز موظفك.",
+      "role": "الدور",
+      "enterCompany": "الدخول إلى الشركة",
+      "companyPanel": "لوحة الشركة"
+    }
+  },
+  "roles": {
+    "companyOwner": "مالك الشركة",
+    "companyManager": "مدير الشركة",
+    "companyAdministrator": "مسؤول الشركة",
+    "companyStaff": "موظف الشركة",
+    "unknown": "دور غير معروف"
+  },
+  "common": {
+    "loading": "جارٍ التحميل...",
+    "error": "حدث خطأ",
+    "retry": "إعادة المحاولة",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "close": "إغلاق",
+    "back": "رجوع",
+    "next": "التالي",
+    "confirm": "تأكيد",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "view": "عرض",
+    "search": "بحث",
+    "filter": "تصفية",
+    "noData": "لم يتم العثور على بيانات",
+    "success": "العملية ناجحة",
+    "unauthorized": "ليس لديك إذن للوصول إلى هذه الصفحة",
+    "notFound": "الصفحة غير موجودة"
+  },
+  "footer": {
+    "rights": "جميع الحقوق محفوظة",
+    "builtWith": "صُنع بحب"
+  }
+}

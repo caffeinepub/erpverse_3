@@ -1,0 +1,221 @@
+{
+  "app": {
+    "name": "ERPVerse",
+    "tagline": "统一业务管理平台",
+    "description": "在单一平台上管理您的企业。多租户、安全且可扩展。"
+  },
+  "nav": {
+    "home": "首页",
+    "dashboard": "控制台",
+    "logout": "退出登录",
+    "login": "登录",
+    "profile": "个人资料"
+  },
+  "landing": {
+    "hero": {
+      "title": "将您的业务提升到新水平",
+      "subtitle": "使用 ERPVerse 在单一平台上管理公司所有流程。安全、可扩展且多语言。",
+      "badge": "企业 ERP 平台"
+    },
+    "ownerPortal": {
+      "title": "企业登录",
+      "subtitle": "企业所有者 / 管理员",
+      "description": "注册您的企业或登录现有账户。",
+      "loginBtn": "企业登录",
+      "registerBtn": "注册企业",
+      "loggingIn": "登录中...",
+      "features": ["企业管理", "员工控制", "角色管理"]
+    },
+    "staffPortal": {
+      "title": "员工登录",
+      "subtitle": "企业员工",
+      "description": "登录您的员工账户或创建新账户。",
+      "loginBtn": "员工登录",
+      "registerBtn": "员工注册",
+      "loggingIn": "登录中...",
+      "features": ["多企业支持", "基于角色的访问", "员工代码"]
+    },
+    "features": {
+      "title": "为什么选择 ERPVerse？",
+      "multiTenant": {
+        "title": "多租户架构",
+        "desc": "每个企业在自己的隔离环境中运行"
+      },
+      "roles": {
+        "title": "分级角色",
+        "desc": "灵活的角色和权限管理系统"
+      },
+      "multilang": {
+        "title": "多语言",
+        "desc": "完整支持多种语言"
+      },
+      "secure": {
+        "title": "安全身份",
+        "desc": "使用 Internet Identity 安全登录"
+      }
+    }
+  },
+  "companySetup": {
+    "title": "企业设置",
+    "subtitle": "在 ERPVerse 上注册您的企业",
+    "description": "填写以下信息以将您的企业添加到系统中。",
+    "fields": {
+      "name": "企业名称",
+      "namePlaceholder": "例：ABC 科技有限公司",
+      "taxNumber": "税号",
+      "taxNumberPlaceholder": "10位税号",
+      "sector": "行业",
+      "sectorPlaceholder": "选择行业",
+      "address": "地址",
+      "addressPlaceholder": "企业地址",
+      "countryCode": "国家代码",
+      "phone": "电话",
+      "phonePlaceholder": "电话号码",
+      "email": "电子邮件",
+      "emailPlaceholder": "info@company.com",
+      "authorizedPerson": "授权人",
+      "authorizedPersonPlaceholder": "全名",
+      "employeeCount": "员工人数",
+      "employeeCountPlaceholder": "预计员工人数",
+      "foundingYear": "成立年份",
+      "foundingYearPlaceholder": "例：2010"
+    },
+    "sectors": [
+      "技术",
+      "金融",
+      "医疗",
+      "教育",
+      "制造",
+      "零售",
+      "建筑",
+      "物流",
+      "旅游",
+      "其他"
+    ],
+    "submitBtn": "注册企业",
+    "submitting": "注册中...",
+    "success": "企业创建成功！",
+    "errors": {
+      "nameRequired": "企业名称为必填项",
+      "taxRequired": "税号为必填项",
+      "taxInvalid": "请输入有效的税号",
+      "sectorRequired": "行业选择为必填项",
+      "addressRequired": "地址为必填项",
+      "phoneRequired": "电话号码为必填项",
+      "emailRequired": "电子邮件地址为必填项",
+      "emailInvalid": "请输入有效的电子邮件地址",
+      "authorizedRequired": "授权人姓名为必填项",
+      "employeeRequired": "员工人数为必填项",
+      "yearRequired": "成立年份为必填项",
+      "yearInvalid": "请输入有效的年份"
+    }
+  },
+  "staffRegistration": {
+    "title": "员工注册",
+    "subtitle": "欢迎使用 ERPVerse",
+    "description": "创建您的档案并获取员工代码。",
+    "fields": {
+      "name": "全名",
+      "namePlaceholder": "您的姓名",
+      "title": "职位",
+      "titlePlaceholder": "例：软件开发工程师"
+    },
+    "submitBtn": "保存档案",
+    "submitting": "保存中...",
+    "codeTitle": "您的员工代码",
+    "codeDesc": "将此代码分享给您的企业管理员。他们将使用它将您添加到企业系统中。",
+    "codeCopied": "代码已复制！",
+    "copyBtn": "复制",
+    "continueBtn": "前往控制台",
+    "errors": {
+      "nameRequired": "全名为必填项"
+    }
+  },
+  "dashboard": {
+    "owner": {
+      "title": "企业控制台",
+      "welcome": "欢迎",
+      "companyInfo": "企业信息",
+      "staffManagement": "员工管理",
+      "roleManagement": "角色管理",
+      "settings": "设置",
+      "overview": "概览",
+      "totalStaff": "总员工数",
+      "activeRoles": "活跃角色",
+      "companyId": "企业 ID",
+      "sector": "行业",
+      "founded": "成立",
+      "email": "电子邮件",
+      "phone": "电话",
+      "address": "地址",
+      "taxNumber": "税号",
+      "authorizedPerson": "授权人",
+      "employeeCount": "员工人数",
+      "addStaff": "添加员工",
+      "removeStaff": "移除员工",
+      "staffList": "员工列表",
+      "noStaff": "尚未添加员工",
+      "staffCode": "员工代码",
+      "staffName": "全名",
+      "staffRole": "角色",
+      "staffActions": "操作",
+      "addStaffTitle": "添加员工",
+      "addStaffDesc": "通过输入员工代码将员工添加到您的企业",
+      "employeeCodeLabel": "员工代码",
+      "employeeCodePlaceholder": "12位员工代码",
+      "roleLabel": "角色",
+      "rolePlaceholder": "选择角色",
+      "addBtn": "添加",
+      "adding": "添加中...",
+      "removeConfirm": "您确定要将此员工从企业中移除吗？",
+      "removeBtn": "移除",
+      "removing": "移除中...",
+      "cancel": "取消",
+      "updateRole": "更新角色",
+      "updating": "更新中..."
+    },
+    "staff": {
+      "title": "员工控制台",
+      "welcome": "欢迎",
+      "myCompanies": "我的企业",
+      "myProfile": "我的档案",
+      "myCode": "我的员工代码",
+      "noCompanies": "您尚未被分配到任何企业",
+      "noCompaniesDesc": "请要求您的企业管理员使用您的员工代码将您添加到系统中。",
+      "role": "角色",
+      "enterCompany": "进入企业",
+      "companyPanel": "企业面板"
+    }
+  },
+  "roles": {
+    "companyOwner": "企业所有者",
+    "companyManager": "企业经理",
+    "companyAdministrator": "企业管理员",
+    "companyStaff": "企业员工",
+    "unknown": "未知角色"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "发生错误",
+    "retry": "重试",
+    "save": "保存",
+    "cancel": "取消",
+    "close": "关闭",
+    "back": "返回",
+    "next": "下一步",
+    "confirm": "确认",
+    "delete": "删除",
+    "edit": "编辑",
+    "view": "查看",
+    "search": "搜索",
+    "filter": "筛选",
+    "noData": "未找到数据",
+    "success": "操作成功",
+    "unauthorized": "您没有权限访问此页面",
+    "notFound": "页面未找到"
+  },
+  "footer": {
+    "rights": "保留所有权利",
+    "builtWith": "用爱构建"
+  }
+}

@@ -1,0 +1,229 @@
+{
+  "app": {
+    "name": "ERPVerse",
+    "tagline": "Einheitliche Unternehmensmanagement-Plattform",
+    "description": "Verwalten Sie Ihr Unternehmen auf einer Plattform. Mandantenfähig, sicher und skalierbar."
+  },
+  "nav": {
+    "home": "Startseite",
+    "dashboard": "Dashboard",
+    "logout": "Abmelden",
+    "login": "Anmelden",
+    "profile": "Profil"
+  },
+  "landing": {
+    "hero": {
+      "title": "Bringen Sie Ihr Unternehmen auf die nächste Stufe",
+      "subtitle": "Verwalten Sie alle Unternehmensprozesse auf einer Plattform mit ERPVerse. Sicher, skalierbar und mehrsprachig.",
+      "badge": "Enterprise ERP-Plattform"
+    },
+    "ownerPortal": {
+      "title": "Unternehmensanmeldung",
+      "subtitle": "Unternehmenseigentümer / Manager",
+      "description": "Registrieren Sie Ihr Unternehmen oder melden Sie sich bei Ihrem bestehenden Konto an.",
+      "loginBtn": "Unternehmensanmeldung",
+      "registerBtn": "Unternehmen registrieren",
+      "loggingIn": "Anmeldung läuft...",
+      "features": [
+        "Unternehmensmanagement",
+        "Mitarbeiterverwaltung",
+        "Rollenverwaltung"
+      ]
+    },
+    "staffPortal": {
+      "title": "Mitarbeiteranmeldung",
+      "subtitle": "Unternehmensmitarbeiter",
+      "description": "Melden Sie sich bei Ihrem Mitarbeiterkonto an oder erstellen Sie ein neues.",
+      "loginBtn": "Mitarbeiteranmeldung",
+      "registerBtn": "Mitarbeiterregistrierung",
+      "loggingIn": "Anmeldung läuft...",
+      "features": [
+        "Multi-Unternehmens-Support",
+        "Rollenbasierter Zugriff",
+        "Mitarbeitercode"
+      ]
+    },
+    "features": {
+      "title": "Warum ERPVerse?",
+      "multiTenant": {
+        "title": "Mandantenfähige Architektur",
+        "desc": "Jedes Unternehmen arbeitet in seiner eigenen isolierten Umgebung"
+      },
+      "roles": {
+        "title": "Hierarchische Rollen",
+        "desc": "Flexibles Rollen- und Berechtigungsverwaltungssystem"
+      },
+      "multilang": {
+        "title": "Mehrsprachig",
+        "desc": "Vollständige Unterstützung mehrerer Sprachen"
+      },
+      "secure": {
+        "title": "Sichere Identität",
+        "desc": "Sichere Anmeldung mit Internet Identity"
+      }
+    }
+  },
+  "companySetup": {
+    "title": "Unternehmenseinrichtung",
+    "subtitle": "Registrieren Sie Ihr Unternehmen auf ERPVerse",
+    "description": "Füllen Sie die nachstehenden Informationen aus, um Ihr Unternehmen zum System hinzuzufügen.",
+    "fields": {
+      "name": "Unternehmensname",
+      "namePlaceholder": "z.B. ABC Technologie GmbH",
+      "taxNumber": "Steuernummer",
+      "taxNumberPlaceholder": "10-stellige Steuernummer",
+      "sector": "Sektor",
+      "sectorPlaceholder": "Sektor auswählen",
+      "address": "Adresse",
+      "addressPlaceholder": "Unternehmensadresse",
+      "countryCode": "Ländervorwahl",
+      "phone": "Telefon",
+      "phonePlaceholder": "Telefonnummer",
+      "email": "E-Mail",
+      "emailPlaceholder": "info@unternehmen.de",
+      "authorizedPerson": "Bevollmächtigte Person",
+      "authorizedPersonPlaceholder": "Vollständiger Name",
+      "employeeCount": "Mitarbeiteranzahl",
+      "employeeCountPlaceholder": "Geschätzte Mitarbeiteranzahl",
+      "foundingYear": "Gründungsjahr",
+      "foundingYearPlaceholder": "z.B. 2010"
+    },
+    "sectors": [
+      "Technologie",
+      "Finanzen",
+      "Gesundheitswesen",
+      "Bildung",
+      "Fertigung",
+      "Einzelhandel",
+      "Bauwesen",
+      "Logistik",
+      "Tourismus",
+      "Sonstiges"
+    ],
+    "submitBtn": "Unternehmen registrieren",
+    "submitting": "Wird registriert...",
+    "success": "Unternehmen erfolgreich erstellt!",
+    "errors": {
+      "nameRequired": "Unternehmensname ist erforderlich",
+      "taxRequired": "Steuernummer ist erforderlich",
+      "taxInvalid": "Geben Sie eine gültige Steuernummer ein",
+      "sectorRequired": "Sektorauswahl ist erforderlich",
+      "addressRequired": "Adresse ist erforderlich",
+      "phoneRequired": "Telefonnummer ist erforderlich",
+      "emailRequired": "E-Mail-Adresse ist erforderlich",
+      "emailInvalid": "Geben Sie eine gültige E-Mail-Adresse ein",
+      "authorizedRequired": "Name der bevollmächtigten Person ist erforderlich",
+      "employeeRequired": "Mitarbeiteranzahl ist erforderlich",
+      "yearRequired": "Gründungsjahr ist erforderlich",
+      "yearInvalid": "Geben Sie ein gültiges Jahr ein"
+    }
+  },
+  "staffRegistration": {
+    "title": "Mitarbeiterregistrierung",
+    "subtitle": "Willkommen bei ERPVerse",
+    "description": "Erstellen Sie Ihr Profil und erhalten Sie Ihren Mitarbeitercode.",
+    "fields": {
+      "name": "Vollständiger Name",
+      "namePlaceholder": "Ihr Vor- und Nachname",
+      "title": "Titel",
+      "titlePlaceholder": "z.B. Softwareentwickler"
+    },
+    "submitBtn": "Profil speichern",
+    "submitting": "Wird gespeichert...",
+    "codeTitle": "Ihr Mitarbeitercode",
+    "codeDesc": "Teilen Sie diesen Code mit Ihrem Unternehmensmanager. Er wird ihn verwenden, um Sie zum Unternehmenssystem hinzuzufügen.",
+    "codeCopied": "Code kopiert!",
+    "copyBtn": "Kopieren",
+    "continueBtn": "Zum Dashboard",
+    "errors": {
+      "nameRequired": "Vollständiger Name ist erforderlich"
+    }
+  },
+  "dashboard": {
+    "owner": {
+      "title": "Unternehmens-Dashboard",
+      "welcome": "Willkommen",
+      "companyInfo": "Unternehmensinformationen",
+      "staffManagement": "Mitarbeiterverwaltung",
+      "roleManagement": "Rollenverwaltung",
+      "settings": "Einstellungen",
+      "overview": "Übersicht",
+      "totalStaff": "Gesamtmitarbeiter",
+      "activeRoles": "Aktive Rollen",
+      "companyId": "Unternehmens-ID",
+      "sector": "Sektor",
+      "founded": "Gegründet",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "address": "Adresse",
+      "taxNumber": "Steuernummer",
+      "authorizedPerson": "Bevollmächtigte Person",
+      "employeeCount": "Mitarbeiteranzahl",
+      "addStaff": "Mitarbeiter hinzufügen",
+      "removeStaff": "Mitarbeiter entfernen",
+      "staffList": "Mitarbeiterliste",
+      "noStaff": "Noch keine Mitarbeiter hinzugefügt",
+      "staffCode": "Mitarbeitercode",
+      "staffName": "Vollständiger Name",
+      "staffRole": "Rolle",
+      "staffActions": "Aktionen",
+      "addStaffTitle": "Mitarbeiter hinzufügen",
+      "addStaffDesc": "Fügen Sie Mitarbeiter durch Eingabe ihres Mitarbeitercodes zu Ihrem Unternehmen hinzu",
+      "employeeCodeLabel": "Mitarbeitercode",
+      "employeeCodePlaceholder": "12-stelliger Mitarbeitercode",
+      "roleLabel": "Rolle",
+      "rolePlaceholder": "Rolle auswählen",
+      "addBtn": "Hinzufügen",
+      "adding": "Wird hinzugefügt...",
+      "removeConfirm": "Sind Sie sicher, dass Sie diesen Mitarbeiter aus dem Unternehmen entfernen möchten?",
+      "removeBtn": "Entfernen",
+      "removing": "Wird entfernt...",
+      "cancel": "Abbrechen",
+      "updateRole": "Rolle aktualisieren",
+      "updating": "Wird aktualisiert..."
+    },
+    "staff": {
+      "title": "Mitarbeiter-Dashboard",
+      "welcome": "Willkommen",
+      "myCompanies": "Meine Unternehmen",
+      "myProfile": "Mein Profil",
+      "myCode": "Mein Mitarbeitercode",
+      "noCompanies": "Sie wurden noch keinem Unternehmen zugewiesen",
+      "noCompaniesDesc": "Bitten Sie Ihren Unternehmensmanager, Sie mit Ihrem Mitarbeitercode zum System hinzuzufügen.",
+      "role": "Rolle",
+      "enterCompany": "Unternehmen betreten",
+      "companyPanel": "Unternehmens-Panel"
+    }
+  },
+  "roles": {
+    "companyOwner": "Unternehmenseigentümer",
+    "companyManager": "Unternehmensmanager",
+    "companyAdministrator": "Unternehmensadministrator",
+    "companyStaff": "Unternehmensmitarbeiter",
+    "unknown": "Unbekannte Rolle"
+  },
+  "common": {
+    "loading": "Wird geladen...",
+    "error": "Ein Fehler ist aufgetreten",
+    "retry": "Erneut versuchen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "confirm": "Bestätigen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "view": "Ansehen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "noData": "Keine Daten gefunden",
+    "success": "Vorgang erfolgreich",
+    "unauthorized": "Sie haben keine Berechtigung, auf diese Seite zuzugreifen",
+    "notFound": "Seite nicht gefunden"
+  },
+  "footer": {
+    "rights": "Alle Rechte vorbehalten",
+    "builtWith": "Mit Liebe gebaut"
+  }
+}

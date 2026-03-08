@@ -1,0 +1,229 @@
+{
+  "app": {
+    "name": "ERPVerse",
+    "tagline": "Plataforma Unificada de Gestão Empresarial",
+    "description": "Gerencie sua empresa em uma única plataforma. Multilocatário, seguro e escalável."
+  },
+  "nav": {
+    "home": "Início",
+    "dashboard": "Painel",
+    "logout": "Sair",
+    "login": "Entrar",
+    "profile": "Perfil"
+  },
+  "landing": {
+    "hero": {
+      "title": "Leve Seu Negócio ao Próximo Nível",
+      "subtitle": "Gerencie todos os processos da sua empresa em uma única plataforma com ERPVerse. Seguro, escalável e multilíngue.",
+      "badge": "Plataforma ERP Empresarial"
+    },
+    "ownerPortal": {
+      "title": "Acesso da Empresa",
+      "subtitle": "Proprietário / Gestor da empresa",
+      "description": "Registre sua empresa ou faça login na sua conta existente.",
+      "loginBtn": "Acesso da Empresa",
+      "registerBtn": "Registrar empresa",
+      "loggingIn": "Fazendo login...",
+      "features": [
+        "Gestão empresarial",
+        "Controle de pessoal",
+        "Gestão de funções"
+      ]
+    },
+    "staffPortal": {
+      "title": "Acesso de Funcionários",
+      "subtitle": "Funcionários da empresa",
+      "description": "Faça login na sua conta de funcionário ou crie uma nova.",
+      "loginBtn": "Acesso de Funcionários",
+      "registerBtn": "Cadastro de Funcionário",
+      "loggingIn": "Fazendo login...",
+      "features": [
+        "Suporte multi-empresa",
+        "Acesso baseado em funções",
+        "Código de funcionário"
+      ]
+    },
+    "features": {
+      "title": "Por que ERPVerse?",
+      "multiTenant": {
+        "title": "Arquitetura Multilocatário",
+        "desc": "Cada empresa opera em seu próprio ambiente isolado"
+      },
+      "roles": {
+        "title": "Funções Hierárquicas",
+        "desc": "Sistema flexível de gestão de funções e permissões"
+      },
+      "multilang": {
+        "title": "Multilíngue",
+        "desc": "Suporte completo a múltiplos idiomas"
+      },
+      "secure": {
+        "title": "Identidade Segura",
+        "desc": "Login seguro com Internet Identity"
+      }
+    }
+  },
+  "companySetup": {
+    "title": "Configuração da Empresa",
+    "subtitle": "Registre sua empresa no ERPVerse",
+    "description": "Preencha as informações abaixo para adicionar sua empresa ao sistema.",
+    "fields": {
+      "name": "Nome da empresa",
+      "namePlaceholder": "ex. ABC Tecnologia Ltda.",
+      "taxNumber": "CNPJ",
+      "taxNumberPlaceholder": "Número fiscal de 10 dígitos",
+      "sector": "Setor",
+      "sectorPlaceholder": "Selecionar setor",
+      "address": "Endereço",
+      "addressPlaceholder": "Endereço da empresa",
+      "countryCode": "Código do país",
+      "phone": "Telefone",
+      "phonePlaceholder": "Número de telefone",
+      "email": "E-mail",
+      "emailPlaceholder": "info@empresa.com.br",
+      "authorizedPerson": "Pessoa autorizada",
+      "authorizedPersonPlaceholder": "Nome completo",
+      "employeeCount": "Número de funcionários",
+      "employeeCountPlaceholder": "Número estimado de funcionários",
+      "foundingYear": "Ano de fundação",
+      "foundingYearPlaceholder": "ex. 2010"
+    },
+    "sectors": [
+      "Tecnologia",
+      "Finanças",
+      "Saúde",
+      "Educação",
+      "Manufatura",
+      "Varejo",
+      "Construção",
+      "Logística",
+      "Turismo",
+      "Outro"
+    ],
+    "submitBtn": "Registrar empresa",
+    "submitting": "Registrando...",
+    "success": "Empresa criada com sucesso!",
+    "errors": {
+      "nameRequired": "O nome da empresa é obrigatório",
+      "taxRequired": "O CNPJ é obrigatório",
+      "taxInvalid": "Digite um CNPJ válido",
+      "sectorRequired": "A seleção do setor é obrigatória",
+      "addressRequired": "O endereço é obrigatório",
+      "phoneRequired": "O número de telefone é obrigatório",
+      "emailRequired": "O endereço de e-mail é obrigatório",
+      "emailInvalid": "Digite um endereço de e-mail válido",
+      "authorizedRequired": "O nome da pessoa autorizada é obrigatório",
+      "employeeRequired": "O número de funcionários é obrigatório",
+      "yearRequired": "O ano de fundação é obrigatório",
+      "yearInvalid": "Digite um ano válido"
+    }
+  },
+  "staffRegistration": {
+    "title": "Cadastro de Funcionário",
+    "subtitle": "Bem-vindo ao ERPVerse",
+    "description": "Crie seu perfil e obtenha seu código de funcionário.",
+    "fields": {
+      "name": "Nome completo",
+      "namePlaceholder": "Seu nome e sobrenome",
+      "title": "Cargo",
+      "titlePlaceholder": "ex. Desenvolvedor de software"
+    },
+    "submitBtn": "Salvar perfil",
+    "submitting": "Salvando...",
+    "codeTitle": "Seu Código de Funcionário",
+    "codeDesc": "Compartilhe este código com seu gestor da empresa. Eles o usarão para adicioná-lo ao sistema.",
+    "codeCopied": "Código copiado!",
+    "copyBtn": "Copiar",
+    "continueBtn": "Ir para o painel",
+    "errors": {
+      "nameRequired": "O nome completo é obrigatório"
+    }
+  },
+  "dashboard": {
+    "owner": {
+      "title": "Painel da Empresa",
+      "welcome": "Bem-vindo",
+      "companyInfo": "Informações da empresa",
+      "staffManagement": "Gestão de pessoal",
+      "roleManagement": "Gestão de funções",
+      "settings": "Configurações",
+      "overview": "Visão geral",
+      "totalStaff": "Total de funcionários",
+      "activeRoles": "Funções ativas",
+      "companyId": "ID da empresa",
+      "sector": "Setor",
+      "founded": "Fundada",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "address": "Endereço",
+      "taxNumber": "CNPJ",
+      "authorizedPerson": "Pessoa autorizada",
+      "employeeCount": "Número de funcionários",
+      "addStaff": "Adicionar funcionário",
+      "removeStaff": "Remover funcionário",
+      "staffList": "Lista de funcionários",
+      "noStaff": "Nenhum funcionário adicionado ainda",
+      "staffCode": "Código de funcionário",
+      "staffName": "Nome completo",
+      "staffRole": "Função",
+      "staffActions": "Ações",
+      "addStaffTitle": "Adicionar funcionário",
+      "addStaffDesc": "Adicione funcionários à sua empresa inserindo o código do funcionário",
+      "employeeCodeLabel": "Código de funcionário",
+      "employeeCodePlaceholder": "Código de funcionário de 12 caracteres",
+      "roleLabel": "Função",
+      "rolePlaceholder": "Selecionar função",
+      "addBtn": "Adicionar",
+      "adding": "Adicionando...",
+      "removeConfirm": "Tem certeza que deseja remover este funcionário da empresa?",
+      "removeBtn": "Remover",
+      "removing": "Removendo...",
+      "cancel": "Cancelar",
+      "updateRole": "Atualizar função",
+      "updating": "Atualizando..."
+    },
+    "staff": {
+      "title": "Painel de Funcionário",
+      "welcome": "Bem-vindo",
+      "myCompanies": "Minhas empresas",
+      "myProfile": "Meu perfil",
+      "myCode": "Meu código de funcionário",
+      "noCompanies": "Você ainda não foi atribuído a nenhuma empresa",
+      "noCompaniesDesc": "Peça ao seu gestor da empresa para adicioná-lo ao sistema usando seu código de funcionário.",
+      "role": "Função",
+      "enterCompany": "Entrar na empresa",
+      "companyPanel": "Painel da empresa"
+    }
+  },
+  "roles": {
+    "companyOwner": "Proprietário da empresa",
+    "companyManager": "Gestor da empresa",
+    "companyAdministrator": "Administrador da empresa",
+    "companyStaff": "Funcionário da empresa",
+    "unknown": "Função desconhecida"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Ocorreu um erro",
+    "retry": "Tentar novamente",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "close": "Fechar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "confirm": "Confirmar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "view": "Visualizar",
+    "search": "Pesquisar",
+    "filter": "Filtrar",
+    "noData": "Nenhum dado encontrado",
+    "success": "Operação bem-sucedida",
+    "unauthorized": "Você não tem permissão para acessar esta página",
+    "notFound": "Página não encontrada"
+  },
+  "footer": {
+    "rights": "Todos os direitos reservados",
+    "builtWith": "Feito com amor"
+  }
+}

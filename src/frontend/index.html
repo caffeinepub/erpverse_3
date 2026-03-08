@@ -1,0 +1,91 @@
+<html lang='tr'>
+    <head>
+        <meta charset='UTF-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <meta name='theme-color' content='#0d0f1a' />
+        <title>ERPVerse – Unified Business Management</title>
+        <style>
+            /* Inline critical CSS — renders before any JS loads */
+            *,::before,::after{box-sizing:border-box;margin:0;padding:0}
+            html,body{width:100%;height:100%;background:#0d0f1c;color:#f0f2ff}
+            body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+            #root{min-height:100vh}
+
+            /* Splash screen — visible before React hydrates */
+            #splash{
+                position:fixed;inset:0;z-index:9999;
+                display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;
+                background:radial-gradient(ellipse 90% 70% at 50% -5%, rgba(56,130,246,0.18) 0%, transparent 60%),
+                           radial-gradient(ellipse 60% 50% at 80% 100%, rgba(120,60,240,0.12) 0%, transparent 60%),
+                           #0d0f1c;
+                transition:opacity 0.4s ease;
+            }
+            #splash.hidden{opacity:0;pointer-events:none}
+
+            .splash-logo{
+                width:64px;height:64px;border-radius:16px;
+                background:linear-gradient(135deg,rgba(56,130,246,0.3),rgba(120,60,240,0.3));
+                border:1px solid rgba(56,130,246,0.4);
+                display:flex;align-items:center;justify-content:center;
+                box-shadow:0 0 40px rgba(56,130,246,0.3);
+                animation:splash-float 3s ease-in-out infinite;
+            }
+            .splash-logo img{width:44px;height:44px;border-radius:10px;object-fit:cover}
+
+            .splash-title{
+                font-size:24px;font-weight:700;letter-spacing:-0.02em;
+                color:#f0f2ff;
+                background:linear-gradient(135deg,#60b4ff,#a78bfa);
+                -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+                background-clip:text;
+            }
+            .splash-subtitle{font-size:13px;color:rgba(180,190,230,0.7);letter-spacing:0.05em;text-transform:uppercase;margin-top:-18px}
+
+            .splash-bar-track{
+                width:200px;height:2px;background:rgba(255,255,255,0.08);border-radius:99px;overflow:hidden;
+            }
+            .splash-bar{
+                height:100%;border-radius:99px;
+                background:linear-gradient(90deg,#3b82f6,#8b5cf6);
+                animation:splash-progress 2s ease-out forwards;
+            }
+            .splash-dots{display:flex;gap:6px}
+            .splash-dot{width:6px;height:6px;border-radius:50%;background:rgba(96,180,255,0.5)}
+            .splash-dot:nth-child(1){animation:dot-pulse 1.2s 0s ease-in-out infinite}
+            .splash-dot:nth-child(2){animation:dot-pulse 1.2s 0.2s ease-in-out infinite}
+            .splash-dot:nth-child(3){animation:dot-pulse 1.2s 0.4s ease-in-out infinite}
+
+            @keyframes splash-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+            @keyframes splash-progress{0%{width:0%}20%{width:35%}60%{width:72%}90%{width:91%}100%{width:100%}}
+            @keyframes dot-pulse{0%,80%,100%{transform:scale(0.7);opacity:0.3}40%{transform:scale(1.2);opacity:1}}
+        </style>
+    </head>
+    <body>
+        <!-- Inline splash — zero JS required, instant first paint -->
+        <div id='splash'>
+            <div class='splash-logo'>
+                <img src='/assets/generated/erpverse-logo.dim_256x256.png' alt='ERPVerse' />
+            </div>
+            <div style='display:flex;flex-direction:column;align-items:center;gap:4px'>
+                <div class='splash-title'>ERPVerse</div>
+                <div class='splash-subtitle'>Unified Business Platform</div>
+            </div>
+            <div class='splash-bar-track'><div class='splash-bar'></div></div>
+            <div class='splash-dots'>
+                <div class='splash-dot'></div>
+                <div class='splash-dot'></div>
+                <div class='splash-dot'></div>
+            </div>
+        </div>
+
+        <div id='root'></div>
+        <script>
+            // Hide splash as soon as React mounts its first paint
+            window.__hideSplash = function() {
+                var s = document.getElementById('splash');
+                if (s) { s.classList.add('hidden'); setTimeout(function(){ s.remove(); }, 450); }
+            };
+        </script>
+        <script type='module' src='/src/main.tsx'></script>
+    </body>
+</html>
