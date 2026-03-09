@@ -43,6 +43,7 @@ import type React from "react";
 import { useState } from "react";
 import { toast } from "sonner";
 import type { CommunicationLog, Customer, SalesOpportunity } from "../backend";
+import { useLanguage } from "../contexts/LanguageContext";
 import {
   useAddCommunicationLog,
   useAddCustomer,
@@ -128,6 +129,7 @@ const BTN_PRIMARY_STYLE: React.CSSProperties = {
 
 export default function CRMModulePage({ companyId }: CRMModulePageProps) {
   const { data: crmData, isLoading } = useGetCRMData(companyId);
+  const { t } = useLanguage();
   const customers = crmData?.customers ?? [];
   const opportunities = crmData?.opportunities ?? [];
   const logs = crmData?.logs ?? [];
@@ -336,10 +338,10 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
           }}
         >
           <TabsTrigger value="customers" data-ocid="crm.customers.tab">
-            Müşteriler
+            {t("erp.crm.customers")}
           </TabsTrigger>
           <TabsTrigger value="pipeline" data-ocid="crm.pipeline.tab">
-            Pipeline
+            {t("erp.crm.pipeline")}
           </TabsTrigger>
         </TabsList>
 
@@ -365,7 +367,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                     color: "oklch(0.12 0.012 270)",
                   }}
                 >
-                  Müşteriler
+                  {t("erp.crm.customers")}
                 </h2>
                 <Button
                   size="sm"
@@ -514,7 +516,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                             className="w-4 h-4"
                             style={{ color: "oklch(0.45 0.22 280)" }}
                           />
-                          Satış Fırsatları
+                          {t("erp.crm.opportunities")}
                         </h2>
                         <p
                           className="text-xs mt-0.5"
@@ -542,7 +544,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                         }}
                       >
                         <Plus className="w-4 h-4 mr-1" />
-                        Fırsat Ekle
+                        {t("erp.crm.addOpportunity")}
                       </Button>
                     </div>
                     {customerOpportunities.length > 0 ? (

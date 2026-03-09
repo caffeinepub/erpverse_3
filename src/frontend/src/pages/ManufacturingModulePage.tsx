@@ -42,6 +42,7 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import type { BOMItem, WorkOrder } from "../backend";
+import { useLanguage } from "../contexts/LanguageContext";
 import {
   useAddBOMItem,
   useAddWorkOrder,
@@ -73,7 +74,7 @@ const STATUS_CONFIG: Record<
   }
 > = {
   planned: {
-    label: "Planlandı",
+    label: "planned",
     bg: "oklch(0.93 0.04 280)",
     color: "oklch(0.35 0.18 280)",
     border: "oklch(0.82 0.1 280)",
@@ -87,7 +88,7 @@ const STATUS_CONFIG: Record<
     icon: Loader2,
   },
   completed: {
-    label: "Tamamlandı",
+    label: "completed",
     bg: "oklch(0.92 0.06 145)",
     color: "oklch(0.38 0.15 145)",
     border: "oklch(0.82 0.1 145)",
@@ -103,6 +104,7 @@ const STATUS_CONFIG: Record<
 };
 
 function StatusBadge({ status }: { status: string }) {
+  const { t } = useLanguage();
   const cfg = STATUS_CONFIG[status as WorkOrderStatus] ?? {
     label: status,
     bg: "oklch(0.93 0.01 270)",
@@ -121,7 +123,7 @@ function StatusBadge({ status }: { status: string }) {
       }}
     >
       <Icon className="h-3 w-3" />
-      {cfg.label}
+      {t(`erp.manufacturing.${cfg.label}`)}
     </span>
   );
 }
@@ -545,6 +547,7 @@ export default function ManufacturingModulePage({
   companyId,
 }: ManufacturingModulePageProps) {
   const { data: mfgData, isLoading } = useGetManufacturingData(companyId);
+  const { t } = useLanguage();
   const addWorkOrder = useAddWorkOrder();
   const updateWorkOrder = useUpdateWorkOrder();
   const removeWorkOrder = useRemoveWorkOrder();
@@ -694,13 +697,13 @@ export default function ManufacturingModulePage({
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
           {
-            label: "Toplam İş Emri",
+            label: t("erp.manufacturing.totalOrders"),
             value: stats.total,
             bg: "oklch(0.94 0.04 25)",
             color: "oklch(0.5 0.18 25)",
           },
           {
-            label: "Planlandı",
+            label: "planned",
             value: stats.planned,
             bg: "oklch(0.93 0.04 280)",
             color: "oklch(0.35 0.18 280)",
@@ -712,7 +715,7 @@ export default function ManufacturingModulePage({
             color: "oklch(0.42 0.14 75)",
           },
           {
-            label: "Tamamlandı",
+            label: "completed",
             value: stats.completed,
             bg: "oklch(0.92 0.06 145)",
             color: "oklch(0.38 0.15 145)",
@@ -760,7 +763,7 @@ export default function ManufacturingModulePage({
             data-ocid="manufacturing.workorders.tab"
             style={{ color: "oklch(0.35 0.01 270)" }}
           >
-            İş Emirleri ({workOrders.length})
+            {t("erp.manufacturing.workOrders")} ({workOrders.length})
           </TabsTrigger>
           <TabsTrigger
             value="bom"

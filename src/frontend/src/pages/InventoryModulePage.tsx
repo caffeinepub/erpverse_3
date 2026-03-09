@@ -40,6 +40,7 @@ import type React from "react";
 import { useState } from "react";
 import { toast } from "sonner";
 import type { Product, StockMovement } from "../backend";
+import { useLanguage } from "../contexts/LanguageContext";
 import {
   useAddProduct,
   useAddStockMovement,
@@ -117,7 +118,7 @@ const STOCK_LEVEL_CONFIG = {
     rowBgHover: "oklch(0.97 0.015 65)",
   },
   normal: {
-    label: "Normal",
+    label: "normal",
     bg: "oklch(0.92 0.06 145)",
     color: "oklch(0.38 0.15 145)",
     border: "oklch(0.8 0.1 145)",
@@ -130,6 +131,7 @@ export default function InventoryModulePage({
   companyId,
 }: InventoryModulePageProps) {
   const { data: inventoryData, isLoading } = useGetInventoryData(companyId);
+  const { t } = useLanguage();
   const products = inventoryData?.products ?? [];
   const movements = inventoryData?.movements ?? [];
 
@@ -336,7 +338,7 @@ export default function InventoryModulePage({
               accent: "oklch(0.45 0.22 280)",
             },
             {
-              label: "Düşük Stok",
+              label: t("erp.inventory.lowStock"),
               value: lowStockCount,
               accent: "oklch(0.45 0.18 25)",
             },
@@ -583,7 +585,7 @@ export default function InventoryModulePage({
                               border: `1px solid ${levelCfg.border}`,
                             }}
                           >
-                            {levelCfg.label}
+                            {t(`erp.inventory.${levelCfg.label}Stock`)}
                           </span>
                         </TableCell>
                         <TableCell className="text-right">

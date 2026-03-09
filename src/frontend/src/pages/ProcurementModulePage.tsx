@@ -39,6 +39,7 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import type { PurchaseOrder, Supplier } from "../backend";
+import { useLanguage } from "../contexts/LanguageContext";
 import {
   useAddPurchaseOrder,
   useAddSupplier,
@@ -76,13 +77,13 @@ const STATUS_CONFIG: Record<
     border: "oklch(0.85 0.1 75)",
   },
   approved: {
-    label: "Onaylandı",
+    label: "approved",
     bg: "oklch(0.93 0.04 280)",
     color: "oklch(0.35 0.18 280)",
     border: "oklch(0.82 0.1 280)",
   },
   delivered: {
-    label: "Teslim Edildi",
+    label: "delivered",
     bg: "oklch(0.92 0.06 145)",
     color: "oklch(0.38 0.15 145)",
     border: "oklch(0.82 0.1 145)",
@@ -96,6 +97,7 @@ const STATUS_CONFIG: Record<
 };
 
 function StatusBadge({ status }: { status: string }) {
+  const { t } = useLanguage();
   const cfg = STATUS_CONFIG[status as OrderStatus] ?? {
     label: status,
     bg: "oklch(0.93 0.01 270)",
@@ -111,7 +113,7 @@ function StatusBadge({ status }: { status: string }) {
         border: `1px solid ${cfg.border}`,
       }}
     >
-      {cfg.label}
+      {t(`erp.procurement.${cfg.label}`)}
     </span>
   );
 }
@@ -570,6 +572,7 @@ export default function ProcurementModulePage({
   companyId,
 }: ProcurementModulePageProps) {
   const { data: procData, isLoading } = useGetProcurementData(companyId);
+  const { t } = useLanguage();
   const addSupplier = useAddSupplier();
   const updateSupplier = useUpdateSupplier();
   const removeSupplier = useRemoveSupplier();
@@ -729,7 +732,7 @@ export default function ProcurementModulePage({
             color: "oklch(0.45 0.18 190)",
           },
           {
-            label: "Bekleyen",
+            label: t("erp.procurement.pending"),
             value: stats.pending,
             icon: Loader2,
             bg: "oklch(0.94 0.06 75)",
@@ -743,7 +746,7 @@ export default function ProcurementModulePage({
             color: "oklch(0.35 0.18 280)",
           },
           {
-            label: "Teslim Edildi",
+            label: "delivered",
             value: stats.delivered,
             icon: Truck,
             bg: "oklch(0.92 0.06 145)",
@@ -798,14 +801,14 @@ export default function ProcurementModulePage({
             data-ocid="procurement.orders.tab"
             style={{ color: "oklch(0.35 0.01 270)" }}
           >
-            Siparişler ({orders.length})
+            {t("erp.procurement.orders")} ({orders.length})
           </TabsTrigger>
           <TabsTrigger
             value="suppliers"
             data-ocid="procurement.suppliers.tab"
             style={{ color: "oklch(0.35 0.01 270)" }}
           >
-            Tedarikçiler ({suppliers.length})
+            {t("erp.procurement.suppliers")} ({suppliers.length})
           </TabsTrigger>
         </TabsList>
 

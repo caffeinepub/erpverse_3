@@ -33,6 +33,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import type { Project, ProjectTask } from "../backend";
 import StaffNameDisplay from "../components/StaffNameDisplay";
+import { useLanguage } from "../contexts/LanguageContext";
 import {
   useCreateProject,
   useCreateProjectTask,
@@ -150,6 +151,7 @@ export default function ProjectManagementModulePage({
   companyId,
 }: ProjectManagementModulePageProps) {
   const { data: projectData, isLoading } = useGetProjectData(companyId);
+  const { t } = useLanguage();
   const projects = projectData?.projects ?? [];
   const tasks = projectData?.tasks ?? [];
 
@@ -287,7 +289,7 @@ export default function ProjectManagementModulePage({
                 color: "oklch(0.12 0.012 270)",
               }}
             >
-              Projeler
+              {t("erp.projects.projects")}
             </h2>
             <Button
               size="sm"
@@ -505,7 +507,7 @@ export default function ProjectManagementModulePage({
                       className="w-4 h-4"
                       style={{ color: "oklch(0.45 0.22 280)" }}
                     />
-                    Görevler ({projectTasks.length})
+                    {t("erp.projects.tasks")} ({projectTasks.length})
                   </h3>
                   <div className="flex items-center gap-2">
                     <Button
@@ -533,7 +535,7 @@ export default function ProjectManagementModulePage({
                       }}
                     >
                       <Plus className="w-4 h-4 mr-1" />
-                      Görev Ekle
+                      {t("erp.projects.addTask")}
                     </Button>
                   </div>
                 </div>
@@ -718,7 +720,7 @@ export default function ProjectManagementModulePage({
         >
           <DialogHeader>
             <DialogTitle style={{ color: "oklch(0.12 0.012 270)" }}>
-              Yeni Proje Oluştur
+              {t("erp.projects.addProject")}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">
@@ -808,7 +810,7 @@ export default function ProjectManagementModulePage({
         >
           <DialogHeader>
             <DialogTitle style={{ color: "oklch(0.12 0.012 270)" }}>
-              Yeni Görev Ekle
+              {t("erp.projects.addTask")}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">

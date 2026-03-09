@@ -35,13 +35,14 @@ function BarChart({
   color: string;
   label: string;
 }) {
+  const { t } = useLanguage();
   if (maxValue === 0) {
     return (
       <div
         className="flex items-center justify-center h-24 text-sm"
         style={{ color: "oklch(0.6 0.01 270)" }}
       >
-        Gösterilecek veri yok
+        {t("erp.reporting.noData")}
       </div>
     );
   }
@@ -156,11 +157,13 @@ function StatCard({
 
 // ─── React import ─────────────────────────────────────────────────────────────
 import type React from "react";
+import { useLanguage } from "../contexts/LanguageContext";
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function ReportingModulePage({
   companyId,
 }: ReportingModulePageProps) {
+  const { t } = useLanguage();
   const { data: summary, isLoading: summaryLoading } =
     useGetDashboardSummary(companyId);
   const { data: financial, isLoading: financialLoading } =
@@ -340,21 +343,21 @@ export default function ReportingModulePage({
               <div className="grid grid-cols-3 gap-3 mb-4">
                 {[
                   {
-                    label: "Toplam Gelir",
+                    label: t("erp.reporting.totalIncome"),
                     value: totalIncome,
                     color: "oklch(0.38 0.15 145)",
                     icon: TrendingUp,
                     bg: "oklch(0.92 0.06 145)",
                   },
                   {
-                    label: "Toplam Gider",
+                    label: t("erp.reporting.totalExpense"),
                     value: totalExpenses,
                     color: "oklch(0.45 0.18 25)",
                     icon: TrendingDown,
                     bg: "oklch(0.94 0.04 25)",
                   },
                   {
-                    label: "Net Bakiye",
+                    label: t("erp.reporting.netBalance"),
                     value: netBalance,
                     color:
                       netBalance >= 0

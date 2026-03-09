@@ -41,6 +41,7 @@ import type React from "react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import type { Invoice, Transaction } from "../backend";
+import { useLanguage } from "../contexts/LanguageContext";
 import {
   useAddInvoice,
   useAddTransaction,
@@ -71,6 +72,7 @@ const EXPENSE_CATEGORIES = [
 ];
 
 function InvoiceStatusBadge({ status }: { status: string }) {
+  const { t } = useLanguage();
   const styles: Record<string, React.CSSProperties> = {
     draft: {
       backgroundColor: "oklch(0.94 0.005 270)",
@@ -91,7 +93,7 @@ function InvoiceStatusBadge({ status }: { status: string }) {
   const labels: Record<string, string> = {
     draft: "Taslak",
     sent: "Gönderildi",
-    paid: "Ödendi",
+    paid: t("erp.accounting.paid"),
   };
   const style = styles[status] ?? styles.draft;
   return (
@@ -108,6 +110,7 @@ export default function AccountingModulePage({
   companyId,
 }: AccountingModulePageProps) {
   const { data: accountingData, isLoading } = useGetAccountingData(companyId);
+  const { t } = useLanguage();
   const { data: financialSummary } = useGetFinancialSummary(companyId);
   const transactions = accountingData?.transactions ?? [];
   const invoices = accountingData?.invoices ?? [];
@@ -763,7 +766,9 @@ export default function AccountingModulePage({
                           <SelectContent>
                             <SelectItem value="draft">Taslak</SelectItem>
                             <SelectItem value="sent">Gönderildi</SelectItem>
-                            <SelectItem value="paid">Ödendi</SelectItem>
+                            <SelectItem value="paid">
+                              {t("erp.accounting.paid")}
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </TableCell>
@@ -812,8 +817,12 @@ export default function AccountingModulePage({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="income">Gelir</SelectItem>
-                  <SelectItem value="expense">Gider</SelectItem>
+                  <SelectItem value="income">
+                    {t("erp.accounting.income")}
+                  </SelectItem>
+                  <SelectItem value="expense">
+                    {t("erp.accounting.expense")}
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>

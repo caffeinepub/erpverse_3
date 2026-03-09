@@ -39,6 +39,7 @@ import {
 import React, { useState } from "react";
 import { toast } from "sonner";
 import type { EmployeeRecord, LeaveRequest, SalaryInfo } from "../backend";
+import { useLanguage } from "../contexts/LanguageContext";
 import {
   useAddEmployee,
   useAddLeaveRequest,
@@ -134,6 +135,7 @@ export default function HRModulePage({
   isOwnerOrManager,
 }: HRModulePageProps) {
   const { data: hrData, isLoading } = useGetHRData(companyId);
+  const { t } = useLanguage();
   const employees = hrData?.employees ?? [];
   const leaveRequests = hrData?.leaveRequests ?? [];
   const salaries = hrData?.salaries ?? [];
@@ -199,7 +201,7 @@ export default function HRModulePage({
             ...empForm,
           },
         });
-        toast.success("Personel güncellendi");
+        toast.success(t("erp.hr.employeeUpdated"));
       } else {
         await addEmployee.mutateAsync({
           companyId,
@@ -212,7 +214,7 @@ export default function HRModulePage({
             hireDate: empForm.hireDate,
           },
         });
-        toast.success("Personel eklendi");
+        toast.success(t("erp.hr.employeeAdded"));
       }
       setShowEmployeeDialog(false);
     } catch {
@@ -223,7 +225,7 @@ export default function HRModulePage({
   const handleRemoveEmployee = async (employeeId: string) => {
     try {
       await removeEmployee.mutateAsync({ companyId, employeeId });
-      toast.success("Personel silindi");
+      toast.success(t("erp.hr.employeeDeleted"));
     } catch {
       toast.error("Silme başarısız");
     }
@@ -267,7 +269,7 @@ export default function HRModulePage({
           status: "pending",
         },
       });
-      toast.success("İzin talebi oluşturuldu");
+      toast.success(t("erp.hr.leaveCreated"));
       setShowLeaveDialog(false);
     } catch {
       toast.error("İşlem başarısız");
@@ -287,7 +289,7 @@ export default function HRModulePage({
           currency: salaryForm.currency,
         },
       });
-      toast.success("Maaş bilgisi kaydedildi");
+      toast.success(t("erp.hr.salaryAdded"));
       setShowSalaryDialog(false);
     } catch {
       toast.error("İşlem başarısız");
@@ -946,7 +948,9 @@ export default function HRModulePage({
         >
           <DialogHeader>
             <DialogTitle style={{ color: "oklch(0.12 0.012 270)" }}>
-              {editingEmployee ? "Personel Düzenle" : "Yeni Personel Ekle"}
+              {editingEmployee
+                ? t("erp.hr.editEmployee")
+                : t("erp.hr.newEmployee")}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">

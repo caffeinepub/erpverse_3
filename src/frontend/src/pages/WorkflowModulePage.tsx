@@ -37,6 +37,7 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import type { WorkflowTask } from "../backend";
+import { useLanguage } from "../contexts/LanguageContext";
 import {
   useAddWorkflowTask,
   useGetWorkflowData,
@@ -55,78 +56,11 @@ function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 }
 
-const PRIORITY_CONFIG: Record<
-  TaskPriority,
-  {
-    label: string;
-    bg: string;
-    color: string;
-    border: string;
-    icon: React.ElementType;
-  }
-> = {
-  low: {
-    label: "Düşük",
-    bg: "oklch(0.95 0.01 270)",
-    color: "oklch(0.5 0.01 270)",
-    border: "oklch(0.86 0.008 270)",
-    icon: Tag,
-  },
-  medium: {
-    label: "Orta",
-    bg: "oklch(0.94 0.06 75)",
-    color: "oklch(0.42 0.14 75)",
-    border: "oklch(0.85 0.1 75)",
-    icon: AlertCircle,
-  },
-  high: {
-    label: "Yüksek",
-    bg: "oklch(0.93 0.04 280)",
-    color: "oklch(0.35 0.18 280)",
-    border: "oklch(0.82 0.1 280)",
-    icon: Flame,
-  },
-  urgent: {
-    label: "Acil",
-    bg: "oklch(0.94 0.04 25)",
-    color: "oklch(0.45 0.18 25)",
-    border: "oklch(0.85 0.1 25)",
-    icon: Flame,
-  },
-};
-
-const COLUMNS: { id: TaskStatus; label: string; color: string; bg: string }[] =
-  [
-    {
-      id: "backlog",
-      label: "Backlog",
-      color: "oklch(0.5 0.01 270)",
-      bg: "oklch(0.95 0.005 270)",
-    },
-    {
-      id: "todo",
-      label: "Yapılacak",
-      color: "oklch(0.42 0.14 75)",
-      bg: "oklch(0.97 0.03 75)",
-    },
-    {
-      id: "in_progress",
-      label: "Devam Ediyor",
-      color: "oklch(0.35 0.18 280)",
-      bg: "oklch(0.97 0.02 280)",
-    },
-    {
-      id: "done",
-      label: "Tamamlandı",
-      color: "oklch(0.38 0.15 145)",
-      bg: "oklch(0.97 0.03 145)",
-    },
-  ];
-
 const OTHER_STATUSES = (current: TaskStatus) =>
   COLUMNS.filter((c) => c.id !== current);
 
 function PriorityBadge({ priority }: { priority: string }) {
+  const { t } = useLanguage();
   const cfg =
     PRIORITY_CONFIG[priority as TaskPriority] ?? PRIORITY_CONFIG.medium;
   const Icon = cfg.icon;
@@ -140,7 +74,7 @@ function PriorityBadge({ priority }: { priority: string }) {
       }}
     >
       <Icon className="h-2.5 w-2.5" />
-      {cfg.label}
+      {t(`erp.workflow.${cfg.label}`)}
     </span>
   );
 }
@@ -450,6 +384,7 @@ function TaskCard({
   onDelete: (id: string) => void;
   onMove: (id: string, status: TaskStatus) => void;
 }) {
+  const { t } = useLanguage();
   const others = OTHER_STATUSES(task.status as TaskStatus);
   const isOverdue =
     task.dueDate &&
@@ -567,7 +502,7 @@ function TaskCard({
               onClick={() => onMove(task.id, col.id)}
               style={{ color: col.color }}
             >
-              → {col.label}
+              → {t(`erp.workflow.${col.label}`)}
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>
@@ -577,10 +512,80 @@ function TaskCard({
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
+const PRIORITY_CONFIG: Record<
+  TaskPriority,
+  {
+    label: string;
+    bg: string;
+    color: string;
+    border: string;
+    icon: React.ElementType;
+  }
+> = {
+  low: {
+    label: "low",
+    bg: "oklch(0.95 0.01 270)",
+    color: "oklch(0.5 0.01 270)",
+    border: "oklch(0.86 0.008 270)",
+    icon: Tag,
+  },
+  medium: {
+    label: "medium",
+    bg: "oklch(0.94 0.06 75)",
+    color: "oklch(0.42 0.14 75)",
+    border: "oklch(0.85 0.1 75)",
+    icon: AlertCircle,
+  },
+  high: {
+    label: "high",
+    bg: "oklch(0.93 0.04 280)",
+    color: "oklch(0.35 0.18 280)",
+    border: "oklch(0.82 0.1 280)",
+    icon: Flame,
+  },
+  urgent: {
+    label: "urgent",
+    bg: "oklch(0.94 0.04 25)",
+    color: "oklch(0.45 0.18 25)",
+    border: "oklch(0.85 0.1 25)",
+    icon: Flame,
+  },
+};
+
+const COLUMNS: { id: TaskStatus; label: string; color: string; bg: string }[] =
+  [
+    {
+      id: "backlog",
+      label: "backlog",
+      color: "oklch(0.5 0.01 270)",
+      bg: "oklch(0.95 0.005 270)",
+    },
+    {
+      id: "todo",
+      label: "todo",
+      color: "oklch(0.42 0.14 75)",
+      bg: "oklch(0.97 0.03 75)",
+    },
+    {
+      id: "in_progress",
+      label: "inProgress",
+      color: "oklch(0.35 0.18 280)",
+      bg: "oklch(0.97 0.02 280)",
+    },
+    {
+      id: "done",
+      label: "completed",
+      color: "oklch(0.38 0.15 145)",
+      bg: "oklch(0.97 0.03 145)",
+    },
+  ];
+
 export default function WorkflowModulePage({
   companyId,
 }: WorkflowModulePageProps) {
   const { data: workflowData, isLoading } = useGetWorkflowData(companyId);
+  const { t } = useLanguage();
+
   const addTask = useAddWorkflowTask();
   const updateTask = useUpdateWorkflowTask();
   const removeTask = useRemoveWorkflowTask();
@@ -717,7 +722,7 @@ export default function WorkflowModulePage({
                     className="text-sm font-bold"
                     style={{ color: col.color }}
                   >
-                    {col.label}
+                    {t(`erp.workflow.${col.label}`)}
                   </span>
                   <span
                     className="text-xs font-mono px-1.5 py-0.5 rounded-full font-bold"
@@ -747,7 +752,7 @@ export default function WorkflowModulePage({
                   }
                   className="p-1 rounded hover:bg-white/50 transition-colors"
                   style={{ color: col.color }}
-                  title={`${col.label}'a ekle`}
+                  title={`${t(`erp.workflow.${col.label}`)}'a ekle`}
                 >
                   <Plus className="h-3.5 w-3.5" />
                 </button>
