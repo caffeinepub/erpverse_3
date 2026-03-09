@@ -36,7 +36,8 @@ type AppView =
   | "company-setup"
   | "company-dashboard"
   | "staff-registration"
-  | "staff-dashboard";
+  | "staff-dashboard"
+  | "staff-module-view";
 
 // Declare the global helper injected by index.html
 declare global {
@@ -70,6 +71,9 @@ function AppInner() {
   );
   const [view, setView] = useState<AppView>("landing");
   const [companyId, setCompanyId] = useState<string | null>(null);
+  const [staffModuleGrantedModules, setStaffModuleGrantedModules] = useState<
+    string[]
+  >([]);
 
   const {
     data: userProfile,
@@ -185,6 +189,13 @@ function AppInner() {
     setView("company-dashboard");
   };
 
+  // Handler for staff members with limited module access
+  const handleEnterStaffModules = (cid: string, modules: string[]) => {
+    setCompanyId(cid);
+    setStaffModuleGrantedModules(modules);
+    setView("staff-module-view");
+  };
+
   // Show a full-screen loader while initializing or routing
   // Don't show loader if in error state — let the user see the landing page to retry
   const isRouting =
@@ -290,8 +301,26 @@ function AppInner() {
     );
   }
 
+  if (view === "staff-module-view" && companyId) {
+    // Staff member accessing specific modules — render CompanyOwnerDashboard
+    // with staff role code (4) so sidebar filters to only grantedModules
+    return (
+      <CompanyOwnerDashboard
+        companyId={companyId}
+        userName={userProfile?.name}
+        userRoleCode={BigInt(4)}
+        grantedModules={staffModuleGrantedModules}
+      />
+    );
+  }
+
   if (view === "staff-dashboard") {
-    return <StaffDashboard onEnterCompany={handleEnterCompany} />;
+    return (
+      <StaffDashboard
+        onEnterCompany={handleEnterCompany}
+        onEnterStaffModules={handleEnterStaffModules}
+      />
+    );
   }
 
   // Fallback

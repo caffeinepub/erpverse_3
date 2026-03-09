@@ -7,10 +7,108 @@ export interface None {
     __kind__: "None";
 }
 export type Option<T> = Some<T> | None;
-export interface InvoiceLineItem {
+export interface UserProfile {
+    roleCode: bigint;
+    employeeCode: string;
+    name: string;
+    projectManager: string;
+    memberships: Array<CompanyMembership>;
+    companyId: string;
+}
+export interface CommunicationLog {
+    id: string;
+    date: string;
+    note: string;
+    logType: string;
+    customerId: string;
+    companyId: CompanyId;
+}
+export interface Role {
+    permissions: Array<string>;
+    name: string;
+    parentRole?: string;
+}
+export interface Transaction {
+    id: string;
+    transactionType: string;
+    date: string;
     description: string;
+    category: string;
+    amount: bigint;
+    companyId: CompanyId;
+}
+export interface PhoneNumber {
+    countryCode: string;
+    number: string;
+}
+export type EmployeeCode = string;
+export interface LeaveRequest {
+    id: string;
+    status: string;
+    endDate: string;
+    employeeId: string;
+    leaveType: string;
+    startDate: string;
+    companyId: CompanyId;
+}
+export interface BOMItem {
+    id: string;
+    unit: string;
+    workOrderId: string;
     quantity: bigint;
-    unitPrice: bigint;
+    materialName: string;
+    companyId: CompanyId;
+}
+export interface Staff {
+    roleCode: bigint;
+    principal: Principal;
+    employeeCode: EmployeeCode;
+    grantedModules: Array<string>;
+    name: string;
+    projectManager: string;
+    memberships: Array<CompanyMembership>;
+    companyId: CompanyId;
+}
+export interface EmployeeRecord {
+    id: string;
+    title: string;
+    principal?: Principal;
+    hireDate: string;
+    name: string;
+    department: string;
+    companyId: CompanyId;
+}
+export interface SalesOpportunity {
+    id: string;
+    closeDate: string;
+    stage: string;
+    estimatedValue: bigint;
+    customerId: string;
+    companyId: CompanyId;
+}
+export interface CompanyMembership {
+    roleCode: bigint;
+    grantedModules: Array<string>;
+    companyId: string;
+}
+export interface PurchaseOrder {
+    id: string;
+    status: string;
+    orderDate: string;
+    totalAmount: bigint;
+    expectedDelivery: string;
+    items: string;
+    supplierId: string;
+    companyId: CompanyId;
+}
+export interface StockMovement {
+    id: string;
+    date: string;
+    productId: string;
+    movementType: string;
+    quantity: bigint;
+    reason: string;
+    companyId: CompanyId;
 }
 export interface FinancialSummary {
     invoiceCount: bigint;
@@ -30,12 +128,25 @@ export interface CompanyProfile {
     authorizedPerson: string;
     phone: PhoneNumber;
 }
-export interface CommunicationLog {
+export interface WorkflowTask {
     id: string;
-    date: string;
-    note: string;
-    logType: string;
-    customerId: string;
+    status: string;
+    assignee?: Principal;
+    title: string;
+    tags: Array<string>;
+    dueDate: string;
+    description: string;
+    priority: string;
+    companyId: CompanyId;
+}
+export interface WorkOrder {
+    id: string;
+    status: string;
+    endDate: string;
+    productName: string;
+    notes: string;
+    quantity: bigint;
+    startDate: string;
     companyId: CompanyId;
 }
 export interface ProjectTask {
@@ -71,74 +182,6 @@ export interface Customer {
     name: string;
     companyId: CompanyId;
 }
-export interface Role {
-    permissions: Array<string>;
-    name: string;
-    parentRole?: string;
-}
-export interface PhoneNumber {
-    countryCode: string;
-    number: string;
-}
-export interface Transaction {
-    id: string;
-    transactionType: string;
-    date: string;
-    description: string;
-    category: string;
-    amount: bigint;
-    companyId: CompanyId;
-}
-export type EmployeeCode = string;
-export interface LeaveRequest {
-    id: string;
-    status: string;
-    endDate: string;
-    employeeId: string;
-    leaveType: string;
-    startDate: string;
-    companyId: CompanyId;
-}
-export interface SalaryInfo {
-    id: string;
-    employeeId: string;
-    currency: string;
-    baseSalary: bigint;
-    companyId: CompanyId;
-}
-export type CompanyId = string;
-export interface Staff {
-    roleCode: bigint;
-    principal: Principal;
-    employeeCode: EmployeeCode;
-    grantedModules: Array<string>;
-    name: string;
-    projectManager: string;
-    memberships: Array<CompanyMembership>;
-    companyId: CompanyId;
-}
-export interface EmployeeRecord {
-    id: string;
-    title: string;
-    principal?: Principal;
-    hireDate: string;
-    name: string;
-    department: string;
-    companyId: CompanyId;
-}
-export interface SalesOpportunity {
-    id: string;
-    closeDate: string;
-    stage: string;
-    estimatedValue: bigint;
-    customerId: string;
-    companyId: CompanyId;
-}
-export interface CompanyMembership {
-    roleCode: bigint;
-    grantedModules: Array<string>;
-    companyId: string;
-}
 export interface Company {
     id: CompanyId;
     employeeCount: bigint;
@@ -153,6 +196,22 @@ export interface Company {
     authorizedPerson: string;
     phone: PhoneNumber;
 }
+export type CompanyId = string;
+export interface SalaryInfo {
+    id: string;
+    employeeId: string;
+    currency: string;
+    baseSalary: bigint;
+    companyId: CompanyId;
+}
+export interface Supplier {
+    id: string;
+    contactInfo: string;
+    name: string;
+    category: string;
+    rating: bigint;
+    companyId: CompanyId;
+}
 export interface Project {
     id: string;
     status: string;
@@ -160,15 +219,6 @@ export interface Project {
     description: string;
     deadline: string;
     teamMembers: Array<Principal>;
-    companyId: CompanyId;
-}
-export interface StockMovement {
-    id: string;
-    date: string;
-    productId: string;
-    movementType: string;
-    quantity: bigint;
-    reason: string;
     companyId: CompanyId;
 }
 export interface Product {
@@ -180,13 +230,10 @@ export interface Product {
     unitPrice: bigint;
     companyId: CompanyId;
 }
-export interface UserProfile {
-    roleCode: bigint;
-    employeeCode: string;
-    name: string;
-    projectManager: string;
-    memberships: Array<CompanyMembership>;
-    companyId: string;
+export interface InvoiceLineItem {
+    description: string;
+    quantity: bigint;
+    unitPrice: bigint;
 }
 export enum RoleAssignmentResult {
     alreadyAssigned = "alreadyAssigned",
@@ -201,6 +248,7 @@ export enum UserRole {
     guest = "guest"
 }
 export interface backendInterface {
+    addBOMItem(companyId: CompanyId, bomItem: BOMItem): Promise<BOMItem>;
     addCommunicationLog(companyId: CompanyId, log: CommunicationLog): Promise<CommunicationLog>;
     addCustomRole(companyId: string, role: Role): Promise<void>;
     /**
@@ -223,16 +271,35 @@ export interface backendInterface {
      * / ==========================
      */
     addProduct(companyId: CompanyId, product: Product): Promise<Product>;
+    addPurchaseOrder(companyId: CompanyId, order: PurchaseOrder): Promise<PurchaseOrder>;
     addSalaryInfo(companyId: CompanyId, salary: SalaryInfo): Promise<SalaryInfo>;
     addSalesOpportunity(companyId: CompanyId, opportunity: SalesOpportunity): Promise<SalesOpportunity>;
     addStaffToCompany(companyId: CompanyId, employeeCode: EmployeeCode, roleName: string): Promise<RoleAssignmentResult>;
     addStockMovement(companyId: CompanyId, movement: StockMovement): Promise<StockMovement>;
     /**
      * / ==========================
+     * / Procurement Module
+     * / ==========================
+     */
+    addSupplier(companyId: CompanyId, supplier: Supplier): Promise<Supplier>;
+    /**
+     * / ==========================
      * / Accounting Module
      * / ==========================
      */
     addTransaction(companyId: CompanyId, tx: Transaction): Promise<Transaction>;
+    /**
+     * / ==========================
+     * / Manufacturing Module
+     * / ==========================
+     */
+    addWorkOrder(companyId: CompanyId, workOrder: WorkOrder): Promise<WorkOrder>;
+    /**
+     * / ==========================
+     * / Workflow Module
+     * / ==========================
+     */
+    addWorkflowTask(companyId: CompanyId, task: WorkflowTask): Promise<WorkflowTask>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     createCompany(profile: CompanyProfile): Promise<Company>;
     /**
@@ -274,7 +341,15 @@ export interface backendInterface {
         movements: Array<StockMovement>;
         products: Array<Product>;
     }>;
+    getManufacturingData(companyId: CompanyId): Promise<{
+        workOrders: Array<WorkOrder>;
+        bomItems: Array<BOMItem>;
+    }>;
     getMyEmployeeCode(): Promise<string | null>;
+    getProcurementData(companyId: CompanyId): Promise<{
+        orders: Array<PurchaseOrder>;
+        suppliers: Array<Supplier>;
+    }>;
     getProjectData(companyId: CompanyId): Promise<{
         tasks: Array<ProjectTask>;
         projects: Array<Project>;
@@ -282,22 +357,31 @@ export interface backendInterface {
     getStaffForCompany(companyId: CompanyId): Promise<Array<Staff>>;
     getStaffName(principal: Principal): Promise<string | null>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
+    getWorkflowData(companyId: CompanyId): Promise<{
+        tasks: Array<WorkflowTask>;
+    }>;
     grantModuleAccess(companyId: CompanyId, staffPrincipal: Principal, moduleName: string): Promise<void>;
     isCallerAdmin(): Promise<boolean>;
     isEmployeeInCompany(companyId: string): Promise<boolean>;
     isRegisteredAsCompany(): Promise<string | null>;
     listDefaultRoles(): Promise<Array<Role>>;
     listRolesForCompany(companyId: string): Promise<Array<Role>>;
+    removeBOMItem(companyId: CompanyId, bomItemId: string): Promise<boolean>;
     removeCustomRole(companyId: string, roleName: string): Promise<void>;
     removeCustomer(companyId: CompanyId, customerId: string): Promise<boolean>;
     removeEmployee(companyId: CompanyId, employeeId: string): Promise<boolean>;
     removeProduct(companyId: CompanyId, productId: string): Promise<boolean>;
     removeProject(companyId: CompanyId, projectId: string): Promise<boolean>;
     removeProjectTask(companyId: CompanyId, taskId: string): Promise<boolean>;
+    removePurchaseOrder(companyId: CompanyId, orderId: string): Promise<boolean>;
     removeStaffFromCompany(companyId: CompanyId, staffPrincipal: Principal): Promise<boolean>;
+    removeSupplier(companyId: CompanyId, supplierId: string): Promise<boolean>;
     removeTransaction(companyId: CompanyId, txId: string): Promise<boolean>;
+    removeWorkOrder(companyId: CompanyId, workOrderId: string): Promise<boolean>;
+    removeWorkflowTask(companyId: CompanyId, taskId: string): Promise<boolean>;
     revokeModuleAccess(companyId: CompanyId, staffPrincipal: Principal, moduleName: string): Promise<void>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
+    updateBOMItem(companyId: CompanyId, updatedBOMItem: BOMItem): Promise<BOMItem>;
     updateCompany(id: CompanyId, profile: CompanyProfile): Promise<Company>;
     updateCustomer(companyId: CompanyId, updatedCustomer: Customer): Promise<Customer>;
     updateEmployee(companyId: CompanyId, updatedEmployee: EmployeeRecord): Promise<EmployeeRecord>;
@@ -306,7 +390,11 @@ export interface backendInterface {
     updateProduct(companyId: CompanyId, updatedProduct: Product): Promise<Product>;
     updateProject(companyId: CompanyId, updatedProject: Project): Promise<Project>;
     updateProjectTask(companyId: CompanyId, updatedTask: ProjectTask): Promise<ProjectTask>;
+    updatePurchaseOrder(companyId: CompanyId, updatedOrder: PurchaseOrder): Promise<PurchaseOrder>;
     updateSalesOpportunity(companyId: CompanyId, updatedOpportunity: SalesOpportunity): Promise<SalesOpportunity>;
     updateStaffRole(companyId: CompanyId, staffPrincipal: Principal, newRoleName: string): Promise<RoleAssignmentResult>;
+    updateSupplier(companyId: CompanyId, updatedSupplier: Supplier): Promise<Supplier>;
     updateTransaction(companyId: CompanyId, updatedTx: Transaction): Promise<Transaction>;
+    updateWorkOrder(companyId: CompanyId, updatedWorkOrder: WorkOrder): Promise<WorkOrder>;
+    updateWorkflowTask(companyId: CompanyId, updatedTask: WorkflowTask): Promise<WorkflowTask>;
 }

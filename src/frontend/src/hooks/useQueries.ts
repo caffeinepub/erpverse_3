@@ -1,6 +1,7 @@
 import type { Principal } from "@dfinity/principal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
+  BOMItem,
   CommunicationLog,
   Company,
   CompanyProfile,
@@ -13,14 +14,18 @@ import type {
   Product,
   Project,
   ProjectTask,
+  PurchaseOrder,
   Role,
   RoleAssignmentResult,
   SalaryInfo,
   SalesOpportunity,
   Staff,
   StockMovement,
+  Supplier,
   Transaction,
   UserProfile,
+  WorkOrder,
+  WorkflowTask,
 } from "../backend";
 import { useActor } from "./useActor";
 
@@ -1064,6 +1069,336 @@ export function useRemoveCustomRole() {
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({
         queryKey: ["rolesForCompany", variables.companyId],
+      });
+    },
+  });
+}
+
+// ===========================
+// Procurement Module Hooks
+// ===========================
+export function useGetProcurementData(companyId: string | null) {
+  const { actor, isFetching: actorFetching } = useActor();
+  return useQuery<{ suppliers: Supplier[]; orders: PurchaseOrder[] }>({
+    queryKey: ["procurementData", companyId],
+    queryFn: async () => {
+      if (!actor || !companyId) return { suppliers: [], orders: [] };
+      return actor.getProcurementData(companyId);
+    },
+    enabled: !!actor && !actorFetching && !!companyId,
+  });
+}
+
+export function useAddSupplier() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      supplier,
+    }: { companyId: string; supplier: Supplier }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.addSupplier(companyId, supplier);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["procurementData", variables.companyId],
+      });
+    },
+  });
+}
+
+export function useUpdateSupplier() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      supplier,
+    }: { companyId: string; supplier: Supplier }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.updateSupplier(companyId, supplier);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["procurementData", variables.companyId],
+      });
+    },
+  });
+}
+
+export function useRemoveSupplier() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      supplierId,
+    }: { companyId: string; supplierId: string }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.removeSupplier(companyId, supplierId);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["procurementData", variables.companyId],
+      });
+    },
+  });
+}
+
+export function useAddPurchaseOrder() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      order,
+    }: { companyId: string; order: PurchaseOrder }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.addPurchaseOrder(companyId, order);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["procurementData", variables.companyId],
+      });
+    },
+  });
+}
+
+export function useUpdatePurchaseOrder() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      order,
+    }: { companyId: string; order: PurchaseOrder }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.updatePurchaseOrder(companyId, order);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["procurementData", variables.companyId],
+      });
+    },
+  });
+}
+
+export function useRemovePurchaseOrder() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      orderId,
+    }: { companyId: string; orderId: string }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.removePurchaseOrder(companyId, orderId);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["procurementData", variables.companyId],
+      });
+    },
+  });
+}
+
+// ===========================
+// Manufacturing Module Hooks
+// ===========================
+export function useGetManufacturingData(companyId: string | null) {
+  const { actor, isFetching: actorFetching } = useActor();
+  return useQuery<{ workOrders: WorkOrder[]; bomItems: BOMItem[] }>({
+    queryKey: ["manufacturingData", companyId],
+    queryFn: async () => {
+      if (!actor || !companyId) return { workOrders: [], bomItems: [] };
+      return actor.getManufacturingData(companyId);
+    },
+    enabled: !!actor && !actorFetching && !!companyId,
+  });
+}
+
+export function useAddWorkOrder() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      workOrder,
+    }: { companyId: string; workOrder: WorkOrder }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.addWorkOrder(companyId, workOrder);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["manufacturingData", variables.companyId],
+      });
+    },
+  });
+}
+
+export function useUpdateWorkOrder() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      workOrder,
+    }: { companyId: string; workOrder: WorkOrder }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.updateWorkOrder(companyId, workOrder);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["manufacturingData", variables.companyId],
+      });
+    },
+  });
+}
+
+export function useRemoveWorkOrder() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      workOrderId,
+    }: { companyId: string; workOrderId: string }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.removeWorkOrder(companyId, workOrderId);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["manufacturingData", variables.companyId],
+      });
+    },
+  });
+}
+
+export function useAddBOMItem() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      bomItem,
+    }: { companyId: string; bomItem: BOMItem }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.addBOMItem(companyId, bomItem);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["manufacturingData", variables.companyId],
+      });
+    },
+  });
+}
+
+export function useUpdateBOMItem() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      bomItem,
+    }: { companyId: string; bomItem: BOMItem }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.updateBOMItem(companyId, bomItem);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["manufacturingData", variables.companyId],
+      });
+    },
+  });
+}
+
+export function useRemoveBOMItem() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      bomItemId,
+    }: { companyId: string; bomItemId: string }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.removeBOMItem(companyId, bomItemId);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["manufacturingData", variables.companyId],
+      });
+    },
+  });
+}
+
+// ===========================
+// Workflow Module Hooks
+// ===========================
+export function useGetWorkflowData(companyId: string | null) {
+  const { actor, isFetching: actorFetching } = useActor();
+  return useQuery<{ tasks: WorkflowTask[] }>({
+    queryKey: ["workflowData", companyId],
+    queryFn: async () => {
+      if (!actor || !companyId) return { tasks: [] };
+      return actor.getWorkflowData(companyId);
+    },
+    enabled: !!actor && !actorFetching && !!companyId,
+  });
+}
+
+export function useAddWorkflowTask() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      task,
+    }: { companyId: string; task: WorkflowTask }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.addWorkflowTask(companyId, task);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["workflowData", variables.companyId],
+      });
+    },
+  });
+}
+
+export function useUpdateWorkflowTask() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      task,
+    }: { companyId: string; task: WorkflowTask }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.updateWorkflowTask(companyId, task);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["workflowData", variables.companyId],
+      });
+    },
+  });
+}
+
+export function useRemoveWorkflowTask() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      companyId,
+      taskId,
+    }: { companyId: string; taskId: string }) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.removeWorkflowTask(companyId, taskId);
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["workflowData", variables.companyId],
       });
     },
   });

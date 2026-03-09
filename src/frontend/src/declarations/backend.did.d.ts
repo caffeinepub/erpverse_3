@@ -10,6 +10,14 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
+export interface BOMItem {
+  'id' : string,
+  'unit' : string,
+  'workOrderId' : string,
+  'quantity' : bigint,
+  'materialName' : string,
+  'companyId' : CompanyId,
+}
 export interface CommunicationLog {
   'id' : string,
   'date' : string,
@@ -132,6 +140,16 @@ export interface ProjectTask {
   'projectId' : string,
   'companyId' : CompanyId,
 }
+export interface PurchaseOrder {
+  'id' : string,
+  'status' : string,
+  'orderDate' : string,
+  'totalAmount' : bigint,
+  'expectedDelivery' : string,
+  'items' : string,
+  'supplierId' : string,
+  'companyId' : CompanyId,
+}
 export interface Role {
   'permissions' : Array<string>,
   'name' : string,
@@ -176,6 +194,14 @@ export interface StockMovement {
   'reason' : string,
   'companyId' : CompanyId,
 }
+export interface Supplier {
+  'id' : string,
+  'contactInfo' : string,
+  'name' : string,
+  'category' : string,
+  'rating' : bigint,
+  'companyId' : CompanyId,
+}
 export interface Transaction {
   'id' : string,
   'transactionType' : string,
@@ -196,8 +222,30 @@ export interface UserProfile {
 export type UserRole = { 'admin' : null } |
   { 'user' : null } |
   { 'guest' : null };
+export interface WorkOrder {
+  'id' : string,
+  'status' : string,
+  'endDate' : string,
+  'productName' : string,
+  'notes' : string,
+  'quantity' : bigint,
+  'startDate' : string,
+  'companyId' : CompanyId,
+}
+export interface WorkflowTask {
+  'id' : string,
+  'status' : string,
+  'assignee' : [] | [Principal],
+  'title' : string,
+  'tags' : Array<string>,
+  'dueDate' : string,
+  'description' : string,
+  'priority' : string,
+  'companyId' : CompanyId,
+}
 export interface _SERVICE {
   '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
+  'addBOMItem' : ActorMethod<[CompanyId, BOMItem], BOMItem>,
   'addCommunicationLog' : ActorMethod<
     [CompanyId, CommunicationLog],
     CommunicationLog
@@ -223,6 +271,7 @@ export interface _SERVICE {
    * / ==========================
    */
   'addProduct' : ActorMethod<[CompanyId, Product], Product>,
+  'addPurchaseOrder' : ActorMethod<[CompanyId, PurchaseOrder], PurchaseOrder>,
   'addSalaryInfo' : ActorMethod<[CompanyId, SalaryInfo], SalaryInfo>,
   'addSalesOpportunity' : ActorMethod<
     [CompanyId, SalesOpportunity],
@@ -235,10 +284,28 @@ export interface _SERVICE {
   'addStockMovement' : ActorMethod<[CompanyId, StockMovement], StockMovement>,
   /**
    * / ==========================
+   * / Procurement Module
+   * / ==========================
+   */
+  'addSupplier' : ActorMethod<[CompanyId, Supplier], Supplier>,
+  /**
+   * / ==========================
    * / Accounting Module
    * / ==========================
    */
   'addTransaction' : ActorMethod<[CompanyId, Transaction], Transaction>,
+  /**
+   * / ==========================
+   * / Manufacturing Module
+   * / ==========================
+   */
+  'addWorkOrder' : ActorMethod<[CompanyId, WorkOrder], WorkOrder>,
+  /**
+   * / ==========================
+   * / Workflow Module
+   * / ==========================
+   */
+  'addWorkflowTask' : ActorMethod<[CompanyId, WorkflowTask], WorkflowTask>,
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
   'createCompany' : ActorMethod<[CompanyProfile], Company>,
   /**
@@ -286,7 +353,15 @@ export interface _SERVICE {
     [CompanyId],
     { 'movements' : Array<StockMovement>, 'products' : Array<Product> }
   >,
+  'getManufacturingData' : ActorMethod<
+    [CompanyId],
+    { 'workOrders' : Array<WorkOrder>, 'bomItems' : Array<BOMItem> }
+  >,
   'getMyEmployeeCode' : ActorMethod<[], [] | [string]>,
+  'getProcurementData' : ActorMethod<
+    [CompanyId],
+    { 'orders' : Array<PurchaseOrder>, 'suppliers' : Array<Supplier> }
+  >,
   'getProjectData' : ActorMethod<
     [CompanyId],
     { 'tasks' : Array<ProjectTask>, 'projects' : Array<Project> }
@@ -294,22 +369,32 @@ export interface _SERVICE {
   'getStaffForCompany' : ActorMethod<[CompanyId], Array<Staff>>,
   'getStaffName' : ActorMethod<[Principal], [] | [string]>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
+  'getWorkflowData' : ActorMethod<
+    [CompanyId],
+    { 'tasks' : Array<WorkflowTask> }
+  >,
   'grantModuleAccess' : ActorMethod<[CompanyId, Principal, string], undefined>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
   'isEmployeeInCompany' : ActorMethod<[string], boolean>,
   'isRegisteredAsCompany' : ActorMethod<[], [] | [string]>,
   'listDefaultRoles' : ActorMethod<[], Array<Role>>,
   'listRolesForCompany' : ActorMethod<[string], Array<Role>>,
+  'removeBOMItem' : ActorMethod<[CompanyId, string], boolean>,
   'removeCustomRole' : ActorMethod<[string, string], undefined>,
   'removeCustomer' : ActorMethod<[CompanyId, string], boolean>,
   'removeEmployee' : ActorMethod<[CompanyId, string], boolean>,
   'removeProduct' : ActorMethod<[CompanyId, string], boolean>,
   'removeProject' : ActorMethod<[CompanyId, string], boolean>,
   'removeProjectTask' : ActorMethod<[CompanyId, string], boolean>,
+  'removePurchaseOrder' : ActorMethod<[CompanyId, string], boolean>,
   'removeStaffFromCompany' : ActorMethod<[CompanyId, Principal], boolean>,
+  'removeSupplier' : ActorMethod<[CompanyId, string], boolean>,
   'removeTransaction' : ActorMethod<[CompanyId, string], boolean>,
+  'removeWorkOrder' : ActorMethod<[CompanyId, string], boolean>,
+  'removeWorkflowTask' : ActorMethod<[CompanyId, string], boolean>,
   'revokeModuleAccess' : ActorMethod<[CompanyId, Principal, string], undefined>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'updateBOMItem' : ActorMethod<[CompanyId, BOMItem], BOMItem>,
   'updateCompany' : ActorMethod<[CompanyId, CompanyProfile], Company>,
   'updateCustomer' : ActorMethod<[CompanyId, Customer], Customer>,
   'updateEmployee' : ActorMethod<[CompanyId, EmployeeRecord], EmployeeRecord>,
@@ -318,6 +403,10 @@ export interface _SERVICE {
   'updateProduct' : ActorMethod<[CompanyId, Product], Product>,
   'updateProject' : ActorMethod<[CompanyId, Project], Project>,
   'updateProjectTask' : ActorMethod<[CompanyId, ProjectTask], ProjectTask>,
+  'updatePurchaseOrder' : ActorMethod<
+    [CompanyId, PurchaseOrder],
+    PurchaseOrder
+  >,
   'updateSalesOpportunity' : ActorMethod<
     [CompanyId, SalesOpportunity],
     SalesOpportunity
@@ -326,7 +415,10 @@ export interface _SERVICE {
     [CompanyId, Principal, string],
     RoleAssignmentResult
   >,
+  'updateSupplier' : ActorMethod<[CompanyId, Supplier], Supplier>,
   'updateTransaction' : ActorMethod<[CompanyId, Transaction], Transaction>,
+  'updateWorkOrder' : ActorMethod<[CompanyId, WorkOrder], WorkOrder>,
+  'updateWorkflowTask' : ActorMethod<[CompanyId, WorkflowTask], WorkflowTask>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

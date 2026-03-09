@@ -62,6 +62,8 @@ interface CompanyOwnerDashboardProps {
   companyId: string;
   userName?: string;
   userRoleCode?: bigint;
+  /** Pre-determined granted modules (for staff-module-view) */
+  grantedModules?: string[];
 }
 
 const ERP_MODULES = [
@@ -293,7 +295,11 @@ function ModulePermissionsView({
 // ─── Settings Sub-Component ───────────────────────────────────────────────────
 function SettingsView({
   company,
-}: { company: NonNullable<ReturnType<typeof useGetCompany>["data"]> }) {
+  isOwner,
+}: {
+  company: NonNullable<ReturnType<typeof useGetCompany>["data"]>;
+  isOwner: boolean;
+}) {
   return (
     <div className="max-w-4xl mx-auto flex flex-col gap-6 animate-fade-in">
       <div>
@@ -305,7 +311,11 @@ function SettingsView({
           Şirket ayarları ve yapılandırma
         </p>
       </div>
-      <CompanyInfoCard company={company} />
+      <CompanyInfoCard
+        company={company}
+        companyId={company.id}
+        isOwner={isOwner}
+      />
     </div>
   );
 }
@@ -315,6 +325,7 @@ export default function CompanyOwnerDashboard({
   companyId,
   userName,
   userRoleCode,
+  grantedModules: propGrantedModules,
 }: CompanyOwnerDashboardProps) {
   const { t } = useLanguage();
   const [activeView, setActiveView] = useState<SidebarView>("overview");
@@ -355,8 +366,8 @@ export default function CompanyOwnerDashboard({
   const [addingRole, setAddingRole] = useState(false);
 
   // Derive granted modules for current user from staffList (for sidebar)
-  // Owner/Manager always have full access, so we pass empty array (sidebar checks role)
-  const currentUserGrantedModules: string[] = [];
+  // If propGrantedModules is provided (staff-module-view), use it; otherwise empty (sidebar checks role)
+  const currentUserGrantedModules: string[] = propGrantedModules ?? [];
 
   const handleAddStaff = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -479,7 +490,7 @@ export default function CompanyOwnerDashboard({
   if (companyLoading) {
     return (
       <div className="min-h-screen flex flex-col bg-background">
-        <Header userName={userName} />
+        <Header userName={userName} companyId={companyId} />
         <div className="flex-1 flex items-center justify-center">
           <div className="flex items-center gap-3 text-muted-foreground">
             <Loader2 className="h-5 w-5 animate-spin" />
@@ -493,7 +504,7 @@ export default function CompanyOwnerDashboard({
   if (!company) {
     return (
       <div className="min-h-screen flex flex-col bg-background">
-        <Header userName={userName} />
+        <Header userName={userName} companyId={companyId} />
         <div className="flex-1 flex items-center justify-center">
           <div className="flex items-center gap-3 text-destructive">
             <AlertCircle className="h-5 w-5" />
@@ -506,7 +517,7 @@ export default function CompanyOwnerDashboard({
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Header userName={userName} />
+      <Header userName={userName} companyId={companyId} />
 
       <div
         className="flex flex-1 overflow-hidden"
@@ -724,7 +735,11 @@ export default function CompanyOwnerDashboard({
                 )}
               </div>
 
-              <CompanyInfoCard company={company} />
+              <CompanyInfoCard
+                company={company}
+                companyId={companyId}
+                isOwner={isOwner}
+              />
             </div>
           )}
 
@@ -1128,7 +1143,7 @@ export default function CompanyOwnerDashboard({
           {/* ── Settings ── */}
           {activeView === "settings" && (
             <div className="p-6 lg:p-8">
-              <SettingsView company={company} />
+              <SettingsView company={company} isOwner={isOwner} />
             </div>
           )}
 

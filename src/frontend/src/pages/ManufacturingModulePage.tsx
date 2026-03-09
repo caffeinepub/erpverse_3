@@ -41,55 +41,29 @@ import {
 import type React from "react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import type { BOMItem, WorkOrder } from "../backend";
+import {
+  useAddBOMItem,
+  useAddWorkOrder,
+  useGetManufacturingData,
+  useRemoveBOMItem,
+  useRemoveWorkOrder,
+  useUpdateBOMItem,
+  useUpdateWorkOrder,
+} from "../hooks/useQueries";
 
 interface ManufacturingModulePageProps {
   companyId: string;
-}
-
-interface BOMItem {
-  id: string;
-  workOrderId: string;
-  materialName: string;
-  quantityNeeded: number;
-  unit: string;
-}
-
-interface WorkOrder {
-  id: string;
-  productName: string;
-  quantity: number;
-  status: "planned" | "in_progress" | "completed" | "cancelled";
-  startDate: string;
-  endDate: string;
-  description: string;
-}
-
-interface ManufacturingData {
-  workOrders: WorkOrder[];
-  bomItems: BOMItem[];
-}
-
-function loadData(companyId: string): ManufacturingData {
-  try {
-    const raw = localStorage.getItem(`erpverse_manufacturing_${companyId}`);
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return { workOrders: [], bomItems: [] };
-}
-
-function saveData(companyId: string, data: ManufacturingData) {
-  localStorage.setItem(
-    `erpverse_manufacturing_${companyId}`,
-    JSON.stringify(data),
-  );
 }
 
 function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 }
 
+type WorkOrderStatus = "planned" | "in_progress" | "completed" | "cancelled";
+
 const STATUS_CONFIG: Record<
-  WorkOrder["status"],
+  WorkOrderStatus,
   {
     label: string;
     bg: string;
@@ -128,8 +102,14 @@ const STATUS_CONFIG: Record<
   },
 };
 
-function StatusBadge({ status }: { status: WorkOrder["status"] }) {
-  const cfg = STATUS_CONFIG[status];
+function StatusBadge({ status }: { status: string }) {
+  const cfg = STATUS_CONFIG[status as WorkOrderStatus] ?? {
+    label: status,
+    bg: "oklch(0.93 0.01 270)",
+    color: "oklch(0.5 0.01 270)",
+    border: "oklch(0.85 0.01 270)",
+    icon: Clock,
+  };
   const Icon = cfg.icon;
   return (
     <span
@@ -148,64 +128,65 @@ function StatusBadge({ status }: { status: WorkOrder["status"] }) {
 
 const UNITS = ["Adet", "kg", "litre", "metre", "m²", "m³", "kutu", "palet"];
 
+// ─── WorkOrder Form Interface ─────────────────────────────────────────────────
+interface WorkOrderFormData {
+  id: string;
+  productName: string;
+  quantity: number;
+  status: WorkOrderStatus;
+  startDate: string;
+  endDate: string;
+  notes: string;
+}
+
 // ─── WorkOrder Dialog ─────────────────────────────────────────────────────────
 function WorkOrderDialog({
   open,
   onClose,
   onSave,
   initial,
+  saving,
 }: {
   open: boolean;
   onClose: () => void;
-  onSave: (wo: WorkOrder) => void;
-  initial?: WorkOrder;
+  onSave: (wo: WorkOrderFormData) => void;
+  initial?: WorkOrderFormData;
+  saving?: boolean;
 }) {
   const today = new Date().toISOString().split("T")[0];
-  const [form, setForm] = useState<Omit<WorkOrder, "id">>({
+  const [form, setForm] = useState<WorkOrderFormData>({
+    id: "",
     productName: "",
     quantity: 1,
     status: "planned",
     startDate: today,
     endDate: "",
-    description: "",
+    notes: "",
   });
-  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (open) {
       setForm(
-        initial
-          ? {
-              productName: initial.productName,
-              quantity: initial.quantity,
-              status: initial.status,
-              startDate: initial.startDate,
-              endDate: initial.endDate,
-              description: initial.description,
-            }
-          : {
-              productName: "",
-              quantity: 1,
-              status: "planned",
-              startDate: today,
-              endDate: "",
-              description: "",
-            },
+        initial ?? {
+          id: "",
+          productName: "",
+          quantity: 1,
+          status: "planned",
+          startDate: today,
+          endDate: "",
+          notes: "",
+        },
       );
     }
   }, [open, initial, today]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.productName.trim()) {
       toast.error("Ürün adı zorunludur");
       return;
     }
-    setSaving(true);
-    await new Promise((r) => setTimeout(r, 300));
-    onSave({ ...form, id: initial?.id || generateId() });
-    setSaving(false);
-    onClose();
+    onSave({ ...form, id: form.id || generateId() });
   };
 
   return (
@@ -220,7 +201,7 @@ function WorkOrderDialog({
       >
         <DialogHeader>
           <DialogTitle>
-            {initial ? "İş Emri Düzenle" : "Yeni İş Emri"}
+            {initial?.id ? "İş Emri Düzenle" : "Yeni İş Emri"}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
@@ -264,7 +245,7 @@ function WorkOrderDialog({
               <Select
                 value={form.status}
                 onValueChange={(v) =>
-                  setForm((p) => ({ ...p, status: v as WorkOrder["status"] }))
+                  setForm((p) => ({ ...p, status: v as WorkOrderStatus }))
                 }
               >
                 <SelectTrigger
@@ -327,12 +308,12 @@ function WorkOrderDialog({
             </div>
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="wo-desc">Açıklama</Label>
+            <Label htmlFor="wo-notes">Açıklama / Notlar</Label>
             <Textarea
-              id="wo-desc"
-              value={form.description}
+              id="wo-notes"
+              value={form.notes}
               onChange={(e) =>
-                setForm((p) => ({ ...p, description: e.target.value }))
+                setForm((p) => ({ ...p, notes: e.target.value }))
               }
               rows={2}
               style={{
@@ -370,13 +351,22 @@ function WorkOrderDialog({
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
               ) : null}
-              {initial ? "Güncelle" : "Oluştur"}
+              {initial?.id ? "Güncelle" : "Oluştur"}
             </Button>
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
   );
+}
+
+// ─── BOM Form Interface ───────────────────────────────────────────────────────
+interface BOMFormData {
+  id: string;
+  workOrderId: string;
+  materialName: string;
+  quantity: number;
+  unit: string;
 }
 
 // ─── BOM Dialog ───────────────────────────────────────────────────────────────
@@ -386,19 +376,20 @@ function BOMDialog({
   onSave,
   workOrderId,
   initial,
+  saving,
 }: {
   open: boolean;
   onClose: () => void;
-  onSave: (b: BOMItem) => void;
+  onSave: (b: BOMFormData) => void;
   workOrderId: string;
-  initial?: BOMItem;
+  initial?: BOMFormData;
+  saving?: boolean;
 }) {
-  const [form, setForm] = useState<Omit<BOMItem, "id" | "workOrderId">>({
+  const [form, setForm] = useState<Omit<BOMFormData, "id" | "workOrderId">>({
     materialName: "",
-    quantityNeeded: 1,
+    quantity: 1,
     unit: "Adet",
   });
-  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (open) {
@@ -406,29 +397,25 @@ function BOMDialog({
         initial
           ? {
               materialName: initial.materialName,
-              quantityNeeded: initial.quantityNeeded,
+              quantity: initial.quantity,
               unit: initial.unit,
             }
-          : { materialName: "", quantityNeeded: 1, unit: "Adet" },
+          : { materialName: "", quantity: 1, unit: "Adet" },
       );
     }
   }, [open, initial]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.materialName.trim()) {
       toast.error("Malzeme adı zorunludur");
       return;
     }
-    setSaving(true);
-    await new Promise((r) => setTimeout(r, 300));
     onSave({
       ...form,
       id: initial?.id || generateId(),
       workOrderId,
     });
-    setSaving(false);
-    onClose();
   };
 
   return (
@@ -443,7 +430,7 @@ function BOMDialog({
       >
         <DialogHeader>
           <DialogTitle>
-            {initial ? "Malzeme Düzenle" : "Malzeme Ekle"}
+            {initial?.id ? "Malzeme Düzenle" : "Malzeme Ekle"}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
@@ -472,11 +459,11 @@ function BOMDialog({
                 type="number"
                 min={0}
                 step={0.01}
-                value={form.quantityNeeded}
+                value={form.quantity}
                 onChange={(e) =>
                   setForm((p) => ({
                     ...p,
-                    quantityNeeded: Number(e.target.value),
+                    quantity: Number(e.target.value),
                   }))
                 }
                 style={{
@@ -544,7 +531,7 @@ function BOMDialog({
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
               ) : null}
-              {initial ? "Güncelle" : "Ekle"}
+              {initial?.id ? "Güncelle" : "Ekle"}
             </Button>
           </DialogFooter>
         </form>
@@ -557,75 +544,127 @@ function BOMDialog({
 export default function ManufacturingModulePage({
   companyId,
 }: ManufacturingModulePageProps) {
-  const [data, setData] = useState<ManufacturingData>(() =>
-    loadData(companyId),
-  );
+  const { data: mfgData, isLoading } = useGetManufacturingData(companyId);
+  const addWorkOrder = useAddWorkOrder();
+  const updateWorkOrder = useUpdateWorkOrder();
+  const removeWorkOrder = useRemoveWorkOrder();
+  const addBOMItem = useAddBOMItem();
+  const updateBOMItem = useUpdateBOMItem();
+  const removeBOMItem = useRemoveBOMItem();
+
+  const workOrders = mfgData?.workOrders ?? [];
+  const bomItems = mfgData?.bomItems ?? [];
+
   const [woDialog, setWODialog] = useState<{
     open: boolean;
-    item?: WorkOrder;
+    item?: WorkOrderFormData;
   }>({ open: false });
   const [bomDialog, setBOMDialog] = useState<{
     open: boolean;
-    item?: BOMItem;
+    item?: BOMFormData;
     workOrderId: string;
   }>({ open: false, workOrderId: "" });
   const [selectedWO, setSelectedWO] = useState<string | null>(null);
 
-  const persist = (next: ManufacturingData) => {
-    setData(next);
-    saveData(companyId, next);
+  const handleSaveWO = async (formData: WorkOrderFormData) => {
+    const woPayload: WorkOrder = {
+      id: formData.id,
+      companyId,
+      productName: formData.productName,
+      quantity: BigInt(formData.quantity),
+      status: formData.status,
+      startDate: formData.startDate,
+      endDate: formData.endDate,
+      notes: formData.notes,
+    };
+    try {
+      const isExisting = workOrders.some((w) => w.id === formData.id);
+      if (isExisting) {
+        await updateWorkOrder.mutateAsync({ companyId, workOrder: woPayload });
+        toast.success("İş emri güncellendi");
+      } else {
+        await addWorkOrder.mutateAsync({ companyId, workOrder: woPayload });
+        toast.success("İş emri oluşturuldu");
+      }
+      setWODialog({ open: false });
+    } catch {
+      toast.error("İşlem başarısız oldu");
+    }
   };
 
-  const saveWO = (wo: WorkOrder) => {
-    const exists = data.workOrders.find((x) => x.id === wo.id);
-    const workOrders = exists
-      ? data.workOrders.map((x) => (x.id === wo.id ? wo : x))
-      : [...data.workOrders, wo];
-    persist({ ...data, workOrders });
-    toast.success(exists ? "İş emri güncellendi" : "İş emri oluşturuldu");
+  const handleDeleteWO = async (id: string) => {
+    try {
+      await removeWorkOrder.mutateAsync({ companyId, workOrderId: id });
+      if (selectedWO === id) setSelectedWO(null);
+      toast.success("İş emri silindi");
+    } catch {
+      toast.error("Silme işlemi başarısız");
+    }
   };
 
-  const deleteWO = (id: string) => {
-    persist({
-      ...data,
-      workOrders: data.workOrders.filter((x) => x.id !== id),
-      bomItems: data.bomItems.filter((x) => x.workOrderId !== id),
-    });
-    if (selectedWO === id) setSelectedWO(null);
-    toast.success("İş emri silindi");
+  const handleSaveBOM = async (formData: BOMFormData) => {
+    const bomPayload: BOMItem = {
+      id: formData.id,
+      companyId,
+      workOrderId: formData.workOrderId,
+      materialName: formData.materialName,
+      quantity: BigInt(Math.round(formData.quantity)),
+      unit: formData.unit,
+    };
+    try {
+      const isExisting = bomItems.some((b) => b.id === formData.id);
+      if (isExisting) {
+        await updateBOMItem.mutateAsync({ companyId, bomItem: bomPayload });
+        toast.success("Malzeme güncellendi");
+      } else {
+        await addBOMItem.mutateAsync({ companyId, bomItem: bomPayload });
+        toast.success("Malzeme eklendi");
+      }
+      setBOMDialog({ open: false, workOrderId: "" });
+    } catch {
+      toast.error("İşlem başarısız oldu");
+    }
   };
 
-  const saveBOM = (b: BOMItem) => {
-    const exists = data.bomItems.find((x) => x.id === b.id);
-    const bomItems = exists
-      ? data.bomItems.map((x) => (x.id === b.id ? b : x))
-      : [...data.bomItems, b];
-    persist({ ...data, bomItems });
-    toast.success(exists ? "Malzeme güncellendi" : "Malzeme eklendi");
-  };
-
-  const deleteBOM = (id: string) => {
-    persist({
-      ...data,
-      bomItems: data.bomItems.filter((x) => x.id !== id),
-    });
-    toast.success("Malzeme silindi");
+  const handleDeleteBOM = async (id: string) => {
+    try {
+      await removeBOMItem.mutateAsync({ companyId, bomItemId: id });
+      toast.success("Malzeme silindi");
+    } catch {
+      toast.error("Silme işlemi başarısız");
+    }
   };
 
   const activeWO = selectedWO
-    ? data.workOrders.find((wo) => wo.id === selectedWO)
+    ? workOrders.find((wo) => wo.id === selectedWO)
     : null;
   const activeBOMItems = selectedWO
-    ? data.bomItems.filter((b) => b.workOrderId === selectedWO)
+    ? bomItems.filter((b) => b.workOrderId === selectedWO)
     : [];
 
   const stats = {
-    total: data.workOrders.length,
-    planned: data.workOrders.filter((w) => w.status === "planned").length,
-    inProgress: data.workOrders.filter((w) => w.status === "in_progress")
-      .length,
-    completed: data.workOrders.filter((w) => w.status === "completed").length,
+    total: workOrders.length,
+    planned: workOrders.filter((w) => w.status === "planned").length,
+    inProgress: workOrders.filter((w) => w.status === "in_progress").length,
+    completed: workOrders.filter((w) => w.status === "completed").length,
   };
+
+  if (isLoading) {
+    return (
+      <div
+        className="p-6 lg:p-8 flex items-center justify-center min-h-[400px]"
+        data-ocid="manufacturing.loading_state"
+      >
+        <div
+          className="flex items-center gap-2"
+          style={{ color: "oklch(0.5 0.01 270)" }}
+        >
+          <Loader2 className="h-5 w-5 animate-spin" />
+          <span>Veriler yükleniyor...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 lg:p-8 max-w-6xl mx-auto flex flex-col gap-6 animate-fade-in">
@@ -721,7 +760,7 @@ export default function ManufacturingModulePage({
             data-ocid="manufacturing.workorders.tab"
             style={{ color: "oklch(0.35 0.01 270)" }}
           >
-            İş Emirleri ({data.workOrders.length})
+            İş Emirleri ({workOrders.length})
           </TabsTrigger>
           <TabsTrigger
             value="bom"
@@ -766,7 +805,7 @@ export default function ManufacturingModulePage({
                 <Plus className="h-4 w-4 mr-1.5" /> Yeni İş Emri
               </Button>
             </div>
-            {data.workOrders.length === 0 ? (
+            {workOrders.length === 0 ? (
               <div
                 className="flex flex-col items-center justify-center py-16"
                 style={{ color: "oklch(0.55 0.01 270)" }}
@@ -804,8 +843,8 @@ export default function ManufacturingModulePage({
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {data.workOrders.map((wo, i) => {
-                      const bomCount = data.bomItems.filter(
+                    {workOrders.map((wo, i) => {
+                      const bomCount = bomItems.filter(
                         (b) => b.workOrderId === wo.id,
                       ).length;
                       return (
@@ -827,7 +866,7 @@ export default function ManufacturingModulePage({
                             className="font-mono"
                             style={{ color: "oklch(0.5 0.18 25)" }}
                           >
-                            {wo.quantity}
+                            {Number(wo.quantity)}
                           </TableCell>
                           <TableCell>
                             <StatusBadge status={wo.status} />
@@ -862,7 +901,18 @@ export default function ManufacturingModulePage({
                               <button
                                 type="button"
                                 onClick={() =>
-                                  setWODialog({ open: true, item: wo })
+                                  setWODialog({
+                                    open: true,
+                                    item: {
+                                      id: wo.id,
+                                      productName: wo.productName,
+                                      quantity: Number(wo.quantity),
+                                      status: wo.status as WorkOrderStatus,
+                                      startDate: wo.startDate,
+                                      endDate: wo.endDate,
+                                      notes: wo.notes,
+                                    },
+                                  })
                                 }
                                 className="p-1.5 rounded-md hover:bg-secondary transition-colors"
                                 style={{ color: "oklch(0.5 0.01 270)" }}
@@ -871,7 +921,7 @@ export default function ManufacturingModulePage({
                               </button>
                               <button
                                 type="button"
-                                onClick={() => deleteWO(wo.id)}
+                                onClick={() => handleDeleteWO(wo.id)}
                                 data-ocid={`manufacturing.workorders.delete_button.${i + 1}`}
                                 className="p-1.5 rounded-md hover:bg-red-50 transition-colors"
                                 style={{ color: "oklch(0.5 0.18 25)" }}
@@ -913,7 +963,7 @@ export default function ManufacturingModulePage({
                   İş Emri Seç
                 </h3>
               </div>
-              {data.workOrders.length === 0 ? (
+              {workOrders.length === 0 ? (
                 <div
                   className="p-6 text-center text-sm"
                   style={{ color: "oklch(0.55 0.01 270)" }}
@@ -925,7 +975,7 @@ export default function ManufacturingModulePage({
                   className="divide-y"
                   style={{ borderColor: "oklch(0.93 0.005 270)" }}
                 >
-                  {data.workOrders.map((wo) => (
+                  {workOrders.map((wo) => (
                     <button
                       key={wo.id}
                       type="button"
@@ -947,7 +997,7 @@ export default function ManufacturingModulePage({
                           className="text-xs"
                           style={{ color: "oklch(0.55 0.01 270)" }}
                         >
-                          {wo.quantity} adet
+                          {Number(wo.quantity)} adet
                         </p>
                       </div>
                       <ChevronRight
@@ -1065,7 +1115,7 @@ export default function ManufacturingModulePage({
                             className="font-mono"
                             style={{ color: "oklch(0.5 0.18 25)" }}
                           >
-                            {bom.quantityNeeded}
+                            {Number(bom.quantity)}
                           </TableCell>
                           <TableCell style={{ color: "oklch(0.45 0.01 270)" }}>
                             {bom.unit}
@@ -1077,7 +1127,13 @@ export default function ManufacturingModulePage({
                                 onClick={() =>
                                   setBOMDialog({
                                     open: true,
-                                    item: bom,
+                                    item: {
+                                      id: bom.id,
+                                      workOrderId: bom.workOrderId,
+                                      materialName: bom.materialName,
+                                      quantity: Number(bom.quantity),
+                                      unit: bom.unit,
+                                    },
                                     workOrderId: selectedWO,
                                   })
                                 }
@@ -1088,7 +1144,7 @@ export default function ManufacturingModulePage({
                               </button>
                               <button
                                 type="button"
-                                onClick={() => deleteBOM(bom.id)}
+                                onClick={() => handleDeleteBOM(bom.id)}
                                 data-ocid={`manufacturing.bom.delete_button.${i + 1}`}
                                 className="p-1.5 rounded-md hover:bg-red-50 transition-colors"
                                 style={{ color: "oklch(0.5 0.18 25)" }}
@@ -1113,14 +1169,16 @@ export default function ManufacturingModulePage({
         open={woDialog.open}
         initial={woDialog.item}
         onClose={() => setWODialog({ open: false })}
-        onSave={saveWO}
+        onSave={handleSaveWO}
+        saving={addWorkOrder.isPending || updateWorkOrder.isPending}
       />
       <BOMDialog
         open={bomDialog.open}
         initial={bomDialog.item}
         onClose={() => setBOMDialog({ open: false, workOrderId: "" })}
-        onSave={saveBOM}
+        onSave={handleSaveBOM}
         workOrderId={bomDialog.workOrderId}
+        saving={addBOMItem.isPending || updateBOMItem.isPending}
       />
     </div>
   );

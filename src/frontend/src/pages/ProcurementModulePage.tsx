@@ -38,63 +38,35 @@ import {
 import type React from "react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import type { PurchaseOrder, Supplier } from "../backend";
+import {
+  useAddPurchaseOrder,
+  useAddSupplier,
+  useGetProcurementData,
+  useRemovePurchaseOrder,
+  useRemoveSupplier,
+  useUpdatePurchaseOrder,
+  useUpdateSupplier,
+} from "../hooks/useQueries";
 
 interface ProcurementModulePageProps {
   companyId: string;
-}
-
-interface Supplier {
-  id: string;
-  name: string;
-  contactInfo: string;
-  category: string;
-  email: string;
-  phone: string;
-}
-
-interface OrderItem {
-  description: string;
-  qty: number;
-  unitPrice: number;
-}
-
-interface PurchaseOrder {
-  id: string;
-  supplierId: string;
-  items: OrderItem[];
-  total: number;
-  status: "pending" | "approved" | "delivered" | "cancelled";
-  orderDate: string;
-  expectedDelivery: string;
-  notes: string;
-}
-
-interface ProcurementData {
-  suppliers: Supplier[];
-  orders: PurchaseOrder[];
-}
-
-function loadData(companyId: string): ProcurementData {
-  try {
-    const raw = localStorage.getItem(`erpverse_procurement_${companyId}`);
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return { suppliers: [], orders: [] };
-}
-
-function saveData(companyId: string, data: ProcurementData) {
-  localStorage.setItem(
-    `erpverse_procurement_${companyId}`,
-    JSON.stringify(data),
-  );
 }
 
 function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 }
 
+const ORDER_STATUSES = [
+  "pending",
+  "approved",
+  "delivered",
+  "cancelled",
+] as const;
+type OrderStatus = (typeof ORDER_STATUSES)[number];
+
 const STATUS_CONFIG: Record<
-  PurchaseOrder["status"],
+  OrderStatus,
   { label: string; bg: string; color: string; border: string }
 > = {
   pending: {
@@ -123,8 +95,13 @@ const STATUS_CONFIG: Record<
   },
 };
 
-function StatusBadge({ status }: { status: PurchaseOrder["status"] }) {
-  const cfg = STATUS_CONFIG[status];
+function StatusBadge({ status }: { status: string }) {
+  const cfg = STATUS_CONFIG[status as OrderStatus] ?? {
+    label: status,
+    bg: "oklch(0.93 0.01 270)",
+    color: "oklch(0.5 0.01 270)",
+    border: "oklch(0.85 0.01 270)",
+  };
   return (
     <span
       className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold"
@@ -150,28 +127,36 @@ const SUPPLIER_CATEGORIES = [
 ];
 
 // ─── Supplier Dialog ──────────────────────────────────────────────────────────
+interface SupplierFormData {
+  id: string;
+  name: string;
+  contactInfo: string;
+  category: string;
+  rating: number;
+}
+
 function SupplierDialog({
   open,
   onClose,
   onSave,
   initial,
+  saving,
 }: {
   open: boolean;
   onClose: () => void;
-  onSave: (s: Supplier) => void;
-  initial?: Supplier;
+  onSave: (s: SupplierFormData) => void;
+  initial?: SupplierFormData;
+  saving?: boolean;
 }) {
-  const [form, setForm] = useState<Supplier>(
+  const [form, setForm] = useState<SupplierFormData>(
     initial ?? {
       id: "",
       name: "",
       contactInfo: "",
       category: "Diğer",
-      email: "",
-      phone: "",
+      rating: 0,
     },
   );
-  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (open) {
@@ -181,24 +166,19 @@ function SupplierDialog({
           name: "",
           contactInfo: "",
           category: "Diğer",
-          email: "",
-          phone: "",
+          rating: 0,
         },
       );
     }
   }, [open, initial]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim()) {
       toast.error("Tedarikçi adı zorunludur");
       return;
     }
-    setSaving(true);
-    await new Promise((r) => setTimeout(r, 300));
     onSave({ ...form, id: form.id || generateId() });
-    setSaving(false);
-    onClose();
   };
 
   return (
@@ -213,7 +193,7 @@ function SupplierDialog({
       >
         <DialogHeader>
           <DialogTitle>
-            {initial ? "Tedarikçi Düzenle" : "Yeni Tedarikçi"}
+            {initial?.id ? "Tedarikçi Düzenle" : "Yeni Tedarikçi"}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
@@ -263,41 +243,6 @@ function SupplierDialog({
               </SelectContent>
             </Select>
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-1.5">
-              <Label htmlFor="sup-email">E-posta</Label>
-              <Input
-                id="sup-email"
-                type="email"
-                value={form.email}
-                onChange={(e) =>
-                  setForm((p) => ({ ...p, email: e.target.value }))
-                }
-                placeholder="ornek@sirket.com"
-                style={{
-                  backgroundColor: "oklch(1 0 0)",
-                  borderColor: "oklch(0.88 0.01 270)",
-                  color: "oklch(0.12 0.012 270)",
-                }}
-              />
-            </div>
-            <div className="space-y-1.5">
-              <Label htmlFor="sup-phone">Telefon</Label>
-              <Input
-                id="sup-phone"
-                value={form.phone}
-                onChange={(e) =>
-                  setForm((p) => ({ ...p, phone: e.target.value }))
-                }
-                placeholder="+90 5XX XXX XX XX"
-                style={{
-                  backgroundColor: "oklch(1 0 0)",
-                  borderColor: "oklch(0.88 0.01 270)",
-                  color: "oklch(0.12 0.012 270)",
-                }}
-              />
-            </div>
-          </div>
           <div className="space-y-1.5">
             <Label htmlFor="sup-contact">İletişim Bilgisi</Label>
             <Textarea
@@ -306,7 +251,7 @@ function SupplierDialog({
               onChange={(e) =>
                 setForm((p) => ({ ...p, contactInfo: e.target.value }))
               }
-              placeholder="Adres ve ek bilgiler..."
+              placeholder="Adres, telefon ve ek bilgiler..."
               rows={2}
               style={{
                 backgroundColor: "oklch(1 0 0)",
@@ -314,6 +259,24 @@ function SupplierDialog({
                 color: "oklch(0.12 0.012 270)",
               }}
               data-ocid="procurement.supplier.textarea"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="sup-rating">Puan (0-5)</Label>
+            <Input
+              id="sup-rating"
+              type="number"
+              min={0}
+              max={5}
+              value={form.rating}
+              onChange={(e) =>
+                setForm((p) => ({ ...p, rating: Number(e.target.value) }))
+              }
+              style={{
+                backgroundColor: "oklch(1 0 0)",
+                borderColor: "oklch(0.88 0.01 270)",
+                color: "oklch(0.12 0.012 270)",
+              }}
             />
           </div>
           <DialogFooter>
@@ -343,7 +306,7 @@ function SupplierDialog({
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
               ) : null}
-              {initial ? "Güncelle" : "Ekle"}
+              {initial?.id ? "Güncelle" : "Ekle"}
             </Button>
           </DialogFooter>
         </form>
@@ -353,102 +316,71 @@ function SupplierDialog({
 }
 
 // ─── Order Dialog ─────────────────────────────────────────────────────────────
+interface OrderFormData {
+  id: string;
+  supplierId: string;
+  itemsDescription: string;
+  totalAmount: number;
+  status: OrderStatus;
+  orderDate: string;
+  expectedDelivery: string;
+}
+
 function OrderDialog({
   open,
   onClose,
   onSave,
   initial,
   suppliers,
+  saving,
 }: {
   open: boolean;
   onClose: () => void;
-  onSave: (o: PurchaseOrder) => void;
-  initial?: PurchaseOrder;
+  onSave: (o: OrderFormData) => void;
+  initial?: OrderFormData;
   suppliers: Supplier[];
+  saving?: boolean;
 }) {
   const today = new Date().toISOString().split("T")[0];
-  const [form, setForm] = useState<Omit<PurchaseOrder, "id" | "total">>({
+  const [form, setForm] = useState<OrderFormData>({
+    id: "",
     supplierId: "",
-    items: [{ description: "", qty: 1, unitPrice: 0 }],
+    itemsDescription: "",
+    totalAmount: 0,
     status: "pending",
     orderDate: today,
     expectedDelivery: "",
-    notes: "",
   });
-  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (open) {
       setForm(
-        initial
-          ? {
-              supplierId: initial.supplierId,
-              items: initial.items,
-              status: initial.status,
-              orderDate: initial.orderDate,
-              expectedDelivery: initial.expectedDelivery,
-              notes: initial.notes,
-            }
-          : {
-              supplierId: "",
-              items: [{ description: "", qty: 1, unitPrice: 0 }],
-              status: "pending",
-              orderDate: today,
-              expectedDelivery: "",
-              notes: "",
-            },
+        initial ?? {
+          id: "",
+          supplierId: "",
+          itemsDescription: "",
+          totalAmount: 0,
+          status: "pending",
+          orderDate: today,
+          expectedDelivery: "",
+        },
       );
     }
   }, [open, initial, today]);
 
-  const calcTotal = (items: OrderItem[]) =>
-    items.reduce((s, i) => s + i.qty * i.unitPrice, 0);
-
-  const updateItem = (
-    idx: number,
-    field: keyof OrderItem,
-    value: string | number,
-  ) => {
-    setForm((p) => {
-      const items = [...p.items];
-      items[idx] = { ...items[idx], [field]: value };
-      return { ...p, items };
-    });
-  };
-
-  const addItem = () =>
-    setForm((p) => ({
-      ...p,
-      items: [...p.items, { description: "", qty: 1, unitPrice: 0 }],
-    }));
-
-  const removeItem = (idx: number) =>
-    setForm((p) => ({
-      ...p,
-      items: p.items.filter((_, i) => i !== idx),
-    }));
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.supplierId) {
       toast.error("Tedarikçi seçiniz");
       return;
     }
-    setSaving(true);
-    await new Promise((r) => setTimeout(r, 300));
-    onSave({
-      ...form,
-      id: initial?.id || generateId(),
-      total: calcTotal(form.items),
-    });
-    setSaving(false);
-    onClose();
+    onSave({ ...form, id: form.id || generateId() });
   };
 
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent
-        className="sm:max-w-2xl max-h-[90vh] overflow-y-auto"
+        className="sm:max-w-lg max-h-[90vh] overflow-y-auto"
         style={{
           backgroundColor: "oklch(1 0 0)",
           color: "oklch(0.12 0.012 270)",
@@ -457,7 +389,7 @@ function OrderDialog({
       >
         <DialogHeader>
           <DialogTitle>
-            {initial ? "Sipariş Düzenle" : "Yeni Sipariş"}
+            {initial?.id ? "Sipariş Düzenle" : "Yeni Sipariş"}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
@@ -499,7 +431,7 @@ function OrderDialog({
                 onValueChange={(v) =>
                   setForm((p) => ({
                     ...p,
-                    status: v as PurchaseOrder["status"],
+                    status: v as OrderStatus,
                   }))
                 }
               >
@@ -561,109 +493,34 @@ function OrderDialog({
               />
             </div>
           </div>
-
-          {/* Items */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label>Sipariş Kalemleri</Label>
-              <button
-                type="button"
-                onClick={addItem}
-                className="text-xs flex items-center gap-1 font-medium"
-                style={{ color: "oklch(0.45 0.18 190)" }}
-              >
-                <Plus className="h-3.5 w-3.5" /> Kalem Ekle
-              </button>
-            </div>
-            <div className="space-y-2">
-              {form.items.map((item, idx) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: order items are positional
-                <div key={idx} className="flex gap-2 items-center">
-                  <Input
-                    placeholder="Açıklama"
-                    value={item.description}
-                    onChange={(e) =>
-                      updateItem(idx, "description", e.target.value)
-                    }
-                    className="flex-1"
-                    style={{
-                      backgroundColor: "oklch(1 0 0)",
-                      borderColor: "oklch(0.88 0.01 270)",
-                      color: "oklch(0.12 0.012 270)",
-                    }}
-                  />
-                  <Input
-                    type="number"
-                    min={1}
-                    value={item.qty}
-                    onChange={(e) =>
-                      updateItem(idx, "qty", Number(e.target.value))
-                    }
-                    placeholder="Adet"
-                    className="w-20"
-                    style={{
-                      backgroundColor: "oklch(1 0 0)",
-                      borderColor: "oklch(0.88 0.01 270)",
-                      color: "oklch(0.12 0.012 270)",
-                    }}
-                  />
-                  <Input
-                    type="number"
-                    min={0}
-                    step={0.01}
-                    value={item.unitPrice}
-                    onChange={(e) =>
-                      updateItem(idx, "unitPrice", Number(e.target.value))
-                    }
-                    placeholder="Birim fiyat"
-                    className="w-28"
-                    style={{
-                      backgroundColor: "oklch(1 0 0)",
-                      borderColor: "oklch(0.88 0.01 270)",
-                      color: "oklch(0.12 0.012 270)",
-                    }}
-                  />
-                  <span
-                    className="text-xs font-mono w-20 text-right shrink-0"
-                    style={{ color: "oklch(0.45 0.18 190)" }}
-                  >
-                    {(item.qty * item.unitPrice).toLocaleString("tr-TR", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </span>
-                  {form.items.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => removeItem(idx)}
-                      className="p-1 rounded hover:bg-red-50"
-                      style={{ color: "oklch(0.5 0.18 25)" }}
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                  )}
-                </div>
-              ))}
-            </div>
-            <div
-              className="flex justify-end pt-2 font-semibold text-sm"
-              style={{ color: "oklch(0.45 0.18 190)" }}
-            >
-              Toplam: ₺
-              {calcTotal(form.items).toLocaleString("tr-TR", {
-                minimumFractionDigits: 2,
-              })}
-            </div>
-          </div>
-
           <div className="space-y-1.5">
-            <Label htmlFor="ord-notes">Notlar</Label>
-            <Textarea
-              id="ord-notes"
-              value={form.notes}
+            <Label htmlFor="ord-total">Toplam Tutar (₺)</Label>
+            <Input
+              id="ord-total"
+              type="number"
+              min={0}
+              step={0.01}
+              value={form.totalAmount}
               onChange={(e) =>
-                setForm((p) => ({ ...p, notes: e.target.value }))
+                setForm((p) => ({ ...p, totalAmount: Number(e.target.value) }))
               }
-              rows={2}
+              style={{
+                backgroundColor: "oklch(1 0 0)",
+                borderColor: "oklch(0.88 0.01 270)",
+                color: "oklch(0.12 0.012 270)",
+              }}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="ord-items">Sipariş Kalemleri / Notlar</Label>
+            <Textarea
+              id="ord-items"
+              value={form.itemsDescription}
+              onChange={(e) =>
+                setForm((p) => ({ ...p, itemsDescription: e.target.value }))
+              }
+              placeholder="Sipariş detayları, ürün listesi..."
+              rows={3}
               style={{
                 backgroundColor: "oklch(1 0 0)",
                 borderColor: "oklch(0.88 0.01 270)",
@@ -699,7 +556,7 @@ function OrderDialog({
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
               ) : null}
-              {initial ? "Güncelle" : "Oluştur"}
+              {initial?.id ? "Güncelle" : "Oluştur"}
             </Button>
           </DialogFooter>
         </form>
@@ -712,59 +569,130 @@ function OrderDialog({
 export default function ProcurementModulePage({
   companyId,
 }: ProcurementModulePageProps) {
-  const [data, setData] = useState<ProcurementData>(() => loadData(companyId));
+  const { data: procData, isLoading } = useGetProcurementData(companyId);
+  const addSupplier = useAddSupplier();
+  const updateSupplier = useUpdateSupplier();
+  const removeSupplier = useRemoveSupplier();
+  const addOrder = useAddPurchaseOrder();
+  const updateOrder = useUpdatePurchaseOrder();
+  const removeOrder = useRemovePurchaseOrder();
+
+  const suppliers = procData?.suppliers ?? [];
+  const orders = procData?.orders ?? [];
+
   const [supplierDialog, setSupplierDialog] = useState<{
     open: boolean;
-    item?: Supplier;
+    item?: SupplierFormData;
   }>({ open: false });
   const [orderDialog, setOrderDialog] = useState<{
     open: boolean;
-    item?: PurchaseOrder;
+    item?: OrderFormData;
   }>({ open: false });
 
-  const persist = (next: ProcurementData) => {
-    setData(next);
-    saveData(companyId, next);
+  const handleSaveSupplier = async (formData: SupplierFormData) => {
+    const supplierPayload: Supplier = {
+      id: formData.id,
+      companyId,
+      name: formData.name,
+      contactInfo: formData.contactInfo,
+      category: formData.category,
+      rating: BigInt(formData.rating),
+    };
+    try {
+      const isExisting = suppliers.some((s) => s.id === formData.id);
+      if (isExisting) {
+        await updateSupplier.mutateAsync({
+          companyId,
+          supplier: supplierPayload,
+        });
+        toast.success("Tedarikçi güncellendi");
+      } else {
+        await addSupplier.mutateAsync({ companyId, supplier: supplierPayload });
+        toast.success("Tedarikçi eklendi");
+      }
+      setSupplierDialog({ open: false });
+    } catch {
+      toast.error("İşlem başarısız oldu");
+    }
   };
 
-  const saveSupplier = (s: Supplier) => {
-    const exists = data.suppliers.find((x) => x.id === s.id);
-    const suppliers = exists
-      ? data.suppliers.map((x) => (x.id === s.id ? s : x))
-      : [...data.suppliers, s];
-    persist({ ...data, suppliers });
-    toast.success(exists ? "Tedarikçi güncellendi" : "Tedarikçi eklendi");
+  const handleDeleteSupplier = async (id: string) => {
+    try {
+      await removeSupplier.mutateAsync({ companyId, supplierId: id });
+      toast.success("Tedarikçi silindi");
+    } catch {
+      toast.error("Silme işlemi başarısız");
+    }
   };
 
-  const deleteSupplier = (id: string) => {
-    persist({ ...data, suppliers: data.suppliers.filter((x) => x.id !== id) });
-    toast.success("Tedarikçi silindi");
+  const handleSaveOrder = async (formData: OrderFormData) => {
+    const orderPayload: PurchaseOrder = {
+      id: formData.id,
+      companyId,
+      supplierId: formData.supplierId,
+      items: formData.itemsDescription,
+      totalAmount: BigInt(Math.round(formData.totalAmount)),
+      status: formData.status,
+      orderDate: formData.orderDate,
+      expectedDelivery: formData.expectedDelivery,
+    };
+    try {
+      const isExisting = orders.some((o) => o.id === formData.id);
+      if (isExisting) {
+        await updateOrder.mutateAsync({ companyId, order: orderPayload });
+        toast.success("Sipariş güncellendi");
+      } else {
+        await addOrder.mutateAsync({ companyId, order: orderPayload });
+        toast.success("Sipariş oluşturuldu");
+      }
+      setOrderDialog({ open: false });
+    } catch {
+      toast.error("İşlem başarısız oldu");
+    }
   };
 
-  const saveOrder = (o: PurchaseOrder) => {
-    const exists = data.orders.find((x) => x.id === o.id);
-    const orders = exists
-      ? data.orders.map((x) => (x.id === o.id ? o : x))
-      : [...data.orders, o];
-    persist({ ...data, orders });
-    toast.success(exists ? "Sipariş güncellendi" : "Sipariş oluşturuldu");
-  };
-
-  const deleteOrder = (id: string) => {
-    persist({ ...data, orders: data.orders.filter((x) => x.id !== id) });
-    toast.success("Sipariş silindi");
+  const handleDeleteOrder = async (id: string) => {
+    try {
+      await removeOrder.mutateAsync({ companyId, orderId: id });
+      toast.success("Sipariş silindi");
+    } catch {
+      toast.error("Silme işlemi başarısız");
+    }
   };
 
   const getSupplierName = (id: string) =>
-    data.suppliers.find((s) => s.id === id)?.name ?? "—";
+    suppliers.find((s) => s.id === id)?.name ?? "—";
 
   const stats = {
-    total: data.orders.length,
-    pending: data.orders.filter((o) => o.status === "pending").length,
-    approved: data.orders.filter((o) => o.status === "approved").length,
-    delivered: data.orders.filter((o) => o.status === "delivered").length,
-    totalValue: data.orders.reduce((s, o) => s + o.total, 0),
+    total: orders.length,
+    pending: orders.filter((o) => o.status === "pending").length,
+    approved: orders.filter((o) => o.status === "approved").length,
+    delivered: orders.filter((o) => o.status === "delivered").length,
+    totalValue: orders.reduce((s, o) => s + Number(o.totalAmount), 0),
   };
+
+  const isMutating =
+    addSupplier.isPending ||
+    updateSupplier.isPending ||
+    addOrder.isPending ||
+    updateOrder.isPending;
+
+  if (isLoading) {
+    return (
+      <div
+        className="p-6 lg:p-8 flex items-center justify-center min-h-[400px]"
+        data-ocid="procurement.loading_state"
+      >
+        <div
+          className="flex items-center gap-2"
+          style={{ color: "oklch(0.5 0.01 270)" }}
+        >
+          <Loader2 className="h-5 w-5 animate-spin" />
+          <span>Veriler yükleniyor...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 lg:p-8 max-w-6xl mx-auto flex flex-col gap-6 animate-fade-in">
@@ -870,14 +798,14 @@ export default function ProcurementModulePage({
             data-ocid="procurement.orders.tab"
             style={{ color: "oklch(0.35 0.01 270)" }}
           >
-            Siparişler ({data.orders.length})
+            Siparişler ({orders.length})
           </TabsTrigger>
           <TabsTrigger
             value="suppliers"
             data-ocid="procurement.suppliers.tab"
             style={{ color: "oklch(0.35 0.01 270)" }}
           >
-            Tedarikçiler ({data.suppliers.length})
+            Tedarikçiler ({suppliers.length})
           </TabsTrigger>
         </TabsList>
 
@@ -915,7 +843,7 @@ export default function ProcurementModulePage({
                 <Plus className="h-4 w-4 mr-1.5" /> Yeni Sipariş
               </Button>
             </div>
-            {data.orders.length === 0 ? (
+            {orders.length === 0 ? (
               <div
                 className="flex flex-col items-center justify-center py-16"
                 style={{ color: "oklch(0.55 0.01 270)" }}
@@ -956,7 +884,7 @@ export default function ProcurementModulePage({
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {data.orders.map((order, i) => (
+                    {orders.map((order, i) => (
                       <TableRow
                         key={order.id}
                         data-ocid={`procurement.orders.row.${i + 1}`}
@@ -991,7 +919,7 @@ export default function ProcurementModulePage({
                           style={{ color: "oklch(0.45 0.18 190)" }}
                         >
                           ₺
-                          {order.total.toLocaleString("tr-TR", {
+                          {Number(order.totalAmount).toLocaleString("tr-TR", {
                             minimumFractionDigits: 2,
                           })}
                         </TableCell>
@@ -1000,7 +928,18 @@ export default function ProcurementModulePage({
                             <button
                               type="button"
                               onClick={() =>
-                                setOrderDialog({ open: true, item: order })
+                                setOrderDialog({
+                                  open: true,
+                                  item: {
+                                    id: order.id,
+                                    supplierId: order.supplierId,
+                                    itemsDescription: order.items,
+                                    totalAmount: Number(order.totalAmount),
+                                    status: order.status as OrderStatus,
+                                    orderDate: order.orderDate,
+                                    expectedDelivery: order.expectedDelivery,
+                                  },
+                                })
                               }
                               className="p-1.5 rounded-md hover:bg-secondary transition-colors"
                               style={{ color: "oklch(0.5 0.01 270)" }}
@@ -1009,7 +948,7 @@ export default function ProcurementModulePage({
                             </button>
                             <button
                               type="button"
-                              onClick={() => deleteOrder(order.id)}
+                              onClick={() => handleDeleteOrder(order.id)}
                               data-ocid={`procurement.orders.delete_button.${i + 1}`}
                               className="p-1.5 rounded-md hover:bg-red-50 transition-colors"
                               style={{ color: "oklch(0.5 0.18 25)" }}
@@ -1061,7 +1000,7 @@ export default function ProcurementModulePage({
                 <Plus className="h-4 w-4 mr-1.5" /> Yeni Tedarikçi
               </Button>
             </div>
-            {data.suppliers.length === 0 ? (
+            {suppliers.length === 0 ? (
               <div
                 className="flex flex-col items-center justify-center py-16"
                 style={{ color: "oklch(0.55 0.01 270)" }}
@@ -1084,16 +1023,16 @@ export default function ProcurementModulePage({
                         Kategori
                       </TableHead>
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                        E-posta
+                        İletişim
                       </TableHead>
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                        Telefon
+                        Puan
                       </TableHead>
                       <TableHead />
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {data.suppliers.map((sup, i) => (
+                    {suppliers.map((sup, i) => (
                       <TableRow
                         key={sup.id}
                         data-ocid={`procurement.suppliers.row.${i + 1}`}
@@ -1121,23 +1060,33 @@ export default function ProcurementModulePage({
                           </Badge>
                         </TableCell>
                         <TableCell
-                          className="text-sm"
+                          className="text-sm max-w-[200px] truncate"
                           style={{ color: "oklch(0.45 0.01 270)" }}
                         >
-                          {sup.email || "—"}
+                          {sup.contactInfo || "—"}
                         </TableCell>
                         <TableCell
-                          className="text-sm"
-                          style={{ color: "oklch(0.45 0.01 270)" }}
+                          className="text-sm font-mono"
+                          style={{ color: "oklch(0.45 0.18 75)" }}
                         >
-                          {sup.phone || "—"}
+                          {"★".repeat(Number(sup.rating))}
+                          {"☆".repeat(Math.max(0, 5 - Number(sup.rating)))}
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end gap-1">
                             <button
                               type="button"
                               onClick={() =>
-                                setSupplierDialog({ open: true, item: sup })
+                                setSupplierDialog({
+                                  open: true,
+                                  item: {
+                                    id: sup.id,
+                                    name: sup.name,
+                                    contactInfo: sup.contactInfo,
+                                    category: sup.category,
+                                    rating: Number(sup.rating),
+                                  },
+                                })
                               }
                               className="p-1.5 rounded-md hover:bg-secondary transition-colors"
                               style={{ color: "oklch(0.5 0.01 270)" }}
@@ -1146,7 +1095,7 @@ export default function ProcurementModulePage({
                             </button>
                             <button
                               type="button"
-                              onClick={() => deleteSupplier(sup.id)}
+                              onClick={() => handleDeleteSupplier(sup.id)}
                               data-ocid={`procurement.suppliers.delete_button.${i + 1}`}
                               className="p-1.5 rounded-md hover:bg-red-50 transition-colors"
                               style={{ color: "oklch(0.5 0.18 25)" }}
@@ -1170,14 +1119,16 @@ export default function ProcurementModulePage({
         open={supplierDialog.open}
         initial={supplierDialog.item}
         onClose={() => setSupplierDialog({ open: false })}
-        onSave={saveSupplier}
+        onSave={handleSaveSupplier}
+        saving={addSupplier.isPending || updateSupplier.isPending}
       />
       <OrderDialog
         open={orderDialog.open}
         initial={orderDialog.item}
         onClose={() => setOrderDialog({ open: false })}
-        onSave={saveOrder}
-        suppliers={data.suppliers}
+        onSave={handleSaveOrder}
+        suppliers={suppliers}
+        saving={addOrder.isPending || updateOrder.isPending || isMutating}
       />
     </div>
   );

@@ -1,5 +1,23 @@
-import { Building2, CheckCheck, Copy, Loader2, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Building2,
+  CheckCheck,
+  Copy,
+  Edit2,
+  Loader2,
+  User,
+} from "lucide-react";
 import React, { useState } from "react";
+import { toast } from "sonner";
 import CompanyMembershipCard from "../components/CompanyMembershipCard";
 import Header from "../components/Header";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -7,10 +25,12 @@ import {
   useGetCallerUserProfile,
   useGetCompany,
   useGetMyEmployeeCode,
+  useSaveCallerUserProfile,
 } from "../hooks/useQueries";
 
 interface StaffDashboardProps {
   onEnterCompany?: (companyId: string) => void;
+  onEnterStaffModules?: (companyId: string, grantedModules: string[]) => void;
 }
 
 function getRoleName(roleCode: bigint, t: (key: string) => string): string {
@@ -23,59 +43,65 @@ function getRoleName(roleCode: bigint, t: (key: string) => string): string {
 }
 
 const MODULE_LABELS: Record<string, string> = {
-  hr: "İnsan Kaynakları",
-  accounting: "Muhasebe",
-  projects: "Proje Yönetimi",
-  inventory: "Stok/Envanter",
-  crm: "CRM",
-  purchasing: "Satın Alma",
-  production: "Üretim",
-  tasks: "Görev Yönetimi",
+  HR: "İnsan Kaynakları",
+  Accounting: "Muhasebe",
+  Projects: "Proje Yönetimi",
+  Inventory: "Stok/Envanter",
+  CRM: "CRM",
+  Procurement: "Satın Alma",
+  Manufacturing: "Üretim",
+  Workflow: "İş Akışları",
+  Reporting: "Raporlama",
 };
 
 const MODULE_COLORS: Record<
   string,
   { bg: string; color: string; border: string }
 > = {
-  hr: {
+  HR: {
     bg: "oklch(0.93 0.04 280)",
     color: "oklch(0.35 0.18 280)",
     border: "oklch(0.82 0.1 280)",
   },
-  accounting: {
+  Accounting: {
     bg: "oklch(0.92 0.06 145)",
     color: "oklch(0.38 0.15 145)",
     border: "oklch(0.8 0.1 145)",
   },
-  projects: {
+  Projects: {
     bg: "oklch(0.94 0.05 220)",
     color: "oklch(0.38 0.18 220)",
     border: "oklch(0.82 0.1 220)",
   },
-  inventory: {
+  Inventory: {
     bg: "oklch(0.94 0.06 65)",
     color: "oklch(0.42 0.16 50)",
     border: "oklch(0.84 0.1 65)",
   },
-  crm: {
+  CRM: {
     bg: "oklch(0.94 0.04 330)",
     color: "oklch(0.42 0.18 330)",
     border: "oklch(0.84 0.1 330)",
   },
-  purchasing: {
+  Procurement: {
     bg: "oklch(0.94 0.05 190)",
     color: "oklch(0.38 0.18 190)",
     border: "oklch(0.82 0.1 190)",
   },
-  production: {
+  Manufacturing: {
     bg: "oklch(0.94 0.04 25)",
     color: "oklch(0.45 0.18 25)",
     border: "oklch(0.84 0.1 25)",
   },
-  tasks: {
+  Workflow: {
     bg: "oklch(0.93 0.03 300)",
     color: "oklch(0.38 0.16 300)",
     border: "oklch(0.82 0.09 300)",
+  },
+  Reporting: {
+    bg: "oklch(0.93 0.03 240)",
+    color: "oklch(0.38 0.16 240)",
+    border: "oklch(0.82 0.09 240)",
   },
 };
 
@@ -84,6 +110,7 @@ interface StaffCompanyCardProps {
   roleCode: bigint;
   grantedModules: Array<string>;
   onEnter: () => void;
+  onEnterStaffModules?: (companyId: string, grantedModules: string[]) => void;
 }
 
 function StaffCompanyCard({
@@ -91,6 +118,7 @@ function StaffCompanyCard({
   roleCode,
   grantedModules,
   onEnter,
+  onEnterStaffModules,
 }: StaffCompanyCardProps) {
   const { t } = useLanguage();
   const { data: company, isLoading } = useGetCompany(companyId);
@@ -120,6 +148,15 @@ function StaffCompanyCard({
   const isOwnerOrManager = Number(roleCode) === 1 || Number(roleCode) === 2;
   const hasFullAccess = isOwnerOrManager && grantedModules.length === 0;
 
+  const handleEnterClick = () => {
+    if (isOwnerOrManager) {
+      onEnter();
+    } else {
+      // Staff/Administrator role: use module-specific navigation
+      onEnterStaffModules?.(companyId, grantedModules);
+    }
+  };
+
   return (
     <div
       className="rounded-xl overflow-hidden"
@@ -133,7 +170,7 @@ function StaffCompanyCard({
         companyName={company.name}
         companyId={company.id}
         roleName={getRoleName(roleCode, t)}
-        onEnter={onEnter}
+        onEnter={handleEnterClick}
       />
       {/* Module badges */}
       <div
@@ -192,15 +229,21 @@ function StaffCompanyCard({
 
 export default function StaffDashboard({
   onEnterCompany,
+  onEnterStaffModules,
 }: StaffDashboardProps) {
   const { t } = useLanguage();
   const { data: profile, isLoading: profileLoading } =
     useGetCallerUserProfile();
   const { data: employeeCode } = useGetMyEmployeeCode();
+  const saveProfile = useSaveCallerUserProfile();
+
   const [activeTab, setActiveTab] = useState<"companies" | "profile">(
     "companies",
   );
   const [codeCopied, setCodeCopied] = useState(false);
+  const [showEditProfile, setShowEditProfile] = useState(false);
+  const [editName, setEditName] = useState("");
+  const [editTitle, setEditTitle] = useState("");
 
   const handleCopyCode = async () => {
     if (!employeeCode) return;
@@ -210,6 +253,27 @@ export default function StaffDashboard({
       setTimeout(() => setCodeCopied(false), 2000);
     } catch {
       setCodeCopied(false);
+    }
+  };
+
+  const openEditProfile = () => {
+    setEditName(profile?.name ?? "");
+    setEditTitle(profile?.projectManager ?? "");
+    setShowEditProfile(true);
+  };
+
+  const handleSaveProfile = async () => {
+    if (!profile) return;
+    try {
+      await saveProfile.mutateAsync({
+        ...profile,
+        name: editName,
+        projectManager: editTitle,
+      });
+      toast.success("Profil güncellendi");
+      setShowEditProfile(false);
+    } catch {
+      toast.error("Profil güncellenemedi");
     }
   };
 
@@ -340,6 +404,7 @@ export default function StaffDashboard({
                           roleCode={membership.roleCode}
                           grantedModules={membership.grantedModules}
                           onEnter={() => onEnterCompany?.(membership.companyId)}
+                          onEnterStaffModules={onEnterStaffModules}
                         />
                       ))}
                     </>
@@ -350,6 +415,7 @@ export default function StaffDashboard({
                       roleCode={profile!.roleCode}
                       grantedModules={[]}
                       onEnter={() => onEnterCompany?.(profile!.companyId)}
+                      onEnterStaffModules={onEnterStaffModules}
                     />
                   )}
                 </>
@@ -473,7 +539,7 @@ export default function StaffDashboard({
                       {profile?.name?.charAt(0)?.toUpperCase() || "?"}
                     </span>
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <h2
                       className="font-bold text-lg"
                       style={{
@@ -492,6 +558,21 @@ export default function StaffDashboard({
                       </p>
                     )}
                   </div>
+                  {/* Edit profile button */}
+                  <button
+                    type="button"
+                    onClick={openEditProfile}
+                    data-ocid="staff.profile.edit_button"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex-shrink-0"
+                    style={{
+                      backgroundColor: "oklch(0.88 0.06 280)",
+                      color: "oklch(0.35 0.18 280)",
+                      border: "1px solid oklch(0.78 0.1 280)",
+                    }}
+                  >
+                    <Edit2 className="h-3.5 w-3.5" />
+                    Düzenle
+                  </button>
                 </div>
 
                 {/* Profile details */}
@@ -593,6 +674,92 @@ export default function StaffDashboard({
           © {new Date().getFullYear()} ERPVerse. {t("footer.rights")}.
         </span>
       </footer>
+
+      {/* Profile Edit Dialog */}
+      <Dialog open={showEditProfile} onOpenChange={setShowEditProfile}>
+        <DialogContent
+          className="sm:max-w-sm"
+          data-ocid="staff.profile.edit.dialog"
+          style={{
+            backgroundColor: "oklch(1 0 0)",
+            color: "oklch(0.12 0.012 270)",
+          }}
+        >
+          <DialogHeader>
+            <DialogTitle style={{ color: "oklch(0.12 0.012 270)" }}>
+              Profili Düzenle
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <div className="space-y-1.5">
+              <Label
+                style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
+              >
+                İsim
+              </Label>
+              <Input
+                value={editName}
+                onChange={(e) => setEditName(e.target.value)}
+                placeholder="Adınız Soyadınız"
+                data-ocid="staff.profile.edit.name.input"
+                style={{
+                  backgroundColor: "oklch(1 0 0)",
+                  color: "oklch(0.12 0.012 270)",
+                  borderColor: "oklch(0.88 0.01 270)",
+                }}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label
+                style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
+              >
+                Unvan / Pozisyon
+              </Label>
+              <Input
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                placeholder="Örn: Yazılım Geliştirici"
+                data-ocid="staff.profile.edit.title.input"
+                style={{
+                  backgroundColor: "oklch(1 0 0)",
+                  color: "oklch(0.12 0.012 270)",
+                  borderColor: "oklch(0.88 0.01 270)",
+                }}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowEditProfile(false)}
+              data-ocid="staff.profile.edit.cancel_button"
+              style={{
+                color: "oklch(0.35 0.01 270)",
+                borderColor: "oklch(0.88 0.01 270)",
+                backgroundColor: "oklch(1 0 0)",
+              }}
+            >
+              İptal
+            </Button>
+            <Button
+              onClick={handleSaveProfile}
+              disabled={saveProfile.isPending}
+              data-ocid="staff.profile.edit.save_button"
+              style={{
+                background:
+                  "linear-gradient(135deg, oklch(0.45 0.22 280), oklch(0.5 0.2 310))",
+                color: "oklch(1 0 0)",
+                border: "none",
+              }}
+            >
+              {saveProfile.isPending ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : null}
+              Kaydet
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

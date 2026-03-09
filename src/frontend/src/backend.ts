@@ -89,10 +89,108 @@ export class ExternalBlob {
         return this;
     }
 }
-export interface InvoiceLineItem {
+export interface UserProfile {
+    roleCode: bigint;
+    employeeCode: string;
+    name: string;
+    projectManager: string;
+    memberships: Array<CompanyMembership>;
+    companyId: string;
+}
+export interface CommunicationLog {
+    id: string;
+    date: string;
+    note: string;
+    logType: string;
+    customerId: string;
+    companyId: CompanyId;
+}
+export interface Role {
+    permissions: Array<string>;
+    name: string;
+    parentRole?: string;
+}
+export interface Transaction {
+    id: string;
+    transactionType: string;
+    date: string;
     description: string;
+    category: string;
+    amount: bigint;
+    companyId: CompanyId;
+}
+export interface PhoneNumber {
+    countryCode: string;
+    number: string;
+}
+export type EmployeeCode = string;
+export interface LeaveRequest {
+    id: string;
+    status: string;
+    endDate: string;
+    employeeId: string;
+    leaveType: string;
+    startDate: string;
+    companyId: CompanyId;
+}
+export interface BOMItem {
+    id: string;
+    unit: string;
+    workOrderId: string;
     quantity: bigint;
-    unitPrice: bigint;
+    materialName: string;
+    companyId: CompanyId;
+}
+export interface Staff {
+    roleCode: bigint;
+    principal: Principal;
+    employeeCode: EmployeeCode;
+    grantedModules: Array<string>;
+    name: string;
+    projectManager: string;
+    memberships: Array<CompanyMembership>;
+    companyId: CompanyId;
+}
+export interface EmployeeRecord {
+    id: string;
+    title: string;
+    principal?: Principal;
+    hireDate: string;
+    name: string;
+    department: string;
+    companyId: CompanyId;
+}
+export interface SalesOpportunity {
+    id: string;
+    closeDate: string;
+    stage: string;
+    estimatedValue: bigint;
+    customerId: string;
+    companyId: CompanyId;
+}
+export interface CompanyMembership {
+    roleCode: bigint;
+    grantedModules: Array<string>;
+    companyId: string;
+}
+export interface PurchaseOrder {
+    id: string;
+    status: string;
+    orderDate: string;
+    totalAmount: bigint;
+    expectedDelivery: string;
+    items: string;
+    supplierId: string;
+    companyId: CompanyId;
+}
+export interface StockMovement {
+    id: string;
+    date: string;
+    productId: string;
+    movementType: string;
+    quantity: bigint;
+    reason: string;
+    companyId: CompanyId;
 }
 export interface FinancialSummary {
     invoiceCount: bigint;
@@ -112,12 +210,25 @@ export interface CompanyProfile {
     authorizedPerson: string;
     phone: PhoneNumber;
 }
-export interface CommunicationLog {
+export interface WorkflowTask {
     id: string;
-    date: string;
-    note: string;
-    logType: string;
-    customerId: string;
+    status: string;
+    assignee?: Principal;
+    title: string;
+    tags: Array<string>;
+    dueDate: string;
+    description: string;
+    priority: string;
+    companyId: CompanyId;
+}
+export interface WorkOrder {
+    id: string;
+    status: string;
+    endDate: string;
+    productName: string;
+    notes: string;
+    quantity: bigint;
+    startDate: string;
     companyId: CompanyId;
 }
 export interface ProjectTask {
@@ -153,74 +264,6 @@ export interface Customer {
     name: string;
     companyId: CompanyId;
 }
-export interface Role {
-    permissions: Array<string>;
-    name: string;
-    parentRole?: string;
-}
-export interface PhoneNumber {
-    countryCode: string;
-    number: string;
-}
-export interface Transaction {
-    id: string;
-    transactionType: string;
-    date: string;
-    description: string;
-    category: string;
-    amount: bigint;
-    companyId: CompanyId;
-}
-export type EmployeeCode = string;
-export interface LeaveRequest {
-    id: string;
-    status: string;
-    endDate: string;
-    employeeId: string;
-    leaveType: string;
-    startDate: string;
-    companyId: CompanyId;
-}
-export interface SalaryInfo {
-    id: string;
-    employeeId: string;
-    currency: string;
-    baseSalary: bigint;
-    companyId: CompanyId;
-}
-export type CompanyId = string;
-export interface Staff {
-    roleCode: bigint;
-    principal: Principal;
-    employeeCode: EmployeeCode;
-    grantedModules: Array<string>;
-    name: string;
-    projectManager: string;
-    memberships: Array<CompanyMembership>;
-    companyId: CompanyId;
-}
-export interface EmployeeRecord {
-    id: string;
-    title: string;
-    principal?: Principal;
-    hireDate: string;
-    name: string;
-    department: string;
-    companyId: CompanyId;
-}
-export interface SalesOpportunity {
-    id: string;
-    closeDate: string;
-    stage: string;
-    estimatedValue: bigint;
-    customerId: string;
-    companyId: CompanyId;
-}
-export interface CompanyMembership {
-    roleCode: bigint;
-    grantedModules: Array<string>;
-    companyId: string;
-}
 export interface Company {
     id: CompanyId;
     employeeCount: bigint;
@@ -235,6 +278,22 @@ export interface Company {
     authorizedPerson: string;
     phone: PhoneNumber;
 }
+export type CompanyId = string;
+export interface SalaryInfo {
+    id: string;
+    employeeId: string;
+    currency: string;
+    baseSalary: bigint;
+    companyId: CompanyId;
+}
+export interface Supplier {
+    id: string;
+    contactInfo: string;
+    name: string;
+    category: string;
+    rating: bigint;
+    companyId: CompanyId;
+}
 export interface Project {
     id: string;
     status: string;
@@ -242,15 +301,6 @@ export interface Project {
     description: string;
     deadline: string;
     teamMembers: Array<Principal>;
-    companyId: CompanyId;
-}
-export interface StockMovement {
-    id: string;
-    date: string;
-    productId: string;
-    movementType: string;
-    quantity: bigint;
-    reason: string;
     companyId: CompanyId;
 }
 export interface Product {
@@ -262,13 +312,10 @@ export interface Product {
     unitPrice: bigint;
     companyId: CompanyId;
 }
-export interface UserProfile {
-    roleCode: bigint;
-    employeeCode: string;
-    name: string;
-    projectManager: string;
-    memberships: Array<CompanyMembership>;
-    companyId: string;
+export interface InvoiceLineItem {
+    description: string;
+    quantity: bigint;
+    unitPrice: bigint;
 }
 export enum RoleAssignmentResult {
     alreadyAssigned = "alreadyAssigned",
@@ -284,6 +331,7 @@ export enum UserRole {
 }
 export interface backendInterface {
     _initializeAccessControlWithSecret(userSecret: string): Promise<void>;
+    addBOMItem(companyId: CompanyId, bomItem: BOMItem): Promise<BOMItem>;
     addCommunicationLog(companyId: CompanyId, log: CommunicationLog): Promise<CommunicationLog>;
     addCustomRole(companyId: string, role: Role): Promise<void>;
     /**
@@ -306,16 +354,35 @@ export interface backendInterface {
      * / ==========================
      */
     addProduct(companyId: CompanyId, product: Product): Promise<Product>;
+    addPurchaseOrder(companyId: CompanyId, order: PurchaseOrder): Promise<PurchaseOrder>;
     addSalaryInfo(companyId: CompanyId, salary: SalaryInfo): Promise<SalaryInfo>;
     addSalesOpportunity(companyId: CompanyId, opportunity: SalesOpportunity): Promise<SalesOpportunity>;
     addStaffToCompany(companyId: CompanyId, employeeCode: EmployeeCode, roleName: string): Promise<RoleAssignmentResult>;
     addStockMovement(companyId: CompanyId, movement: StockMovement): Promise<StockMovement>;
     /**
      * / ==========================
+     * / Procurement Module
+     * / ==========================
+     */
+    addSupplier(companyId: CompanyId, supplier: Supplier): Promise<Supplier>;
+    /**
+     * / ==========================
      * / Accounting Module
      * / ==========================
      */
     addTransaction(companyId: CompanyId, tx: Transaction): Promise<Transaction>;
+    /**
+     * / ==========================
+     * / Manufacturing Module
+     * / ==========================
+     */
+    addWorkOrder(companyId: CompanyId, workOrder: WorkOrder): Promise<WorkOrder>;
+    /**
+     * / ==========================
+     * / Workflow Module
+     * / ==========================
+     */
+    addWorkflowTask(companyId: CompanyId, task: WorkflowTask): Promise<WorkflowTask>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     createCompany(profile: CompanyProfile): Promise<Company>;
     /**
@@ -357,7 +424,15 @@ export interface backendInterface {
         movements: Array<StockMovement>;
         products: Array<Product>;
     }>;
+    getManufacturingData(companyId: CompanyId): Promise<{
+        workOrders: Array<WorkOrder>;
+        bomItems: Array<BOMItem>;
+    }>;
     getMyEmployeeCode(): Promise<string | null>;
+    getProcurementData(companyId: CompanyId): Promise<{
+        orders: Array<PurchaseOrder>;
+        suppliers: Array<Supplier>;
+    }>;
     getProjectData(companyId: CompanyId): Promise<{
         tasks: Array<ProjectTask>;
         projects: Array<Project>;
@@ -365,22 +440,31 @@ export interface backendInterface {
     getStaffForCompany(companyId: CompanyId): Promise<Array<Staff>>;
     getStaffName(principal: Principal): Promise<string | null>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
+    getWorkflowData(companyId: CompanyId): Promise<{
+        tasks: Array<WorkflowTask>;
+    }>;
     grantModuleAccess(companyId: CompanyId, staffPrincipal: Principal, moduleName: string): Promise<void>;
     isCallerAdmin(): Promise<boolean>;
     isEmployeeInCompany(companyId: string): Promise<boolean>;
     isRegisteredAsCompany(): Promise<string | null>;
     listDefaultRoles(): Promise<Array<Role>>;
     listRolesForCompany(companyId: string): Promise<Array<Role>>;
+    removeBOMItem(companyId: CompanyId, bomItemId: string): Promise<boolean>;
     removeCustomRole(companyId: string, roleName: string): Promise<void>;
     removeCustomer(companyId: CompanyId, customerId: string): Promise<boolean>;
     removeEmployee(companyId: CompanyId, employeeId: string): Promise<boolean>;
     removeProduct(companyId: CompanyId, productId: string): Promise<boolean>;
     removeProject(companyId: CompanyId, projectId: string): Promise<boolean>;
     removeProjectTask(companyId: CompanyId, taskId: string): Promise<boolean>;
+    removePurchaseOrder(companyId: CompanyId, orderId: string): Promise<boolean>;
     removeStaffFromCompany(companyId: CompanyId, staffPrincipal: Principal): Promise<boolean>;
+    removeSupplier(companyId: CompanyId, supplierId: string): Promise<boolean>;
     removeTransaction(companyId: CompanyId, txId: string): Promise<boolean>;
+    removeWorkOrder(companyId: CompanyId, workOrderId: string): Promise<boolean>;
+    removeWorkflowTask(companyId: CompanyId, taskId: string): Promise<boolean>;
     revokeModuleAccess(companyId: CompanyId, staffPrincipal: Principal, moduleName: string): Promise<void>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
+    updateBOMItem(companyId: CompanyId, updatedBOMItem: BOMItem): Promise<BOMItem>;
     updateCompany(id: CompanyId, profile: CompanyProfile): Promise<Company>;
     updateCustomer(companyId: CompanyId, updatedCustomer: Customer): Promise<Customer>;
     updateEmployee(companyId: CompanyId, updatedEmployee: EmployeeRecord): Promise<EmployeeRecord>;
@@ -389,11 +473,15 @@ export interface backendInterface {
     updateProduct(companyId: CompanyId, updatedProduct: Product): Promise<Product>;
     updateProject(companyId: CompanyId, updatedProject: Project): Promise<Project>;
     updateProjectTask(companyId: CompanyId, updatedTask: ProjectTask): Promise<ProjectTask>;
+    updatePurchaseOrder(companyId: CompanyId, updatedOrder: PurchaseOrder): Promise<PurchaseOrder>;
     updateSalesOpportunity(companyId: CompanyId, updatedOpportunity: SalesOpportunity): Promise<SalesOpportunity>;
     updateStaffRole(companyId: CompanyId, staffPrincipal: Principal, newRoleName: string): Promise<RoleAssignmentResult>;
+    updateSupplier(companyId: CompanyId, updatedSupplier: Supplier): Promise<Supplier>;
     updateTransaction(companyId: CompanyId, updatedTx: Transaction): Promise<Transaction>;
+    updateWorkOrder(companyId: CompanyId, updatedWorkOrder: WorkOrder): Promise<WorkOrder>;
+    updateWorkflowTask(companyId: CompanyId, updatedTask: WorkflowTask): Promise<WorkflowTask>;
 }
-import type { Company as _Company, CompanyId as _CompanyId, EmployeeRecord as _EmployeeRecord, LeaveRequest as _LeaveRequest, Project as _Project, ProjectTask as _ProjectTask, Role as _Role, RoleAssignmentResult as _RoleAssignmentResult, SalaryInfo as _SalaryInfo, UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
+import type { Company as _Company, CompanyId as _CompanyId, EmployeeRecord as _EmployeeRecord, LeaveRequest as _LeaveRequest, Project as _Project, ProjectTask as _ProjectTask, Role as _Role, RoleAssignmentResult as _RoleAssignmentResult, SalaryInfo as _SalaryInfo, UserProfile as _UserProfile, UserRole as _UserRole, WorkflowTask as _WorkflowTask } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
     async _initializeAccessControlWithSecret(arg0: string): Promise<void> {
@@ -407,6 +495,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor._initializeAccessControlWithSecret(arg0);
+            return result;
+        }
+    }
+    async addBOMItem(arg0: CompanyId, arg1: BOMItem): Promise<BOMItem> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.addBOMItem(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.addBOMItem(arg0, arg1);
             return result;
         }
     }
@@ -508,6 +610,20 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async addPurchaseOrder(arg0: CompanyId, arg1: PurchaseOrder): Promise<PurchaseOrder> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.addPurchaseOrder(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.addPurchaseOrder(arg0, arg1);
+            return result;
+        }
+    }
     async addSalaryInfo(arg0: CompanyId, arg1: SalaryInfo): Promise<SalaryInfo> {
         if (this.processError) {
             try {
@@ -564,6 +680,20 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async addSupplier(arg0: CompanyId, arg1: Supplier): Promise<Supplier> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.addSupplier(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.addSupplier(arg0, arg1);
+            return result;
+        }
+    }
     async addTransaction(arg0: CompanyId, arg1: Transaction): Promise<Transaction> {
         if (this.processError) {
             try {
@@ -578,17 +708,45 @@ export class Backend implements backendInterface {
             return result;
         }
     }
-    async assignCallerUserRole(arg0: Principal, arg1: UserRole): Promise<void> {
+    async addWorkOrder(arg0: CompanyId, arg1: WorkOrder): Promise<WorkOrder> {
         if (this.processError) {
             try {
-                const result = await this.actor.assignCallerUserRole(arg0, to_candid_UserRole_n10(this._uploadFile, this._downloadFile, arg1));
+                const result = await this.actor.addWorkOrder(arg0, arg1);
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.assignCallerUserRole(arg0, to_candid_UserRole_n10(this._uploadFile, this._downloadFile, arg1));
+            const result = await this.actor.addWorkOrder(arg0, arg1);
+            return result;
+        }
+    }
+    async addWorkflowTask(arg0: CompanyId, arg1: WorkflowTask): Promise<WorkflowTask> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.addWorkflowTask(arg0, to_candid_WorkflowTask_n10(this._uploadFile, this._downloadFile, arg1));
+                return from_candid_WorkflowTask_n12(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.addWorkflowTask(arg0, to_candid_WorkflowTask_n10(this._uploadFile, this._downloadFile, arg1));
+            return from_candid_WorkflowTask_n12(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async assignCallerUserRole(arg0: Principal, arg1: UserRole): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.assignCallerUserRole(arg0, to_candid_UserRole_n14(this._uploadFile, this._downloadFile, arg1));
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.assignCallerUserRole(arg0, to_candid_UserRole_n14(this._uploadFile, this._downloadFile, arg1));
             return result;
         }
     }
@@ -623,57 +781,57 @@ export class Backend implements backendInterface {
     async createProjectTask(arg0: CompanyId, arg1: ProjectTask): Promise<ProjectTask> {
         if (this.processError) {
             try {
-                const result = await this.actor.createProjectTask(arg0, to_candid_ProjectTask_n12(this._uploadFile, this._downloadFile, arg1));
-                return from_candid_ProjectTask_n14(this._uploadFile, this._downloadFile, result);
+                const result = await this.actor.createProjectTask(arg0, to_candid_ProjectTask_n16(this._uploadFile, this._downloadFile, arg1));
+                return from_candid_ProjectTask_n18(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.createProjectTask(arg0, to_candid_ProjectTask_n12(this._uploadFile, this._downloadFile, arg1));
-            return from_candid_ProjectTask_n14(this._uploadFile, this._downloadFile, result);
+            const result = await this.actor.createProjectTask(arg0, to_candid_ProjectTask_n16(this._uploadFile, this._downloadFile, arg1));
+            return from_candid_ProjectTask_n18(this._uploadFile, this._downloadFile, result);
         }
     }
     async findByName(arg0: string): Promise<Company | null> {
         if (this.processError) {
             try {
                 const result = await this.actor.findByName(arg0);
-                return from_candid_opt_n16(this._uploadFile, this._downloadFile, result);
+                return from_candid_opt_n20(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.findByName(arg0);
-            return from_candid_opt_n16(this._uploadFile, this._downloadFile, result);
+            return from_candid_opt_n20(this._uploadFile, this._downloadFile, result);
         }
     }
     async findByOwner(arg0: Principal): Promise<Company | null> {
         if (this.processError) {
             try {
                 const result = await this.actor.findByOwner(arg0);
-                return from_candid_opt_n16(this._uploadFile, this._downloadFile, result);
+                return from_candid_opt_n20(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.findByOwner(arg0);
-            return from_candid_opt_n16(this._uploadFile, this._downloadFile, result);
+            return from_candid_opt_n20(this._uploadFile, this._downloadFile, result);
         }
     }
     async findByToken(arg0: string): Promise<Company | null> {
         if (this.processError) {
             try {
                 const result = await this.actor.findByToken(arg0);
-                return from_candid_opt_n16(this._uploadFile, this._downloadFile, result);
+                return from_candid_opt_n20(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.findByToken(arg0);
-            return from_candid_opt_n16(this._uploadFile, this._downloadFile, result);
+            return from_candid_opt_n20(this._uploadFile, this._downloadFile, result);
         }
     }
     async getAccountingData(arg0: CompanyId): Promise<{
@@ -715,42 +873,42 @@ export class Backend implements backendInterface {
         if (this.processError) {
             try {
                 const result = await this.actor.getCallerUserProfile();
-                return from_candid_opt_n17(this._uploadFile, this._downloadFile, result);
+                return from_candid_opt_n21(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getCallerUserProfile();
-            return from_candid_opt_n17(this._uploadFile, this._downloadFile, result);
+            return from_candid_opt_n21(this._uploadFile, this._downloadFile, result);
         }
     }
     async getCallerUserRole(): Promise<UserRole> {
         if (this.processError) {
             try {
                 const result = await this.actor.getCallerUserRole();
-                return from_candid_UserRole_n18(this._uploadFile, this._downloadFile, result);
+                return from_candid_UserRole_n22(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getCallerUserRole();
-            return from_candid_UserRole_n18(this._uploadFile, this._downloadFile, result);
+            return from_candid_UserRole_n22(this._uploadFile, this._downloadFile, result);
         }
     }
     async getCompany(arg0: string): Promise<Company | null> {
         if (this.processError) {
             try {
                 const result = await this.actor.getCompany(arg0);
-                return from_candid_opt_n16(this._uploadFile, this._downloadFile, result);
+                return from_candid_opt_n20(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getCompany(arg0);
-            return from_candid_opt_n16(this._uploadFile, this._downloadFile, result);
+            return from_candid_opt_n20(this._uploadFile, this._downloadFile, result);
         }
     }
     async getDashboardSummary(arg0: CompanyId): Promise<DashboardSummary> {
@@ -803,14 +961,14 @@ export class Backend implements backendInterface {
         if (this.processError) {
             try {
                 const result = await this.actor.getHRData(arg0);
-                return from_candid_record_n20(this._uploadFile, this._downloadFile, result);
+                return from_candid_record_n24(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getHRData(arg0);
-            return from_candid_record_n20(this._uploadFile, this._downloadFile, result);
+            return from_candid_record_n24(this._uploadFile, this._downloadFile, result);
         }
     }
     async getInventoryData(arg0: CompanyId): Promise<{
@@ -830,18 +988,52 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async getManufacturingData(arg0: CompanyId): Promise<{
+        workOrders: Array<WorkOrder>;
+        bomItems: Array<BOMItem>;
+    }> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getManufacturingData(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getManufacturingData(arg0);
+            return result;
+        }
+    }
     async getMyEmployeeCode(): Promise<string | null> {
         if (this.processError) {
             try {
                 const result = await this.actor.getMyEmployeeCode();
-                return from_candid_opt_n22(this._uploadFile, this._downloadFile, result);
+                return from_candid_opt_n26(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getMyEmployeeCode();
-            return from_candid_opt_n22(this._uploadFile, this._downloadFile, result);
+            return from_candid_opt_n26(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getProcurementData(arg0: CompanyId): Promise<{
+        orders: Array<PurchaseOrder>;
+        suppliers: Array<Supplier>;
+    }> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getProcurementData(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getProcurementData(arg0);
+            return result;
         }
     }
     async getProjectData(arg0: CompanyId): Promise<{
@@ -851,14 +1043,14 @@ export class Backend implements backendInterface {
         if (this.processError) {
             try {
                 const result = await this.actor.getProjectData(arg0);
-                return from_candid_record_n23(this._uploadFile, this._downloadFile, result);
+                return from_candid_record_n27(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getProjectData(arg0);
-            return from_candid_record_n23(this._uploadFile, this._downloadFile, result);
+            return from_candid_record_n27(this._uploadFile, this._downloadFile, result);
         }
     }
     async getStaffForCompany(arg0: CompanyId): Promise<Array<Staff>> {
@@ -879,28 +1071,44 @@ export class Backend implements backendInterface {
         if (this.processError) {
             try {
                 const result = await this.actor.getStaffName(arg0);
-                return from_candid_opt_n22(this._uploadFile, this._downloadFile, result);
+                return from_candid_opt_n26(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getStaffName(arg0);
-            return from_candid_opt_n22(this._uploadFile, this._downloadFile, result);
+            return from_candid_opt_n26(this._uploadFile, this._downloadFile, result);
         }
     }
     async getUserProfile(arg0: Principal): Promise<UserProfile | null> {
         if (this.processError) {
             try {
                 const result = await this.actor.getUserProfile(arg0);
-                return from_candid_opt_n17(this._uploadFile, this._downloadFile, result);
+                return from_candid_opt_n21(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getUserProfile(arg0);
-            return from_candid_opt_n17(this._uploadFile, this._downloadFile, result);
+            return from_candid_opt_n21(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getWorkflowData(arg0: CompanyId): Promise<{
+        tasks: Array<WorkflowTask>;
+    }> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getWorkflowData(arg0);
+                return from_candid_record_n29(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getWorkflowData(arg0);
+            return from_candid_record_n29(this._uploadFile, this._downloadFile, result);
         }
     }
     async grantModuleAccess(arg0: CompanyId, arg1: Principal, arg2: string): Promise<void> {
@@ -949,42 +1157,56 @@ export class Backend implements backendInterface {
         if (this.processError) {
             try {
                 const result = await this.actor.isRegisteredAsCompany();
-                return from_candid_opt_n22(this._uploadFile, this._downloadFile, result);
+                return from_candid_opt_n26(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.isRegisteredAsCompany();
-            return from_candid_opt_n22(this._uploadFile, this._downloadFile, result);
+            return from_candid_opt_n26(this._uploadFile, this._downloadFile, result);
         }
     }
     async listDefaultRoles(): Promise<Array<Role>> {
         if (this.processError) {
             try {
                 const result = await this.actor.listDefaultRoles();
-                return from_candid_vec_n25(this._uploadFile, this._downloadFile, result);
+                return from_candid_vec_n31(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.listDefaultRoles();
-            return from_candid_vec_n25(this._uploadFile, this._downloadFile, result);
+            return from_candid_vec_n31(this._uploadFile, this._downloadFile, result);
         }
     }
     async listRolesForCompany(arg0: string): Promise<Array<Role>> {
         if (this.processError) {
             try {
                 const result = await this.actor.listRolesForCompany(arg0);
-                return from_candid_vec_n25(this._uploadFile, this._downloadFile, result);
+                return from_candid_vec_n31(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.listRolesForCompany(arg0);
-            return from_candid_vec_n25(this._uploadFile, this._downloadFile, result);
+            return from_candid_vec_n31(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async removeBOMItem(arg0: CompanyId, arg1: string): Promise<boolean> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.removeBOMItem(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.removeBOMItem(arg0, arg1);
+            return result;
         }
     }
     async removeCustomRole(arg0: string, arg1: string): Promise<void> {
@@ -1071,6 +1293,20 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async removePurchaseOrder(arg0: CompanyId, arg1: string): Promise<boolean> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.removePurchaseOrder(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.removePurchaseOrder(arg0, arg1);
+            return result;
+        }
+    }
     async removeStaffFromCompany(arg0: CompanyId, arg1: Principal): Promise<boolean> {
         if (this.processError) {
             try {
@@ -1085,6 +1321,20 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async removeSupplier(arg0: CompanyId, arg1: string): Promise<boolean> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.removeSupplier(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.removeSupplier(arg0, arg1);
+            return result;
+        }
+    }
     async removeTransaction(arg0: CompanyId, arg1: string): Promise<boolean> {
         if (this.processError) {
             try {
@@ -1096,6 +1346,34 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.removeTransaction(arg0, arg1);
+            return result;
+        }
+    }
+    async removeWorkOrder(arg0: CompanyId, arg1: string): Promise<boolean> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.removeWorkOrder(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.removeWorkOrder(arg0, arg1);
+            return result;
+        }
+    }
+    async removeWorkflowTask(arg0: CompanyId, arg1: string): Promise<boolean> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.removeWorkflowTask(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.removeWorkflowTask(arg0, arg1);
             return result;
         }
     }
@@ -1124,6 +1402,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.saveCallerUserProfile(arg0);
+            return result;
+        }
+    }
+    async updateBOMItem(arg0: CompanyId, arg1: BOMItem): Promise<BOMItem> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateBOMItem(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateBOMItem(arg0, arg1);
             return result;
         }
     }
@@ -1228,15 +1520,29 @@ export class Backend implements backendInterface {
     async updateProjectTask(arg0: CompanyId, arg1: ProjectTask): Promise<ProjectTask> {
         if (this.processError) {
             try {
-                const result = await this.actor.updateProjectTask(arg0, to_candid_ProjectTask_n12(this._uploadFile, this._downloadFile, arg1));
-                return from_candid_ProjectTask_n14(this._uploadFile, this._downloadFile, result);
+                const result = await this.actor.updateProjectTask(arg0, to_candid_ProjectTask_n16(this._uploadFile, this._downloadFile, arg1));
+                return from_candid_ProjectTask_n18(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.updateProjectTask(arg0, to_candid_ProjectTask_n12(this._uploadFile, this._downloadFile, arg1));
-            return from_candid_ProjectTask_n14(this._uploadFile, this._downloadFile, result);
+            const result = await this.actor.updateProjectTask(arg0, to_candid_ProjectTask_n16(this._uploadFile, this._downloadFile, arg1));
+            return from_candid_ProjectTask_n18(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async updatePurchaseOrder(arg0: CompanyId, arg1: PurchaseOrder): Promise<PurchaseOrder> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updatePurchaseOrder(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updatePurchaseOrder(arg0, arg1);
+            return result;
         }
     }
     async updateSalesOpportunity(arg0: CompanyId, arg1: SalesOpportunity): Promise<SalesOpportunity> {
@@ -1267,6 +1573,20 @@ export class Backend implements backendInterface {
             return from_candid_RoleAssignmentResult_n8(this._uploadFile, this._downloadFile, result);
         }
     }
+    async updateSupplier(arg0: CompanyId, arg1: Supplier): Promise<Supplier> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateSupplier(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateSupplier(arg0, arg1);
+            return result;
+        }
+    }
     async updateTransaction(arg0: CompanyId, arg1: Transaction): Promise<Transaction> {
         if (this.processError) {
             try {
@@ -1281,35 +1601,99 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async updateWorkOrder(arg0: CompanyId, arg1: WorkOrder): Promise<WorkOrder> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateWorkOrder(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateWorkOrder(arg0, arg1);
+            return result;
+        }
+    }
+    async updateWorkflowTask(arg0: CompanyId, arg1: WorkflowTask): Promise<WorkflowTask> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateWorkflowTask(arg0, to_candid_WorkflowTask_n10(this._uploadFile, this._downloadFile, arg1));
+                return from_candid_WorkflowTask_n12(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateWorkflowTask(arg0, to_candid_WorkflowTask_n10(this._uploadFile, this._downloadFile, arg1));
+            return from_candid_WorkflowTask_n12(this._uploadFile, this._downloadFile, result);
+        }
+    }
 }
 function from_candid_EmployeeRecord_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _EmployeeRecord): EmployeeRecord {
     return from_candid_record_n6(_uploadFile, _downloadFile, value);
 }
-function from_candid_ProjectTask_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _ProjectTask): ProjectTask {
-    return from_candid_record_n15(_uploadFile, _downloadFile, value);
+function from_candid_ProjectTask_n18(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _ProjectTask): ProjectTask {
+    return from_candid_record_n19(_uploadFile, _downloadFile, value);
 }
 function from_candid_RoleAssignmentResult_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _RoleAssignmentResult): RoleAssignmentResult {
     return from_candid_variant_n9(_uploadFile, _downloadFile, value);
 }
-function from_candid_Role_n26(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Role): Role {
-    return from_candid_record_n27(_uploadFile, _downloadFile, value);
+function from_candid_Role_n32(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Role): Role {
+    return from_candid_record_n33(_uploadFile, _downloadFile, value);
 }
-function from_candid_UserRole_n18(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserRole): UserRole {
-    return from_candid_variant_n19(_uploadFile, _downloadFile, value);
+function from_candid_UserRole_n22(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserRole): UserRole {
+    return from_candid_variant_n23(_uploadFile, _downloadFile, value);
 }
-function from_candid_opt_n16(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_Company]): Company | null {
+function from_candid_WorkflowTask_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _WorkflowTask): WorkflowTask {
+    return from_candid_record_n13(_uploadFile, _downloadFile, value);
+}
+function from_candid_opt_n20(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_Company]): Company | null {
     return value.length === 0 ? null : value[0];
 }
-function from_candid_opt_n17(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserProfile]): UserProfile | null {
+function from_candid_opt_n21(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserProfile]): UserProfile | null {
     return value.length === 0 ? null : value[0];
 }
-function from_candid_opt_n22(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [string]): string | null {
+function from_candid_opt_n26(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [string]): string | null {
     return value.length === 0 ? null : value[0];
 }
 function from_candid_opt_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [Principal]): Principal | null {
     return value.length === 0 ? null : value[0];
 }
-function from_candid_record_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_record_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    id: string;
+    status: string;
+    assignee: [] | [Principal];
+    title: string;
+    tags: Array<string>;
+    dueDate: string;
+    description: string;
+    priority: string;
+    companyId: _CompanyId;
+}): {
+    id: string;
+    status: string;
+    assignee?: Principal;
+    title: string;
+    tags: Array<string>;
+    dueDate: string;
+    description: string;
+    priority: string;
+    companyId: CompanyId;
+} {
+    return {
+        id: value.id,
+        status: value.status,
+        assignee: record_opt_to_undefined(from_candid_opt_n7(_uploadFile, _downloadFile, value.assignee)),
+        title: value.title,
+        tags: value.tags,
+        dueDate: value.dueDate,
+        description: value.description,
+        priority: value.priority,
+        companyId: value.companyId
+    };
+}
+function from_candid_record_n19(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     id: string;
     status: string;
     assignee: [] | [Principal];
@@ -1336,7 +1720,7 @@ function from_candid_record_n15(_uploadFile: (file: ExternalBlob) => Promise<Uin
         companyId: value.companyId
     };
 }
-function from_candid_record_n20(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_record_n24(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     employees: Array<_EmployeeRecord>;
     leaveRequests: Array<_LeaveRequest>;
     salaries: Array<_SalaryInfo>;
@@ -1346,12 +1730,12 @@ function from_candid_record_n20(_uploadFile: (file: ExternalBlob) => Promise<Uin
     salaries: Array<SalaryInfo>;
 } {
     return {
-        employees: from_candid_vec_n21(_uploadFile, _downloadFile, value.employees),
+        employees: from_candid_vec_n25(_uploadFile, _downloadFile, value.employees),
         leaveRequests: value.leaveRequests,
         salaries: value.salaries
     };
 }
-function from_candid_record_n23(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_record_n27(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     tasks: Array<_ProjectTask>;
     projects: Array<_Project>;
 }): {
@@ -1359,11 +1743,20 @@ function from_candid_record_n23(_uploadFile: (file: ExternalBlob) => Promise<Uin
     projects: Array<Project>;
 } {
     return {
-        tasks: from_candid_vec_n24(_uploadFile, _downloadFile, value.tasks),
+        tasks: from_candid_vec_n28(_uploadFile, _downloadFile, value.tasks),
         projects: value.projects
     };
 }
-function from_candid_record_n27(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_record_n29(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    tasks: Array<_WorkflowTask>;
+}): {
+    tasks: Array<WorkflowTask>;
+} {
+    return {
+        tasks: from_candid_vec_n30(_uploadFile, _downloadFile, value.tasks)
+    };
+}
+function from_candid_record_n33(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     permissions: Array<string>;
     name: string;
     parentRole: [] | [string];
@@ -1375,7 +1768,7 @@ function from_candid_record_n27(_uploadFile: (file: ExternalBlob) => Promise<Uin
     return {
         permissions: value.permissions,
         name: value.name,
-        parentRole: record_opt_to_undefined(from_candid_opt_n22(_uploadFile, _downloadFile, value.parentRole))
+        parentRole: record_opt_to_undefined(from_candid_opt_n26(_uploadFile, _downloadFile, value.parentRole))
     };
 }
 function from_candid_record_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
@@ -1405,7 +1798,7 @@ function from_candid_record_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint
         companyId: value.companyId
     };
 }
-function from_candid_variant_n19(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_variant_n23(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     admin: null;
 } | {
     user: null;
@@ -1427,28 +1820,67 @@ function from_candid_variant_n9(_uploadFile: (file: ExternalBlob) => Promise<Uin
 }): RoleAssignmentResult {
     return "alreadyAssigned" in value ? RoleAssignmentResult.alreadyAssigned : "invalidCode" in value ? RoleAssignmentResult.invalidCode : "invalidRole" in value ? RoleAssignmentResult.invalidRole : "success" in value ? RoleAssignmentResult.success : "insufficientPermissions" in value ? RoleAssignmentResult.insufficientPermissions : value;
 }
-function from_candid_vec_n21(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_EmployeeRecord>): Array<EmployeeRecord> {
+function from_candid_vec_n25(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_EmployeeRecord>): Array<EmployeeRecord> {
     return value.map((x)=>from_candid_EmployeeRecord_n5(_uploadFile, _downloadFile, x));
 }
-function from_candid_vec_n24(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_ProjectTask>): Array<ProjectTask> {
-    return value.map((x)=>from_candid_ProjectTask_n14(_uploadFile, _downloadFile, x));
+function from_candid_vec_n28(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_ProjectTask>): Array<ProjectTask> {
+    return value.map((x)=>from_candid_ProjectTask_n18(_uploadFile, _downloadFile, x));
 }
-function from_candid_vec_n25(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_Role>): Array<Role> {
-    return value.map((x)=>from_candid_Role_n26(_uploadFile, _downloadFile, x));
+function from_candid_vec_n30(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_WorkflowTask>): Array<WorkflowTask> {
+    return value.map((x)=>from_candid_WorkflowTask_n12(_uploadFile, _downloadFile, x));
+}
+function from_candid_vec_n31(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_Role>): Array<Role> {
+    return value.map((x)=>from_candid_Role_n32(_uploadFile, _downloadFile, x));
 }
 function to_candid_EmployeeRecord_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: EmployeeRecord): _EmployeeRecord {
     return to_candid_record_n4(_uploadFile, _downloadFile, value);
 }
-function to_candid_ProjectTask_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: ProjectTask): _ProjectTask {
-    return to_candid_record_n13(_uploadFile, _downloadFile, value);
+function to_candid_ProjectTask_n16(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: ProjectTask): _ProjectTask {
+    return to_candid_record_n17(_uploadFile, _downloadFile, value);
 }
 function to_candid_Role_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Role): _Role {
     return to_candid_record_n2(_uploadFile, _downloadFile, value);
 }
-function to_candid_UserRole_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): _UserRole {
-    return to_candid_variant_n11(_uploadFile, _downloadFile, value);
+function to_candid_UserRole_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): _UserRole {
+    return to_candid_variant_n15(_uploadFile, _downloadFile, value);
 }
-function to_candid_record_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function to_candid_WorkflowTask_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: WorkflowTask): _WorkflowTask {
+    return to_candid_record_n11(_uploadFile, _downloadFile, value);
+}
+function to_candid_record_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    id: string;
+    status: string;
+    assignee?: Principal;
+    title: string;
+    tags: Array<string>;
+    dueDate: string;
+    description: string;
+    priority: string;
+    companyId: CompanyId;
+}): {
+    id: string;
+    status: string;
+    assignee: [] | [Principal];
+    title: string;
+    tags: Array<string>;
+    dueDate: string;
+    description: string;
+    priority: string;
+    companyId: _CompanyId;
+} {
+    return {
+        id: value.id,
+        status: value.status,
+        assignee: value.assignee ? candid_some(value.assignee) : candid_none(),
+        title: value.title,
+        tags: value.tags,
+        dueDate: value.dueDate,
+        description: value.description,
+        priority: value.priority,
+        companyId: value.companyId
+    };
+}
+function to_candid_record_n17(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     id: string;
     status: string;
     assignee?: Principal;
@@ -1517,7 +1949,7 @@ function to_candid_record_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8A
         companyId: value.companyId
     };
 }
-function to_candid_variant_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): {
+function to_candid_variant_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): {
     admin: null;
 } | {
     user: null;

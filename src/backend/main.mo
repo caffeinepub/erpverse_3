@@ -284,6 +284,67 @@ actor {
   };
 
   // ===========================
+  // Procurement Module Types
+  // ===========================
+  public type Supplier = {
+    id : Text;
+    companyId : CompanyId;
+    name : Text;
+    contactInfo : Text;
+    category : Text;
+    rating : Nat; // 1-5
+  };
+
+  public type PurchaseOrder = {
+    id : Text;
+    companyId : CompanyId;
+    supplierId : Text;
+    items : Text;
+    totalAmount : Nat;
+    status : Text; // draft/sent/confirmed/received/cancelled
+    orderDate : Text;
+    expectedDelivery : Text;
+  };
+
+  // ===========================
+  // Manufacturing Module Types
+  // ===========================
+  public type WorkOrder = {
+    id : Text;
+    companyId : CompanyId;
+    productName : Text;
+    quantity : Nat;
+    status : Text; // planned/in_progress/completed/cancelled
+    startDate : Text;
+    endDate : Text;
+    notes : Text;
+  };
+
+  public type BOMItem = {
+    id : Text;
+    companyId : CompanyId;
+    workOrderId : Text;
+    materialName : Text;
+    quantity : Nat;
+    unit : Text;
+  };
+
+  // ===========================
+  // Workflow Module Types
+  // ===========================
+  public type WorkflowTask = {
+    id : Text;
+    companyId : CompanyId;
+    title : Text;
+    description : Text;
+    status : Text; // backlog/todo/in_progress/done
+    priority : Text; // low/medium/high/urgent
+    assignee : ?Principal;
+    dueDate : Text;
+    tags : [Text];
+  };
+
+  // ===========================
   // Persistent State
   // ===========================
   let companies = Map.empty<CompanyId, Company>();
@@ -307,6 +368,15 @@ actor {
   let crmCustomers = Map.empty<Text, Customer>();
   let salesOpportunities = Map.empty<Text, SalesOpportunity>();
   let communicationLogs = Map.empty<Text, CommunicationLog>();
+  // Procurement state
+  let procurementSuppliers = Map.empty<Text, Supplier>();
+  let procurementPurchaseOrders = Map.empty<Text, PurchaseOrder>();
+  // Manufacturing state
+  let manufacturingWorkOrders = Map.empty<Text, WorkOrder>();
+  let manufacturingBOMItems = Map.empty<Text, BOMItem>();
+  // Workflow state
+  let workflowTasks = Map.empty<Text, WorkflowTask>();
+
   var idCounter : Nat = 0;
 
   let accessControlState = AccessControl.initState();
@@ -1867,6 +1937,368 @@ actor {
       customers = customerList;
       opportunities = opportunityList;
       logs = logList;
+    };
+  };
+
+  /// ==========================
+  /// Procurement Module
+  /// ==========================
+  public shared ({ caller }) func addSupplier(companyId : CompanyId, supplier : Supplier) : async Supplier {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Procurement")) {
+      Runtime.trap("Unauthorized: No access to Procurement module");
+    };
+
+    let newId = nextId();
+    let newSupplier : Supplier = {
+      id = newId;
+      companyId = companyId;
+      name = supplier.name;
+      contactInfo = supplier.contactInfo;
+      category = supplier.category;
+      rating = supplier.rating;
+    };
+
+    procurementSuppliers.add(newId, newSupplier);
+    newSupplier;
+  };
+
+  public shared ({ caller }) func updateSupplier(companyId : CompanyId, updatedSupplier : Supplier) : async Supplier {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Procurement")) {
+      Runtime.trap("Unauthorized: No access to Procurement module");
+    };
+
+    procurementSuppliers.add(updatedSupplier.id, updatedSupplier);
+    updatedSupplier;
+  };
+
+  public shared ({ caller }) func removeSupplier(companyId : CompanyId, supplierId : Text) : async Bool {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Procurement")) {
+      Runtime.trap("Unauthorized: No access to Procurement module");
+    };
+    procurementSuppliers.remove(supplierId);
+    true;
+  };
+
+  public shared ({ caller }) func addPurchaseOrder(companyId : CompanyId, order : PurchaseOrder) : async PurchaseOrder {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Procurement")) {
+      Runtime.trap("Unauthorized: No access to Procurement module");
+    };
+
+    let newId = nextId();
+    let newOrder : PurchaseOrder = {
+      id = newId;
+      companyId = companyId;
+      supplierId = order.supplierId;
+      items = order.items;
+      totalAmount = order.totalAmount;
+      status = order.status;
+      orderDate = order.orderDate;
+      expectedDelivery = order.expectedDelivery;
+    };
+
+    procurementPurchaseOrders.add(newId, newOrder);
+    newOrder;
+  };
+
+  public shared ({ caller }) func updatePurchaseOrder(companyId : CompanyId, updatedOrder : PurchaseOrder) : async PurchaseOrder {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Procurement")) {
+      Runtime.trap("Unauthorized: No access to Procurement module");
+    };
+
+    procurementPurchaseOrders.add(updatedOrder.id, updatedOrder);
+    updatedOrder;
+  };
+
+  public shared ({ caller }) func removePurchaseOrder(companyId : CompanyId, orderId : Text) : async Bool {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Procurement")) {
+      Runtime.trap("Unauthorized: No access to Procurement module");
+    };
+    procurementPurchaseOrders.remove(orderId);
+    true;
+  };
+
+  public query ({ caller }) func getProcurementData(companyId : CompanyId) : async {
+    suppliers : [Supplier];
+    orders : [PurchaseOrder];
+  } {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Procurement")) {
+      Runtime.trap("Unauthorized: No access to Procurement module");
+    };
+
+    let supplierList = procurementSuppliers.values().toArray().filter(
+      func(s) { s.companyId == companyId }
+    );
+    let orderList = procurementPurchaseOrders.values().toArray().filter(
+      func(o) { o.companyId == companyId }
+    );
+
+    {
+      suppliers = supplierList;
+      orders = orderList;
+    };
+  };
+
+  /// ==========================
+  /// Manufacturing Module
+  /// ==========================
+  public shared ({ caller }) func addWorkOrder(companyId : CompanyId, workOrder : WorkOrder) : async WorkOrder {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Manufacturing")) {
+      Runtime.trap("Unauthorized: No access to Manufacturing module");
+    };
+
+    let newId = nextId();
+    let newWorkOrder : WorkOrder = {
+      id = newId;
+      companyId = companyId;
+      productName = workOrder.productName;
+      quantity = workOrder.quantity;
+      status = workOrder.status;
+      startDate = workOrder.startDate;
+      endDate = workOrder.endDate;
+      notes = workOrder.notes;
+    };
+
+    manufacturingWorkOrders.add(newId, newWorkOrder);
+    newWorkOrder;
+  };
+
+  public shared ({ caller }) func updateWorkOrder(companyId : CompanyId, updatedWorkOrder : WorkOrder) : async WorkOrder {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Manufacturing")) {
+      Runtime.trap("Unauthorized: No access to Manufacturing module");
+    };
+
+    manufacturingWorkOrders.add(updatedWorkOrder.id, updatedWorkOrder);
+    updatedWorkOrder;
+  };
+
+  public shared ({ caller }) func removeWorkOrder(companyId : CompanyId, workOrderId : Text) : async Bool {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Manufacturing")) {
+      Runtime.trap("Unauthorized: No access to Manufacturing module");
+    };
+    manufacturingWorkOrders.remove(workOrderId);
+    true;
+  };
+
+  public shared ({ caller }) func addBOMItem(companyId : CompanyId, bomItem : BOMItem) : async BOMItem {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Manufacturing")) {
+      Runtime.trap("Unauthorized: No access to Manufacturing module");
+    };
+
+    let newId = nextId();
+    let newBOMItem : BOMItem = {
+      id = newId;
+      companyId = companyId;
+      workOrderId = bomItem.workOrderId;
+      materialName = bomItem.materialName;
+      quantity = bomItem.quantity;
+      unit = bomItem.unit;
+    };
+
+    manufacturingBOMItems.add(newId, newBOMItem);
+    newBOMItem;
+  };
+
+  public shared ({ caller }) func updateBOMItem(companyId : CompanyId, updatedBOMItem : BOMItem) : async BOMItem {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Manufacturing")) {
+      Runtime.trap("Unauthorized: No access to Manufacturing module");
+    };
+
+    manufacturingBOMItems.add(updatedBOMItem.id, updatedBOMItem);
+    updatedBOMItem;
+  };
+
+  public shared ({ caller }) func removeBOMItem(companyId : CompanyId, bomItemId : Text) : async Bool {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Manufacturing")) {
+      Runtime.trap("Unauthorized: No access to Manufacturing module");
+    };
+    manufacturingBOMItems.remove(bomItemId);
+    true;
+  };
+
+  public query ({ caller }) func getManufacturingData(companyId : CompanyId) : async {
+    workOrders : [WorkOrder];
+    bomItems : [BOMItem];
+  } {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Manufacturing")) {
+      Runtime.trap("Unauthorized: No access to Manufacturing module");
+    };
+
+    let workOrderList = manufacturingWorkOrders.values().toArray().filter(
+      func(w) { w.companyId == companyId }
+    );
+    let bomItemList = manufacturingBOMItems.values().toArray().filter(
+      func(b) { b.companyId == companyId }
+    );
+
+    {
+      workOrders = workOrderList;
+      bomItems = bomItemList;
+    };
+  };
+
+  /// ==========================
+  /// Workflow Module
+  /// ==========================
+  public shared ({ caller }) func addWorkflowTask(companyId : CompanyId, task : WorkflowTask) : async WorkflowTask {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Workflow")) {
+      Runtime.trap("Unauthorized: No access to Workflow module");
+    };
+
+    let newId = nextId();
+    let newTask : WorkflowTask = {
+      id = newId;
+      companyId = companyId;
+      title = task.title;
+      description = task.description;
+      status = task.status;
+      priority = task.priority;
+      assignee = task.assignee;
+      dueDate = task.dueDate;
+      tags = task.tags;
+    };
+
+    workflowTasks.add(newId, newTask);
+    newTask;
+  };
+
+  public shared ({ caller }) func updateWorkflowTask(companyId : CompanyId, updatedTask : WorkflowTask) : async WorkflowTask {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Workflow")) {
+      Runtime.trap("Unauthorized: No access to Workflow module");
+    };
+
+    workflowTasks.add(updatedTask.id, updatedTask);
+    updatedTask;
+  };
+
+  public shared ({ caller }) func removeWorkflowTask(companyId : CompanyId, taskId : Text) : async Bool {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Workflow")) {
+      Runtime.trap("Unauthorized: No access to Workflow module");
+    };
+    workflowTasks.remove(taskId);
+    true;
+  };
+
+  public query ({ caller }) func getWorkflowData(companyId : CompanyId) : async {
+    tasks : [WorkflowTask];
+  } {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Permission denied");
+    };
+    if (not isCallerCompanyMember(caller, companyId)) {
+      Runtime.trap("Unauthorized: Not a member of this company");
+    };
+    if (not callerHasModuleAccess(caller, companyId, "Workflow")) {
+      Runtime.trap("Unauthorized: No access to Workflow module");
+    };
+
+    let taskList = workflowTasks.values().toArray().filter(
+      func(t) { t.companyId == companyId }
+    );
+
+    {
+      tasks = taskList;
     };
   };
 

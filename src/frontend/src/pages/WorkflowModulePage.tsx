@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -37,6 +36,13 @@ import {
 import type React from "react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import type { WorkflowTask } from "../backend";
+import {
+  useAddWorkflowTask,
+  useGetWorkflowData,
+  useRemoveWorkflowTask,
+  useUpdateWorkflowTask,
+} from "../hooks/useQueries";
 
 interface WorkflowModulePageProps {
   companyId: string;
@@ -44,33 +50,6 @@ interface WorkflowModulePageProps {
 
 type TaskStatus = "backlog" | "todo" | "in_progress" | "done";
 type TaskPriority = "low" | "medium" | "high" | "urgent";
-
-interface WorkflowTask {
-  id: string;
-  title: string;
-  description: string;
-  priority: TaskPriority;
-  status: TaskStatus;
-  dueDate: string;
-  tags: string[];
-}
-
-interface WorkflowData {
-  tasks: WorkflowTask[];
-  workflows: string[];
-}
-
-function loadData(companyId: string): WorkflowData {
-  try {
-    const raw = localStorage.getItem(`erpverse_workflow_${companyId}`);
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return { tasks: [], workflows: [] };
-}
-
-function saveData(companyId: string, data: WorkflowData) {
-  localStorage.setItem(`erpverse_workflow_${companyId}`, JSON.stringify(data));
-}
 
 function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
@@ -147,8 +126,9 @@ const COLUMNS: { id: TaskStatus; label: string; color: string; bg: string }[] =
 const OTHER_STATUSES = (current: TaskStatus) =>
   COLUMNS.filter((c) => c.id !== current);
 
-function PriorityBadge({ priority }: { priority: TaskPriority }) {
-  const cfg = PRIORITY_CONFIG[priority];
+function PriorityBadge({ priority }: { priority: string }) {
+  const cfg =
+    PRIORITY_CONFIG[priority as TaskPriority] ?? PRIORITY_CONFIG.medium;
   const Icon = cfg.icon;
   return (
     <span
@@ -165,19 +145,33 @@ function PriorityBadge({ priority }: { priority: TaskPriority }) {
   );
 }
 
+// ─── Task Form Interface ──────────────────────────────────────────────────────
+interface TaskFormData {
+  id: string;
+  title: string;
+  description: string;
+  priority: TaskPriority;
+  status: TaskStatus;
+  dueDate: string;
+  tags: string[];
+}
+
 // ─── Task Dialog ──────────────────────────────────────────────────────────────
 function TaskDialog({
   open,
   onClose,
   onSave,
   initial,
+  saving,
 }: {
   open: boolean;
   onClose: () => void;
-  onSave: (t: WorkflowTask) => void;
-  initial?: WorkflowTask;
+  onSave: (t: TaskFormData) => void;
+  initial?: TaskFormData;
+  saving?: boolean;
 }) {
-  const [form, setForm] = useState<Omit<WorkflowTask, "id">>({
+  const [form, setForm] = useState<TaskFormData>({
+    id: "",
     title: "",
     description: "",
     priority: "medium",
@@ -186,28 +180,19 @@ function TaskDialog({
     tags: [],
   });
   const [tagInput, setTagInput] = useState("");
-  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (open) {
       setForm(
-        initial
-          ? {
-              title: initial.title,
-              description: initial.description,
-              priority: initial.priority,
-              status: initial.status,
-              dueDate: initial.dueDate,
-              tags: initial.tags,
-            }
-          : {
-              title: "",
-              description: "",
-              priority: "medium",
-              status: "todo",
-              dueDate: "",
-              tags: [],
-            },
+        initial ?? {
+          id: "",
+          title: "",
+          description: "",
+          priority: "medium",
+          status: "todo",
+          dueDate: "",
+          tags: [],
+        },
       );
       setTagInput("");
     }
@@ -224,17 +209,13 @@ function TaskDialog({
   const removeTag = (tag: string) =>
     setForm((p) => ({ ...p, tags: p.tags.filter((t) => t !== tag) }));
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.title.trim()) {
       toast.error("Görev başlığı zorunludur");
       return;
     }
-    setSaving(true);
-    await new Promise((r) => setTimeout(r, 300));
-    onSave({ ...form, id: initial?.id || generateId() });
-    setSaving(false);
-    onClose();
+    onSave({ ...form, id: form.id || generateId() });
   };
 
   return (
@@ -248,7 +229,9 @@ function TaskDialog({
         data-ocid="workflow.task.dialog"
       >
         <DialogHeader>
-          <DialogTitle>{initial ? "Görevi Düzenle" : "Yeni Görev"}</DialogTitle>
+          <DialogTitle>
+            {initial?.id ? "Görevi Düzenle" : "Yeni Görev"}
+          </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
           <div className="space-y-1.5">
@@ -446,7 +429,7 @@ function TaskDialog({
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
               ) : null}
-              {initial ? "Güncelle" : "Oluştur"}
+              {initial?.id ? "Güncelle" : "Oluştur"}
             </Button>
           </DialogFooter>
         </form>
@@ -467,7 +450,7 @@ function TaskCard({
   onDelete: (id: string) => void;
   onMove: (id: string, status: TaskStatus) => void;
 }) {
-  const others = OTHER_STATUSES(task.status);
+  const others = OTHER_STATUSES(task.status as TaskStatus);
   const isOverdue =
     task.dueDate &&
     new Date(task.dueDate) < new Date() &&
@@ -597,41 +580,87 @@ function TaskCard({
 export default function WorkflowModulePage({
   companyId,
 }: WorkflowModulePageProps) {
-  const [data, setData] = useState<WorkflowData>(() => loadData(companyId));
+  const { data: workflowData, isLoading } = useGetWorkflowData(companyId);
+  const addTask = useAddWorkflowTask();
+  const updateTask = useUpdateWorkflowTask();
+  const removeTask = useRemoveWorkflowTask();
+
+  const tasks = workflowData?.tasks ?? [];
+
   const [taskDialog, setTaskDialog] = useState<{
     open: boolean;
-    item?: WorkflowTask;
+    item?: TaskFormData;
   }>({ open: false });
 
-  const persist = (next: WorkflowData) => {
-    setData(next);
-    saveData(companyId, next);
+  const handleSaveTask = async (formData: TaskFormData) => {
+    const taskPayload: WorkflowTask = {
+      id: formData.id,
+      companyId,
+      title: formData.title,
+      description: formData.description,
+      priority: formData.priority,
+      status: formData.status,
+      dueDate: formData.dueDate,
+      tags: formData.tags,
+      assignee: undefined,
+    };
+    try {
+      const isExisting = tasks.some((t) => t.id === formData.id);
+      if (isExisting) {
+        await updateTask.mutateAsync({ companyId, task: taskPayload });
+        toast.success("Görev güncellendi");
+      } else {
+        await addTask.mutateAsync({ companyId, task: taskPayload });
+        toast.success("Görev oluşturuldu");
+      }
+      setTaskDialog({ open: false });
+    } catch {
+      toast.error("İşlem başarısız oldu");
+    }
   };
 
-  const saveTask = (t: WorkflowTask) => {
-    const exists = data.tasks.find((x) => x.id === t.id);
-    const tasks = exists
-      ? data.tasks.map((x) => (x.id === t.id ? t : x))
-      : [...data.tasks, t];
-    persist({ ...data, tasks });
-    toast.success(exists ? "Görev güncellendi" : "Görev oluşturuldu");
+  const handleDeleteTask = async (id: string) => {
+    try {
+      await removeTask.mutateAsync({ companyId, taskId: id });
+      toast.success("Görev silindi");
+    } catch {
+      toast.error("Silme işlemi başarısız");
+    }
   };
 
-  const deleteTask = (id: string) => {
-    persist({ ...data, tasks: data.tasks.filter((x) => x.id !== id) });
-    toast.success("Görev silindi");
-  };
-
-  const moveTask = (id: string, status: TaskStatus) => {
-    const tasks = data.tasks.map((t) => (t.id === id ? { ...t, status } : t));
-    persist({ ...data, tasks });
-    toast.success(
-      `Görev "${COLUMNS.find((c) => c.id === status)?.label}" sütununa taşındı`,
-    );
+  const handleMoveTask = async (id: string, status: TaskStatus) => {
+    const task = tasks.find((t) => t.id === id);
+    if (!task) return;
+    const updatedTask: WorkflowTask = { ...task, status };
+    try {
+      await updateTask.mutateAsync({ companyId, task: updatedTask });
+      toast.success(
+        `Görev "${COLUMNS.find((c) => c.id === status)?.label}" sütununa taşındı`,
+      );
+    } catch {
+      toast.error("Taşıma işlemi başarısız");
+    }
   };
 
   const countByStatus = (status: TaskStatus) =>
-    data.tasks.filter((t) => t.status === status).length;
+    tasks.filter((t) => t.status === status).length;
+
+  if (isLoading) {
+    return (
+      <div
+        className="p-6 lg:p-8 flex items-center justify-center min-h-[400px]"
+        data-ocid="workflow.loading_state"
+      >
+        <div
+          className="flex items-center gap-2"
+          style={{ color: "oklch(0.5 0.01 270)" }}
+        >
+          <Loader2 className="h-5 w-5 animate-spin" />
+          <span>Veriler yükleniyor...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 lg:p-8 max-w-full flex flex-col gap-6 animate-fade-in">
@@ -672,7 +701,7 @@ export default function WorkflowModulePage({
       {/* Kanban Board */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {COLUMNS.map((col) => {
-          const colTasks = data.tasks.filter((t) => t.status === col.id);
+          const colTasks = tasks.filter((t) => t.status === col.id);
           return (
             <div key={col.id} className="flex flex-col gap-3">
               {/* Column Header */}
@@ -745,9 +774,22 @@ export default function WorkflowModulePage({
                     >
                       <TaskCard
                         task={task}
-                        onEdit={(t) => setTaskDialog({ open: true, item: t })}
-                        onDelete={deleteTask}
-                        onMove={moveTask}
+                        onEdit={(t) =>
+                          setTaskDialog({
+                            open: true,
+                            item: {
+                              id: t.id,
+                              title: t.title,
+                              description: t.description,
+                              priority: t.priority as TaskPriority,
+                              status: t.status as TaskStatus,
+                              dueDate: t.dueDate,
+                              tags: t.tags,
+                            },
+                          })
+                        }
+                        onDelete={handleDeleteTask}
+                        onMove={handleMoveTask}
                       />
                     </div>
                   ))
@@ -761,15 +803,10 @@ export default function WorkflowModulePage({
       {/* Task Dialog */}
       <TaskDialog
         open={taskDialog.open}
-        initial={
-          taskDialog.item?.id
-            ? taskDialog.item
-            : taskDialog.item?.status
-              ? { ...taskDialog.item, id: "" }
-              : undefined
-        }
+        initial={taskDialog.item}
         onClose={() => setTaskDialog({ open: false })}
-        onSave={saveTask}
+        onSave={handleSaveTask}
+        saving={addTask.isPending || updateTask.isPending}
       />
     </div>
   );

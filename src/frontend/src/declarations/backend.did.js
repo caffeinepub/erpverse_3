@@ -9,6 +9,14 @@
 import { IDL } from '@icp-sdk/core/candid';
 
 export const CompanyId = IDL.Text;
+export const BOMItem = IDL.Record({
+  'id' : IDL.Text,
+  'unit' : IDL.Text,
+  'workOrderId' : IDL.Text,
+  'quantity' : IDL.Nat,
+  'materialName' : IDL.Text,
+  'companyId' : CompanyId,
+});
 export const CommunicationLog = IDL.Record({
   'id' : IDL.Text,
   'date' : IDL.Text,
@@ -70,6 +78,16 @@ export const Product = IDL.Record({
   'unitPrice' : IDL.Nat,
   'companyId' : CompanyId,
 });
+export const PurchaseOrder = IDL.Record({
+  'id' : IDL.Text,
+  'status' : IDL.Text,
+  'orderDate' : IDL.Text,
+  'totalAmount' : IDL.Nat,
+  'expectedDelivery' : IDL.Text,
+  'items' : IDL.Text,
+  'supplierId' : IDL.Text,
+  'companyId' : CompanyId,
+});
 export const SalaryInfo = IDL.Record({
   'id' : IDL.Text,
   'employeeId' : IDL.Text,
@@ -102,6 +120,14 @@ export const StockMovement = IDL.Record({
   'reason' : IDL.Text,
   'companyId' : CompanyId,
 });
+export const Supplier = IDL.Record({
+  'id' : IDL.Text,
+  'contactInfo' : IDL.Text,
+  'name' : IDL.Text,
+  'category' : IDL.Text,
+  'rating' : IDL.Nat,
+  'companyId' : CompanyId,
+});
 export const Transaction = IDL.Record({
   'id' : IDL.Text,
   'transactionType' : IDL.Text,
@@ -109,6 +135,27 @@ export const Transaction = IDL.Record({
   'description' : IDL.Text,
   'category' : IDL.Text,
   'amount' : IDL.Nat,
+  'companyId' : CompanyId,
+});
+export const WorkOrder = IDL.Record({
+  'id' : IDL.Text,
+  'status' : IDL.Text,
+  'endDate' : IDL.Text,
+  'productName' : IDL.Text,
+  'notes' : IDL.Text,
+  'quantity' : IDL.Nat,
+  'startDate' : IDL.Text,
+  'companyId' : CompanyId,
+});
+export const WorkflowTask = IDL.Record({
+  'id' : IDL.Text,
+  'status' : IDL.Text,
+  'assignee' : IDL.Opt(IDL.Principal),
+  'title' : IDL.Text,
+  'tags' : IDL.Vec(IDL.Text),
+  'dueDate' : IDL.Text,
+  'description' : IDL.Text,
+  'priority' : IDL.Text,
   'companyId' : CompanyId,
 });
 export const UserRole = IDL.Variant({
@@ -204,6 +251,7 @@ export const Staff = IDL.Record({
 
 export const idlService = IDL.Service({
   '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'addBOMItem' : IDL.Func([CompanyId, BOMItem], [BOMItem], []),
   'addCommunicationLog' : IDL.Func(
       [CompanyId, CommunicationLog],
       [CommunicationLog],
@@ -215,6 +263,11 @@ export const idlService = IDL.Service({
   'addInvoice' : IDL.Func([CompanyId, Invoice], [Invoice], []),
   'addLeaveRequest' : IDL.Func([CompanyId, LeaveRequest], [LeaveRequest], []),
   'addProduct' : IDL.Func([CompanyId, Product], [Product], []),
+  'addPurchaseOrder' : IDL.Func(
+      [CompanyId, PurchaseOrder],
+      [PurchaseOrder],
+      [],
+    ),
   'addSalaryInfo' : IDL.Func([CompanyId, SalaryInfo], [SalaryInfo], []),
   'addSalesOpportunity' : IDL.Func(
       [CompanyId, SalesOpportunity],
@@ -231,7 +284,10 @@ export const idlService = IDL.Service({
       [StockMovement],
       [],
     ),
+  'addSupplier' : IDL.Func([CompanyId, Supplier], [Supplier], []),
   'addTransaction' : IDL.Func([CompanyId, Transaction], [Transaction], []),
+  'addWorkOrder' : IDL.Func([CompanyId, WorkOrder], [WorkOrder], []),
+  'addWorkflowTask' : IDL.Func([CompanyId, WorkflowTask], [WorkflowTask], []),
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
   'createCompany' : IDL.Func([CompanyProfile], [Company], []),
   'createProject' : IDL.Func([CompanyId, Project], [Project], []),
@@ -291,7 +347,27 @@ export const idlService = IDL.Service({
       ],
       ['query'],
     ),
+  'getManufacturingData' : IDL.Func(
+      [CompanyId],
+      [
+        IDL.Record({
+          'workOrders' : IDL.Vec(WorkOrder),
+          'bomItems' : IDL.Vec(BOMItem),
+        }),
+      ],
+      ['query'],
+    ),
   'getMyEmployeeCode' : IDL.Func([], [IDL.Opt(IDL.Text)], ['query']),
+  'getProcurementData' : IDL.Func(
+      [CompanyId],
+      [
+        IDL.Record({
+          'orders' : IDL.Vec(PurchaseOrder),
+          'suppliers' : IDL.Vec(Supplier),
+        }),
+      ],
+      ['query'],
+    ),
   'getProjectData' : IDL.Func(
       [CompanyId],
       [
@@ -309,26 +385,37 @@ export const idlService = IDL.Service({
       [IDL.Opt(UserProfile)],
       ['query'],
     ),
+  'getWorkflowData' : IDL.Func(
+      [CompanyId],
+      [IDL.Record({ 'tasks' : IDL.Vec(WorkflowTask) })],
+      ['query'],
+    ),
   'grantModuleAccess' : IDL.Func([CompanyId, IDL.Principal, IDL.Text], [], []),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
   'isEmployeeInCompany' : IDL.Func([IDL.Text], [IDL.Bool], ['query']),
   'isRegisteredAsCompany' : IDL.Func([], [IDL.Opt(IDL.Text)], ['query']),
   'listDefaultRoles' : IDL.Func([], [IDL.Vec(Role)], ['query']),
   'listRolesForCompany' : IDL.Func([IDL.Text], [IDL.Vec(Role)], ['query']),
+  'removeBOMItem' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
   'removeCustomRole' : IDL.Func([IDL.Text, IDL.Text], [], []),
   'removeCustomer' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
   'removeEmployee' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
   'removeProduct' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
   'removeProject' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
   'removeProjectTask' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
+  'removePurchaseOrder' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
   'removeStaffFromCompany' : IDL.Func(
       [CompanyId, IDL.Principal],
       [IDL.Bool],
       [],
     ),
+  'removeSupplier' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
   'removeTransaction' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
+  'removeWorkOrder' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
+  'removeWorkflowTask' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
   'revokeModuleAccess' : IDL.Func([CompanyId, IDL.Principal, IDL.Text], [], []),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'updateBOMItem' : IDL.Func([CompanyId, BOMItem], [BOMItem], []),
   'updateCompany' : IDL.Func([CompanyId, CompanyProfile], [Company], []),
   'updateCustomer' : IDL.Func([CompanyId, Customer], [Customer], []),
   'updateEmployee' : IDL.Func(
@@ -345,6 +432,11 @@ export const idlService = IDL.Service({
   'updateProduct' : IDL.Func([CompanyId, Product], [Product], []),
   'updateProject' : IDL.Func([CompanyId, Project], [Project], []),
   'updateProjectTask' : IDL.Func([CompanyId, ProjectTask], [ProjectTask], []),
+  'updatePurchaseOrder' : IDL.Func(
+      [CompanyId, PurchaseOrder],
+      [PurchaseOrder],
+      [],
+    ),
   'updateSalesOpportunity' : IDL.Func(
       [CompanyId, SalesOpportunity],
       [SalesOpportunity],
@@ -355,13 +447,28 @@ export const idlService = IDL.Service({
       [RoleAssignmentResult],
       [],
     ),
+  'updateSupplier' : IDL.Func([CompanyId, Supplier], [Supplier], []),
   'updateTransaction' : IDL.Func([CompanyId, Transaction], [Transaction], []),
+  'updateWorkOrder' : IDL.Func([CompanyId, WorkOrder], [WorkOrder], []),
+  'updateWorkflowTask' : IDL.Func(
+      [CompanyId, WorkflowTask],
+      [WorkflowTask],
+      [],
+    ),
 });
 
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
   const CompanyId = IDL.Text;
+  const BOMItem = IDL.Record({
+    'id' : IDL.Text,
+    'unit' : IDL.Text,
+    'workOrderId' : IDL.Text,
+    'quantity' : IDL.Nat,
+    'materialName' : IDL.Text,
+    'companyId' : CompanyId,
+  });
   const CommunicationLog = IDL.Record({
     'id' : IDL.Text,
     'date' : IDL.Text,
@@ -423,6 +530,16 @@ export const idlFactory = ({ IDL }) => {
     'unitPrice' : IDL.Nat,
     'companyId' : CompanyId,
   });
+  const PurchaseOrder = IDL.Record({
+    'id' : IDL.Text,
+    'status' : IDL.Text,
+    'orderDate' : IDL.Text,
+    'totalAmount' : IDL.Nat,
+    'expectedDelivery' : IDL.Text,
+    'items' : IDL.Text,
+    'supplierId' : IDL.Text,
+    'companyId' : CompanyId,
+  });
   const SalaryInfo = IDL.Record({
     'id' : IDL.Text,
     'employeeId' : IDL.Text,
@@ -455,6 +572,14 @@ export const idlFactory = ({ IDL }) => {
     'reason' : IDL.Text,
     'companyId' : CompanyId,
   });
+  const Supplier = IDL.Record({
+    'id' : IDL.Text,
+    'contactInfo' : IDL.Text,
+    'name' : IDL.Text,
+    'category' : IDL.Text,
+    'rating' : IDL.Nat,
+    'companyId' : CompanyId,
+  });
   const Transaction = IDL.Record({
     'id' : IDL.Text,
     'transactionType' : IDL.Text,
@@ -462,6 +587,27 @@ export const idlFactory = ({ IDL }) => {
     'description' : IDL.Text,
     'category' : IDL.Text,
     'amount' : IDL.Nat,
+    'companyId' : CompanyId,
+  });
+  const WorkOrder = IDL.Record({
+    'id' : IDL.Text,
+    'status' : IDL.Text,
+    'endDate' : IDL.Text,
+    'productName' : IDL.Text,
+    'notes' : IDL.Text,
+    'quantity' : IDL.Nat,
+    'startDate' : IDL.Text,
+    'companyId' : CompanyId,
+  });
+  const WorkflowTask = IDL.Record({
+    'id' : IDL.Text,
+    'status' : IDL.Text,
+    'assignee' : IDL.Opt(IDL.Principal),
+    'title' : IDL.Text,
+    'tags' : IDL.Vec(IDL.Text),
+    'dueDate' : IDL.Text,
+    'description' : IDL.Text,
+    'priority' : IDL.Text,
     'companyId' : CompanyId,
   });
   const UserRole = IDL.Variant({
@@ -557,6 +703,7 @@ export const idlFactory = ({ IDL }) => {
   
   return IDL.Service({
     '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'addBOMItem' : IDL.Func([CompanyId, BOMItem], [BOMItem], []),
     'addCommunicationLog' : IDL.Func(
         [CompanyId, CommunicationLog],
         [CommunicationLog],
@@ -568,6 +715,11 @@ export const idlFactory = ({ IDL }) => {
     'addInvoice' : IDL.Func([CompanyId, Invoice], [Invoice], []),
     'addLeaveRequest' : IDL.Func([CompanyId, LeaveRequest], [LeaveRequest], []),
     'addProduct' : IDL.Func([CompanyId, Product], [Product], []),
+    'addPurchaseOrder' : IDL.Func(
+        [CompanyId, PurchaseOrder],
+        [PurchaseOrder],
+        [],
+      ),
     'addSalaryInfo' : IDL.Func([CompanyId, SalaryInfo], [SalaryInfo], []),
     'addSalesOpportunity' : IDL.Func(
         [CompanyId, SalesOpportunity],
@@ -584,7 +736,10 @@ export const idlFactory = ({ IDL }) => {
         [StockMovement],
         [],
       ),
+    'addSupplier' : IDL.Func([CompanyId, Supplier], [Supplier], []),
     'addTransaction' : IDL.Func([CompanyId, Transaction], [Transaction], []),
+    'addWorkOrder' : IDL.Func([CompanyId, WorkOrder], [WorkOrder], []),
+    'addWorkflowTask' : IDL.Func([CompanyId, WorkflowTask], [WorkflowTask], []),
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
     'createCompany' : IDL.Func([CompanyProfile], [Company], []),
     'createProject' : IDL.Func([CompanyId, Project], [Project], []),
@@ -652,7 +807,27 @@ export const idlFactory = ({ IDL }) => {
         ],
         ['query'],
       ),
+    'getManufacturingData' : IDL.Func(
+        [CompanyId],
+        [
+          IDL.Record({
+            'workOrders' : IDL.Vec(WorkOrder),
+            'bomItems' : IDL.Vec(BOMItem),
+          }),
+        ],
+        ['query'],
+      ),
     'getMyEmployeeCode' : IDL.Func([], [IDL.Opt(IDL.Text)], ['query']),
+    'getProcurementData' : IDL.Func(
+        [CompanyId],
+        [
+          IDL.Record({
+            'orders' : IDL.Vec(PurchaseOrder),
+            'suppliers' : IDL.Vec(Supplier),
+          }),
+        ],
+        ['query'],
+      ),
     'getProjectData' : IDL.Func(
         [CompanyId],
         [
@@ -670,6 +845,11 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Opt(UserProfile)],
         ['query'],
       ),
+    'getWorkflowData' : IDL.Func(
+        [CompanyId],
+        [IDL.Record({ 'tasks' : IDL.Vec(WorkflowTask) })],
+        ['query'],
+      ),
     'grantModuleAccess' : IDL.Func(
         [CompanyId, IDL.Principal, IDL.Text],
         [],
@@ -680,24 +860,30 @@ export const idlFactory = ({ IDL }) => {
     'isRegisteredAsCompany' : IDL.Func([], [IDL.Opt(IDL.Text)], ['query']),
     'listDefaultRoles' : IDL.Func([], [IDL.Vec(Role)], ['query']),
     'listRolesForCompany' : IDL.Func([IDL.Text], [IDL.Vec(Role)], ['query']),
+    'removeBOMItem' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
     'removeCustomRole' : IDL.Func([IDL.Text, IDL.Text], [], []),
     'removeCustomer' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
     'removeEmployee' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
     'removeProduct' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
     'removeProject' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
     'removeProjectTask' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
+    'removePurchaseOrder' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
     'removeStaffFromCompany' : IDL.Func(
         [CompanyId, IDL.Principal],
         [IDL.Bool],
         [],
       ),
+    'removeSupplier' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
     'removeTransaction' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
+    'removeWorkOrder' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
+    'removeWorkflowTask' : IDL.Func([CompanyId, IDL.Text], [IDL.Bool], []),
     'revokeModuleAccess' : IDL.Func(
         [CompanyId, IDL.Principal, IDL.Text],
         [],
         [],
       ),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'updateBOMItem' : IDL.Func([CompanyId, BOMItem], [BOMItem], []),
     'updateCompany' : IDL.Func([CompanyId, CompanyProfile], [Company], []),
     'updateCustomer' : IDL.Func([CompanyId, Customer], [Customer], []),
     'updateEmployee' : IDL.Func(
@@ -714,6 +900,11 @@ export const idlFactory = ({ IDL }) => {
     'updateProduct' : IDL.Func([CompanyId, Product], [Product], []),
     'updateProject' : IDL.Func([CompanyId, Project], [Project], []),
     'updateProjectTask' : IDL.Func([CompanyId, ProjectTask], [ProjectTask], []),
+    'updatePurchaseOrder' : IDL.Func(
+        [CompanyId, PurchaseOrder],
+        [PurchaseOrder],
+        [],
+      ),
     'updateSalesOpportunity' : IDL.Func(
         [CompanyId, SalesOpportunity],
         [SalesOpportunity],
@@ -724,7 +915,14 @@ export const idlFactory = ({ IDL }) => {
         [RoleAssignmentResult],
         [],
       ),
+    'updateSupplier' : IDL.Func([CompanyId, Supplier], [Supplier], []),
     'updateTransaction' : IDL.Func([CompanyId, Transaction], [Transaction], []),
+    'updateWorkOrder' : IDL.Func([CompanyId, WorkOrder], [WorkOrder], []),
+    'updateWorkflowTask' : IDL.Func(
+        [CompanyId, WorkflowTask],
+        [WorkflowTask],
+        [],
+      ),
   });
 };
 
