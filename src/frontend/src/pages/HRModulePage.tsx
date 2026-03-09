@@ -72,6 +72,7 @@ const LEAVE_TYPES = [
 const CURRENCIES = ["TRY", "USD", "EUR"];
 
 function StatusBadge({ status }: { status: string }) {
+  const { t } = useLanguage();
   if (status === "approved")
     return (
       <span
@@ -83,7 +84,7 @@ function StatusBadge({ status }: { status: string }) {
         }}
       >
         <CheckCircle className="w-3 h-3" />
-        Onaylandı
+        {t("erp.common.approved")}
       </span>
     );
   if (status === "rejected")
@@ -97,7 +98,7 @@ function StatusBadge({ status }: { status: string }) {
         }}
       >
         <XCircle className="w-3 h-3" />
-        Reddedildi
+        {t("erp.common.rejected")}
       </span>
     );
   return (
@@ -110,7 +111,7 @@ function StatusBadge({ status }: { status: string }) {
       }}
     >
       <Clock className="w-3 h-3" />
-      Bekliyor
+      {t("erp.common.pending")}
     </span>
   );
 }
@@ -218,7 +219,7 @@ export default function HRModulePage({
       }
       setShowEmployeeDialog(false);
     } catch {
-      toast.error("İşlem başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -227,7 +228,7 @@ export default function HRModulePage({
       await removeEmployee.mutateAsync({ companyId, employeeId });
       toast.success(t("erp.hr.employeeDeleted"));
     } catch {
-      toast.error("Silme başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -241,10 +242,12 @@ export default function HRModulePage({
         request: { ...req, status: action },
       });
       toast.success(
-        action === "approved" ? "İzin onaylandı" : "İzin reddedildi",
+        action === "approved"
+          ? t("erp.hr.leaveApproved")
+          : t("erp.hr.leaveRejected"),
       );
     } catch {
-      toast.error("İşlem başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -272,7 +275,7 @@ export default function HRModulePage({
       toast.success(t("erp.hr.leaveCreated"));
       setShowLeaveDialog(false);
     } catch {
-      toast.error("İşlem başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -292,7 +295,7 @@ export default function HRModulePage({
       toast.success(t("erp.hr.salaryAdded"));
       setShowSalaryDialog(false);
     } catch {
-      toast.error("İşlem başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -327,7 +330,7 @@ export default function HRModulePage({
                 style={{ color: "oklch(0.45 0.22 280)" }}
               />
             </div>
-            İnsan Kaynakları
+            {t("erp.hr.title")}
           </h1>
           <p className="text-sm mt-1" style={{ color: "oklch(0.5 0.01 270)" }}>
             Personel, izin ve maaş yönetimi
@@ -346,17 +349,17 @@ export default function HRModulePage({
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {[
             {
-              label: "Toplam Personel",
+              label: t("erp.hr.totalEmployees"),
               value: employees.length,
               accent: "oklch(0.45 0.22 280)",
             },
             {
-              label: "Bekleyen İzin",
+              label: t("erp.hr.pendingLeaves"),
               value: leaveRequests.filter((r) => r.status === "pending").length,
               accent: "oklch(0.6 0.17 50)",
             },
             {
-              label: "Onaylanan İzin",
+              label: t("erp.hr.approvedLeaves"),
               value: leaveRequests.filter((r) => r.status === "approved")
                 .length,
               accent: "oklch(0.5 0.16 145)",
@@ -400,14 +403,14 @@ export default function HRModulePage({
           }}
         >
           <TabsTrigger value="employees" data-ocid="hr.employees.tab">
-            Personel
+            {t("erp.hr.employees")}
           </TabsTrigger>
           <TabsTrigger value="leaves" data-ocid="hr.leaves.tab">
-            İzin Talepleri
+            {t("erp.hr.leaves")}
           </TabsTrigger>
           {isOwnerOrManager && (
             <TabsTrigger value="salaries" data-ocid="hr.salaries.tab">
-              Maaş Bilgileri
+              {t("erp.hr.salaries")}
             </TabsTrigger>
           )}
         </TabsList>
@@ -434,7 +437,7 @@ export default function HRModulePage({
                     color: "oklch(0.12 0.012 270)",
                   }}
                 >
-                  Personel Listesi
+                  {t("erp.hr.employees")}
                 </h2>
                 <p
                   className="text-xs mt-0.5"
@@ -456,7 +459,7 @@ export default function HRModulePage({
                   }}
                 >
                   <Plus className="w-4 h-4 mr-1" />
-                  Personel Ekle
+                  {t("erp.hr.addEmployee")}
                 </Button>
               )}
             </div>
@@ -473,7 +476,7 @@ export default function HRModulePage({
                 style={{ color: "oklch(0.6 0.01 270)" }}
               >
                 <Users className="w-10 h-10 mb-3 opacity-30" />
-                <p className="text-sm">Henüz personel kaydı yok</p>
+                <p className="text-sm">{t("erp.hr.noEmployees")}</p>
               </div>
             ) : (
               <Table>
@@ -484,22 +487,22 @@ export default function HRModulePage({
                     <TableHead
                       style={{ color: "oklch(0.45 0.01 270)", fontWeight: 600 }}
                     >
-                      Ad Soyad
+                      {t("erp.hr.employeeName")}
                     </TableHead>
                     <TableHead
                       style={{ color: "oklch(0.45 0.01 270)", fontWeight: 600 }}
                     >
-                      Unvan
+                      {t("erp.hr.position")}
                     </TableHead>
                     <TableHead
                       style={{ color: "oklch(0.45 0.01 270)", fontWeight: 600 }}
                     >
-                      Departman
+                      {t("erp.hr.department")}
                     </TableHead>
                     <TableHead
                       style={{ color: "oklch(0.45 0.01 270)", fontWeight: 600 }}
                     >
-                      İşe Giriş
+                      {t("erp.hr.startDate")}
                     </TableHead>
                     {isOwnerOrManager && (
                       <TableHead
@@ -509,7 +512,7 @@ export default function HRModulePage({
                           fontWeight: 600,
                         }}
                       >
-                        İşlem
+                        {t("erp.common.actions")}
                       </TableHead>
                     )}
                   </TableRow>
@@ -618,7 +621,7 @@ export default function HRModulePage({
                     color: "oklch(0.12 0.012 270)",
                   }}
                 >
-                  İzin Talepleri
+                  {t("erp.hr.leaves")}
                 </h2>
                 <p
                   className="text-xs mt-0.5"
@@ -647,7 +650,7 @@ export default function HRModulePage({
                 }}
               >
                 <Plus className="w-4 h-4 mr-1" />
-                İzin Talebi Ekle
+                {t("erp.hr.addLeave")}
               </Button>
             </div>
             {isLoading ? (
@@ -663,7 +666,7 @@ export default function HRModulePage({
                 style={{ color: "oklch(0.6 0.01 270)" }}
               >
                 <Clock className="w-10 h-10 mb-3 opacity-30" />
-                <p className="text-sm">Henüz izin talebi yok</p>
+                <p className="text-sm">{t("erp.hr.noLeaves")}</p>
               </div>
             ) : (
               <Table>
@@ -674,27 +677,27 @@ export default function HRModulePage({
                     <TableHead
                       style={{ color: "oklch(0.45 0.01 270)", fontWeight: 600 }}
                     >
-                      Personel
+                      {t("erp.hr.employee")}
                     </TableHead>
                     <TableHead
                       style={{ color: "oklch(0.45 0.01 270)", fontWeight: 600 }}
                     >
-                      İzin Türü
+                      {t("erp.hr.leaveType")}
                     </TableHead>
                     <TableHead
                       style={{ color: "oklch(0.45 0.01 270)", fontWeight: 600 }}
                     >
-                      Başlangıç
+                      {t("erp.hr.leaveStart")}
                     </TableHead>
                     <TableHead
                       style={{ color: "oklch(0.45 0.01 270)", fontWeight: 600 }}
                     >
-                      Bitiş
+                      {t("erp.hr.leaveEnd")}
                     </TableHead>
                     <TableHead
                       style={{ color: "oklch(0.45 0.01 270)", fontWeight: 600 }}
                     >
-                      Durum
+                      {t("erp.common.status")}
                     </TableHead>
                     {isOwnerOrManager && (
                       <TableHead
@@ -704,7 +707,7 @@ export default function HRModulePage({
                           fontWeight: 600,
                         }}
                       >
-                        İşlem
+                        {t("erp.common.actions")}
                       </TableHead>
                     )}
                   </TableRow>
@@ -835,7 +838,7 @@ export default function HRModulePage({
                   }}
                 >
                   <DollarSign className="w-4 h-4 mr-1" />
-                  Maaş Ekle
+                  {t("erp.hr.addSalary")}
                 </Button>
               </div>
               {isLoading ? (
@@ -851,7 +854,7 @@ export default function HRModulePage({
                   style={{ color: "oklch(0.6 0.01 270)" }}
                 >
                   <DollarSign className="w-10 h-10 mb-3 opacity-30" />
-                  <p className="text-sm">Henüz maaş kaydı yok</p>
+                  <p className="text-sm">{t("erp.hr.noSalaries")}</p>
                 </div>
               ) : (
                 <Table>
@@ -865,7 +868,7 @@ export default function HRModulePage({
                           fontWeight: 600,
                         }}
                       >
-                        Personel
+                        {t("erp.hr.employee")}
                       </TableHead>
                       <TableHead
                         style={{
@@ -873,7 +876,7 @@ export default function HRModulePage({
                           fontWeight: 600,
                         }}
                       >
-                        Temel Maaş
+                        {t("erp.hr.baseSalary")}
                       </TableHead>
                       <TableHead
                         style={{
@@ -881,7 +884,7 @@ export default function HRModulePage({
                           fontWeight: 600,
                         }}
                       >
-                        Para Birimi
+                        {t("erp.common.currency")}
                       </TableHead>
                     </TableRow>
                   </TableHeader>
@@ -958,7 +961,7 @@ export default function HRModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Ad Soyad
+                {t("erp.hr.employeeName")}
               </Label>
               <Input
                 value={empForm.name}
@@ -978,7 +981,7 @@ export default function HRModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Unvan
+                {t("erp.hr.position")}
               </Label>
               <Input
                 value={empForm.title}
@@ -998,7 +1001,7 @@ export default function HRModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Departman
+                {t("erp.hr.department")}
               </Label>
               <Select
                 value={empForm.department}
@@ -1007,7 +1010,7 @@ export default function HRModulePage({
                 }
               >
                 <SelectTrigger data-ocid="hr.employee.department.select">
-                  <SelectValue placeholder="Departman seçin" />
+                  <SelectValue placeholder={t("erp.hr.department")} />
                 </SelectTrigger>
                 <SelectContent>
                   {DEPARTMENTS.map((d) => (
@@ -1022,7 +1025,7 @@ export default function HRModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                İşe Giriş Tarihi
+                {t("erp.hr.startDate")}
               </Label>
               <Input
                 type="date"
@@ -1050,7 +1053,7 @@ export default function HRModulePage({
                 backgroundColor: "oklch(1 0 0)",
               }}
             >
-              İptal
+              {t("erp.common.cancel")}
             </Button>
             <Button
               onClick={saveEmployee}
@@ -1066,7 +1069,7 @@ export default function HRModulePage({
               {isSaving ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : null}
-              Kaydet
+              {t("erp.common.save")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1084,7 +1087,7 @@ export default function HRModulePage({
         >
           <DialogHeader>
             <DialogTitle style={{ color: "oklch(0.12 0.012 270)" }}>
-              İzin Talebi Oluştur
+              {t("erp.hr.addLeave")}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">
@@ -1092,7 +1095,7 @@ export default function HRModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Personel
+                {t("erp.hr.employee")}
               </Label>
               <Select
                 value={leaveForm.employeeId}
@@ -1101,7 +1104,7 @@ export default function HRModulePage({
                 }
               >
                 <SelectTrigger data-ocid="hr.leave.employee.select">
-                  <SelectValue placeholder="Personel seçin" />
+                  <SelectValue placeholder={t("erp.hr.employee")} />
                 </SelectTrigger>
                 <SelectContent>
                   {employees.map((e) => (
@@ -1116,7 +1119,7 @@ export default function HRModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                İzin Türü
+                {t("erp.hr.leaveType")}
               </Label>
               <Select
                 value={leaveForm.leaveType}
@@ -1125,7 +1128,7 @@ export default function HRModulePage({
                 }
               >
                 <SelectTrigger data-ocid="hr.leave.type.select">
-                  <SelectValue placeholder="İzin türü seçin" />
+                  <SelectValue placeholder={t("erp.hr.leaveType")} />
                 </SelectTrigger>
                 <SelectContent>
                   {LEAVE_TYPES.map((t) => (
@@ -1141,7 +1144,7 @@ export default function HRModulePage({
                 <Label
                   style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
                 >
-                  Başlangıç
+                  {t("erp.hr.leaveStart")}
                 </Label>
                 <Input
                   type="date"
@@ -1161,7 +1164,7 @@ export default function HRModulePage({
                 <Label
                   style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
                 >
-                  Bitiş
+                  {t("erp.hr.leaveEnd")}
                 </Label>
                 <Input
                   type="date"
@@ -1190,7 +1193,7 @@ export default function HRModulePage({
                 backgroundColor: "oklch(1 0 0)",
               }}
             >
-              İptal
+              {t("erp.common.cancel")}
             </Button>
             <Button
               onClick={saveLeaveRequest}
@@ -1206,7 +1209,7 @@ export default function HRModulePage({
               {addLeaveRequest.isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : null}
-              Oluştur
+              {t("erp.hr.addLeave")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1224,7 +1227,7 @@ export default function HRModulePage({
         >
           <DialogHeader>
             <DialogTitle style={{ color: "oklch(0.12 0.012 270)" }}>
-              Maaş Bilgisi Ekle
+              {t("erp.hr.addSalary")}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">
@@ -1232,7 +1235,7 @@ export default function HRModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Personel
+                {t("erp.hr.employee")}
               </Label>
               <Select
                 value={salaryForm.employeeId}
@@ -1241,7 +1244,7 @@ export default function HRModulePage({
                 }
               >
                 <SelectTrigger data-ocid="hr.salary.employee.select">
-                  <SelectValue placeholder="Personel seçin" />
+                  <SelectValue placeholder={t("erp.hr.employee")} />
                 </SelectTrigger>
                 <SelectContent>
                   {employees.map((e) => (
@@ -1256,7 +1259,7 @@ export default function HRModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Temel Maaş
+                {t("erp.hr.baseSalary")}
               </Label>
               <Input
                 type="number"
@@ -1277,7 +1280,7 @@ export default function HRModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Para Birimi
+                {t("erp.common.currency")}
               </Label>
               <Select
                 value={salaryForm.currency}
@@ -1309,7 +1312,7 @@ export default function HRModulePage({
                 backgroundColor: "oklch(1 0 0)",
               }}
             >
-              İptal
+              {t("erp.common.cancel")}
             </Button>
             <Button
               onClick={saveSalary}
@@ -1325,7 +1328,7 @@ export default function HRModulePage({
               {addSalaryInfo.isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : null}
-              Kaydet
+              {t("erp.common.save")}
             </Button>
           </DialogFooter>
         </DialogContent>

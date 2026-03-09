@@ -39,7 +39,7 @@ export default function StaffRegistrationPage({
       projectManager: title.trim(),
       roleCode: BigInt(4), // Company Staff by default
       employeeCode: "",
-      companyId: "unassigned",
+      companyId: "",
       memberships: [],
     };
 

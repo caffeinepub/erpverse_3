@@ -471,11 +471,35 @@
       "noData": "Keine Daten gefunden",
       "totalEmployees": "Total Employees",
       "totalIncome": "Total Income",
-      "totalExpense": "Total Expenses",
+      "totalExpense": "Gesamtausgaben",
       "netBalance": "Net Balance",
       "activeProjects": "Active Projects",
       "totalCustomers": "Total Customers",
-      "pipelineValue": "Pipeline Value"
+      "pipelineValue": "Pipeline Value",
+      "financialSummary": "Finanzübersicht",
+      "projectStatus": "Projektstatus",
+      "deptDistribution": "Abteilungsverteilung",
+      "lowStockAlerts": "Niedrige Lagerbestandsalarme",
+      "crmPipeline": "CRM Pipeline",
+      "completionRate": "Fertigstellungsrate",
+      "incomeExpenseChart": "Einnahmen / Ausgaben Vergleich",
+      "subtitle": "Übersicht aller ERP-Module",
+      "noHRData": "Keine HR-Daten gefunden",
+      "noStockAlert": "Keine Lagerbestandsalarme",
+      "noOpportunityData": "Keine Opportunity-Daten gefunden",
+      "noProjectData": "Keine Projektdaten gefunden"
+    },
+    "modulePermissions": {
+      "title": "Modulberechtigungen",
+      "subtitle": "Verwalten Sie den ERP-Modulzugang der Mitarbeiter",
+      "fullAccessTitle": "Vollzugriffsbenutzer",
+      "fullAccessNote": "Firmeninhaber und Manager haben automatisch Zugriff auf alle Module.",
+      "staffPermissions": "Mitarbeiter-Modulzugang",
+      "staffPermissionsDesc": "Modulzugang für jeden Mitarbeiter ein-/ausschalten",
+      "noStaff": "Keine Mitarbeiter zur Berechtigungsverwaltung gefunden",
+      "accessGranted": "Zugriff gewährt",
+      "accessRevoked": "Zugriff widerrufen",
+      "operationFailed": "Vorgang fehlgeschlagen"
     }
   }
 }

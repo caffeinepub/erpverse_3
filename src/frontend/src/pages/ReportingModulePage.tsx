@@ -190,7 +190,7 @@ export default function ReportingModulePage({
   const deptMap: Record<string, number> = {};
   if (hrData?.employees) {
     for (const emp of hrData.employees) {
-      const dept = emp.department || "Diğer";
+      const dept = emp.department || t("erp.common.type");
       deptMap[dept] = (deptMap[dept] || 0) + 1;
     }
   }
@@ -223,11 +223,11 @@ export default function ReportingModulePage({
 
   // ── CRM pipeline ──
   const crmStages = [
-    { label: "Potansiyel", key: "lead" },
-    { label: "Nitelikli", key: "qualified" },
-    { label: "Teklif", key: "proposal" },
-    { label: "Müzakere", key: "negotiation" },
-    { label: "Kazanıldı", key: "won" },
+    { label: t("erp.crm.prospect"), key: "lead" },
+    { label: t("erp.crm.qualified"), key: "qualified" },
+    { label: t("erp.crm.proposal"), key: "proposal" },
+    { label: t("erp.crm.negotiation"), key: "negotiation" },
+    { label: t("erp.crm.closed"), key: "won" },
   ];
   const opportunityByStage = crmStages.map((s) => ({
     label: s.label,
@@ -237,9 +237,9 @@ export default function ReportingModulePage({
 
   // ── Financial bar chart ──
   const financialBars = [
-    { label: "Gelir", value: totalIncome },
-    { label: "Gider", value: totalExpenses },
-    { label: "Net", value: Math.abs(netBalance) },
+    { label: t("erp.reporting.totalIncome"), value: totalIncome },
+    { label: t("erp.reporting.totalExpense"), value: totalExpenses },
+    { label: t("erp.reporting.netBalance"), value: Math.abs(netBalance) },
   ];
   const maxFinancial = Math.max(...financialBars.map((b) => b.value), 1);
 
@@ -255,17 +255,17 @@ export default function ReportingModulePage({
             className="w-6 h-6"
             style={{ color: "oklch(0.42 0.15 145)" }}
           />
-          Raporlama & Analitik
+          {t("erp.reporting.title")}
         </h1>
         <p className="text-sm mt-0.5" style={{ color: "oklch(0.5 0.01 270)" }}>
-          Tüm ERP modüllerinin özet görünümü
+          {t("erp.reporting.subtitle")}
         </p>
       </div>
 
       {/* KPI Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         <StatCard
-          label="HR Çalışan"
+          label={t("erp.reporting.totalEmployees")}
           value={totalEmployees}
           icon={Users}
           iconBg="oklch(0.93 0.04 220)"
@@ -274,7 +274,7 @@ export default function ReportingModulePage({
           loading={summaryLoading}
         />
         <StatCard
-          label="Açık Projeler"
+          label={t("erp.reporting.activeProjects")}
           value={openProjects}
           icon={FolderKanban}
           iconBg="oklch(0.93 0.04 280)"
@@ -283,7 +283,7 @@ export default function ReportingModulePage({
           loading={summaryLoading}
         />
         <StatCard
-          label="Düşük Stok"
+          label={t("erp.reporting.criticalStock")}
           value={lowStock}
           icon={Boxes}
           iconBg="oklch(0.94 0.06 35)"
@@ -292,7 +292,7 @@ export default function ReportingModulePage({
           loading={summaryLoading}
         />
         <StatCard
-          label="Bekl. Fatura"
+          label={t("erp.accounting.invoices")}
           value={pendingInvoices}
           icon={BookOpen}
           iconBg="oklch(0.94 0.06 75)"
@@ -301,7 +301,7 @@ export default function ReportingModulePage({
           loading={summaryLoading}
         />
         <StatCard
-          label="Müşteriler"
+          label={t("erp.reporting.totalCustomers")}
           value={totalCustomers}
           icon={Contact}
           iconBg="oklch(0.92 0.06 145)"
@@ -330,7 +330,7 @@ export default function ReportingModulePage({
               className="h-5 w-5"
               style={{ color: "oklch(0.42 0.16 145)" }}
             />
-            Finansal Özet
+            {t("erp.reporting.financialSummary")}
           </h2>
           {financialLoading ? (
             <div className="space-y-3">
@@ -404,7 +404,7 @@ export default function ReportingModulePage({
                 data={financialBars}
                 maxValue={maxFinancial}
                 color="oklch(0.45 0.16 145)"
-                label="Gelir / Gider Karşılaştırması"
+                label={t("erp.reporting.incomeExpenseChart")}
               />
             </div>
           )}
@@ -427,7 +427,7 @@ export default function ReportingModulePage({
               className="h-5 w-5"
               style={{ color: "oklch(0.45 0.22 280)" }}
             />
-            Proje Durumu
+            {t("erp.reporting.projectStatus")}
           </h2>
           {projectLoading ? (
             <div className="space-y-3">
@@ -440,19 +440,19 @@ export default function ReportingModulePage({
               <div className="grid grid-cols-3 gap-3">
                 {[
                   {
-                    label: "Toplam",
+                    label: t("erp.common.total"),
                     value: totalProjects,
                     color: "oklch(0.35 0.18 280)",
                     bg: "oklch(0.93 0.04 280)",
                   },
                   {
-                    label: "Devam Ediyor",
+                    label: t("erp.common.inProgress"),
                     value: inProgressProjects,
                     color: "oklch(0.42 0.14 75)",
                     bg: "oklch(0.94 0.06 75)",
                   },
                   {
-                    label: "Tamamlandı",
+                    label: t("erp.common.completed"),
                     value: completedProjects,
                     color: "oklch(0.38 0.15 145)",
                     bg: "oklch(0.92 0.06 145)",
@@ -487,7 +487,7 @@ export default function ReportingModulePage({
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs">
                   <span style={{ color: "oklch(0.5 0.01 270)" }}>
-                    Tamamlanma Oranı
+                    {t("erp.reporting.completionRate")}
                   </span>
                   <span
                     className="font-mono font-bold"
@@ -511,7 +511,7 @@ export default function ReportingModulePage({
                   className="text-sm text-center py-4"
                   style={{ color: "oklch(0.6 0.01 270)" }}
                 >
-                  Proje verisi bulunamadı
+                  {t("erp.reporting.noProjectData")}
                 </p>
               )}
             </div>
@@ -538,7 +538,7 @@ export default function ReportingModulePage({
               className="h-5 w-5"
               style={{ color: "oklch(0.42 0.18 220)" }}
             />
-            Departman Dağılımı
+            {t("erp.reporting.deptDistribution")}
           </h2>
           {hrLoading ? (
             <div className="space-y-2">
@@ -551,7 +551,7 @@ export default function ReportingModulePage({
               className="text-sm text-center py-4"
               style={{ color: "oklch(0.6 0.01 270)" }}
             >
-              HR verisi bulunamadı
+              {t("erp.reporting.noHRData")}
             </p>
           ) : (
             <div className="space-y-2.5">
@@ -606,7 +606,7 @@ export default function ReportingModulePage({
               className="h-5 w-5"
               style={{ color: "oklch(0.5 0.18 35)" }}
             />
-            Düşük Stok Uyarıları
+            {t("erp.reporting.lowStockAlerts")}
           </h2>
           {inventoryLoading ? (
             <div className="space-y-2">
@@ -619,7 +619,7 @@ export default function ReportingModulePage({
               className="text-sm text-center py-4"
               style={{ color: "oklch(0.6 0.01 270)" }}
             >
-              Stok uyarısı bulunmuyor
+              {t("erp.reporting.noStockAlert")}
             </p>
           ) : (
             <div className="space-y-2">
@@ -682,7 +682,7 @@ export default function ReportingModulePage({
               className="h-5 w-5"
               style={{ color: "oklch(0.42 0.16 145)" }}
             />
-            CRM Pipeline
+            {t("erp.reporting.crmPipeline")}
           </h2>
           {crmLoading ? (
             <div className="space-y-2">
@@ -737,7 +737,7 @@ export default function ReportingModulePage({
                   className="text-sm text-center py-4"
                   style={{ color: "oklch(0.6 0.01 270)" }}
                 >
-                  Fırsat verisi bulunamadı
+                  {t("erp.reporting.noOpportunityData")}
                 </p>
               )}
             </div>

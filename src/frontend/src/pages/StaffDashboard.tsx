@@ -276,10 +276,10 @@ export default function StaffDashboard({
         name: editName,
         projectManager: editTitle,
       });
-      toast.success("Profil güncellendi");
+      toast.success(t("common.success"));
       setShowEditProfile(false);
     } catch {
-      toast.error("Profil güncellenemedi");
+      toast.error(t("common.error"));
     }
   };
 
@@ -400,7 +400,8 @@ export default function StaffDashboard({
                           className="text-xs font-medium uppercase tracking-wider"
                           style={{ color: "oklch(0.5 0.01 270)" }}
                         >
-                          {memberships.length} şirkette çalışıyorsunuz
+                          {memberships.length}{" "}
+                          {t("dashboard.staff.myCompanies")}
                         </p>
                       )}
                       {memberships.map((membership) => (

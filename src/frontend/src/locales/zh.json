@@ -463,11 +463,35 @@
       "noData": "暂无数据",
       "totalEmployees": "Total Employees",
       "totalIncome": "Total Income",
-      "totalExpense": "Total Expenses",
+      "totalExpense": "总支出",
       "netBalance": "Net Balance",
       "activeProjects": "Active Projects",
       "totalCustomers": "Total Customers",
-      "pipelineValue": "Pipeline Value"
+      "pipelineValue": "Pipeline Value",
+      "financialSummary": "财务摘要",
+      "projectStatus": "项目状态",
+      "deptDistribution": "部门分布",
+      "lowStockAlerts": "低库存警报",
+      "crmPipeline": "CRM 管道",
+      "completionRate": "完成率",
+      "incomeExpenseChart": "收入 / 支出比较",
+      "subtitle": "所有ERP模块的摘要视图",
+      "noHRData": "未找到HR数据",
+      "noStockAlert": "无库存警报",
+      "noOpportunityData": "未找到商机数据",
+      "noProjectData": "未找到项目数据"
+    },
+    "modulePermissions": {
+      "title": "模块权限",
+      "subtitle": "管理员工可以访问哪些ERP模块",
+      "fullAccessTitle": "完全访问权限用户",
+      "fullAccessNote": "公司所有者和经理可以自动访问所有模块。",
+      "staffPermissions": "员工模块访问",
+      "staffPermissionsDesc": "为每个员工切换模块访问权限",
+      "noStaff": "未找到需要管理权限的员工",
+      "accessGranted": "已授予访问权限",
+      "accessRevoked": "已撤销访问权限",
+      "operationFailed": "操作失败"
     }
   }
 }

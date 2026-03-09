@@ -467,11 +467,35 @@
       "noData": "لا توجد بيانات",
       "totalEmployees": "Total Employees",
       "totalIncome": "Total Income",
-      "totalExpense": "Total Expenses",
+      "totalExpense": "إجمالي المصروفات",
       "netBalance": "Net Balance",
       "activeProjects": "Active Projects",
       "totalCustomers": "Total Customers",
-      "pipelineValue": "Pipeline Value"
+      "pipelineValue": "Pipeline Value",
+      "financialSummary": "الملخص المالي",
+      "projectStatus": "حالة المشروع",
+      "deptDistribution": "توزيع الأقسام",
+      "lowStockAlerts": "تنبيهات المخزون المنخفض",
+      "crmPipeline": "خط أنابيب CRM",
+      "completionRate": "معدل الإنجاز",
+      "incomeExpenseChart": "مقارنة الدخل / المصروفات",
+      "subtitle": "عرض ملخص لجميع وحدات ERP",
+      "noHRData": "لم يتم العثور على بيانات الموارد البشرية",
+      "noStockAlert": "لا توجد تنبيهات للمخزون",
+      "noOpportunityData": "لم يتم العثور على بيانات الفرص",
+      "noProjectData": "لم يتم العثور على بيانات المشاريع"
+    },
+    "modulePermissions": {
+      "title": "صلاحيات الوحدات",
+      "subtitle": "إدارة وحدات ERP التي يمكن للموظفين الوصول إليها",
+      "fullAccessTitle": "مستخدمون بصلاحية كاملة",
+      "fullAccessNote": "يمكن لأصحاب الشركات والمديرين الوصول إلى جميع الوحدات تلقائياً.",
+      "staffPermissions": "وصول الموظفين للوحدات",
+      "staffPermissionsDesc": "تفعيل/تعطيل الوصول للوحدات لكل موظف",
+      "noStaff": "لم يتم العثور على موظفين لإدارة الصلاحيات",
+      "accessGranted": "تم منح الوصول",
+      "accessRevoked": "تم إلغاء الوصول",
+      "operationFailed": "فشلت العملية"
     }
   }
 }

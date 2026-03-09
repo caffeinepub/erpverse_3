@@ -471,11 +471,35 @@
       "noData": "Данные не найдены",
       "totalEmployees": "Total Employees",
       "totalIncome": "Total Income",
-      "totalExpense": "Total Expenses",
+      "totalExpense": "Общие Расходы",
       "netBalance": "Net Balance",
       "activeProjects": "Active Projects",
       "totalCustomers": "Total Customers",
-      "pipelineValue": "Pipeline Value"
+      "pipelineValue": "Pipeline Value",
+      "financialSummary": "Финансовая Сводка",
+      "projectStatus": "Статус Проекта",
+      "deptDistribution": "Распределение по Отделам",
+      "lowStockAlerts": "Предупреждения о Низком Запасе",
+      "crmPipeline": "CRM Воронка",
+      "completionRate": "Процент Завершения",
+      "incomeExpenseChart": "Сравнение Доходов / Расходов",
+      "subtitle": "Сводный вид всех модулей ERP",
+      "noHRData": "Данные HR не найдены",
+      "noStockAlert": "Нет предупреждений о запасах",
+      "noOpportunityData": "Данные о возможностях не найдены",
+      "noProjectData": "Данные о проектах не найдены"
+    },
+    "modulePermissions": {
+      "title": "Разрешения Модулей",
+      "subtitle": "Управляйте доступом сотрудников к модулям ERP",
+      "fullAccessTitle": "Пользователи с Полным Доступом",
+      "fullAccessNote": "Владельцы и менеджеры компаний имеют автоматический доступ ко всем модулям.",
+      "staffPermissions": "Доступ Сотрудников к Модулям",
+      "staffPermissionsDesc": "Включить/отключить доступ к модулям для каждого сотрудника",
+      "noStaff": "Сотрудники для управления разрешениями не найдены",
+      "accessGranted": "доступ предоставлен",
+      "accessRevoked": "доступ отозван",
+      "operationFailed": "Операция не удалась"
     }
   }
 }

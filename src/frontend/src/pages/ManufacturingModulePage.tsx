@@ -155,6 +155,7 @@ function WorkOrderDialog({
   initial?: WorkOrderFormData;
   saving?: boolean;
 }) {
+  const { t } = useLanguage();
   const today = new Date().toISOString().split("T")[0];
   const [form, setForm] = useState<WorkOrderFormData>({
     id: "",
@@ -185,7 +186,7 @@ function WorkOrderDialog({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.productName.trim()) {
-      toast.error("Ürün adı zorunludur");
+      toast.error(t("erp.manufacturing.product"));
       return;
     }
     onSave({ ...form, id: form.id || generateId() });
@@ -203,7 +204,9 @@ function WorkOrderDialog({
       >
         <DialogHeader>
           <DialogTitle>
-            {initial?.id ? "İş Emri Düzenle" : "Yeni İş Emri"}
+            {initial?.id
+              ? t("erp.common.edit")
+              : t("erp.manufacturing.addWorkOrder")}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
@@ -215,7 +218,7 @@ function WorkOrderDialog({
               onChange={(e) =>
                 setForm((p) => ({ ...p, productName: e.target.value }))
               }
-              placeholder="Üretilecek ürün"
+              placeholder={t("erp.manufacturing.product")}
               style={{
                 backgroundColor: "oklch(1 0 0)",
                 borderColor: "oklch(0.88 0.01 270)",
@@ -392,6 +395,7 @@ function BOMDialog({
     quantity: 1,
     unit: "Adet",
   });
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (open) {
@@ -410,7 +414,7 @@ function BOMDialog({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.materialName.trim()) {
-      toast.error("Malzeme adı zorunludur");
+      toast.error(t("erp.manufacturing.material"));
       return;
     }
     onSave({
@@ -444,7 +448,7 @@ function BOMDialog({
               onChange={(e) =>
                 setForm((p) => ({ ...p, materialName: e.target.value }))
               }
-              placeholder="Malzeme adı"
+              placeholder={t("erp.manufacturing.material")}
               style={{
                 backgroundColor: "oklch(1 0 0)",
                 borderColor: "oklch(0.88 0.01 270)",
@@ -584,14 +588,14 @@ export default function ManufacturingModulePage({
       const isExisting = workOrders.some((w) => w.id === formData.id);
       if (isExisting) {
         await updateWorkOrder.mutateAsync({ companyId, workOrder: woPayload });
-        toast.success("İş emri güncellendi");
+        toast.success(t("erp.manufacturing.workOrderAdded"));
       } else {
         await addWorkOrder.mutateAsync({ companyId, workOrder: woPayload });
-        toast.success("İş emri oluşturuldu");
+        toast.success(t("erp.manufacturing.workOrderAdded"));
       }
       setWODialog({ open: false });
     } catch {
-      toast.error("İşlem başarısız oldu");
+      toast.error(t("common.error"));
     }
   };
 
@@ -599,9 +603,9 @@ export default function ManufacturingModulePage({
     try {
       await removeWorkOrder.mutateAsync({ companyId, workOrderId: id });
       if (selectedWO === id) setSelectedWO(null);
-      toast.success("İş emri silindi");
+      toast.success(t("erp.manufacturing.workOrderAdded"));
     } catch {
-      toast.error("Silme işlemi başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -618,14 +622,14 @@ export default function ManufacturingModulePage({
       const isExisting = bomItems.some((b) => b.id === formData.id);
       if (isExisting) {
         await updateBOMItem.mutateAsync({ companyId, bomItem: bomPayload });
-        toast.success("Malzeme güncellendi");
+        toast.success(t("erp.manufacturing.bomAdded"));
       } else {
         await addBOMItem.mutateAsync({ companyId, bomItem: bomPayload });
         toast.success("Malzeme eklendi");
       }
       setBOMDialog({ open: false, workOrderId: "" });
     } catch {
-      toast.error("İşlem başarısız oldu");
+      toast.error(t("common.error"));
     }
   };
 
@@ -634,7 +638,7 @@ export default function ManufacturingModulePage({
       await removeBOMItem.mutateAsync({ companyId, bomItemId: id });
       toast.success("Malzeme silindi");
     } catch {
-      toast.error("Silme işlemi başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -682,7 +686,7 @@ export default function ManufacturingModulePage({
               className="w-6 h-6"
               style={{ color: "oklch(0.5 0.18 25)" }}
             />
-            Üretim Yönetimi
+            {t("erp.manufacturing.title")}
           </h1>
           <p
             className="text-sm mt-0.5"
@@ -770,7 +774,7 @@ export default function ManufacturingModulePage({
             data-ocid="manufacturing.bom.tab"
             style={{ color: "oklch(0.35 0.01 270)" }}
           >
-            Malzeme Listesi (BOM)
+            {t("erp.manufacturing.bom")}
           </TabsTrigger>
         </TabsList>
 
@@ -792,7 +796,7 @@ export default function ManufacturingModulePage({
                 className="font-display font-semibold"
                 style={{ color: "oklch(0.12 0.012 270)" }}
               >
-                İş Emirleri
+                {t("erp.manufacturing.workOrders")}
               </h2>
               <Button
                 size="sm"

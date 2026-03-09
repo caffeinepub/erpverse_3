@@ -61,35 +61,35 @@ interface CRMModulePageProps {
 const STAGES = [
   {
     value: "lead",
-    label: "Potansiyel",
+    labelKey: "erp.crm.prospect",
     color: "oklch(0.4 0.01 270)",
     bg: "oklch(0.94 0.005 270)",
     border: "oklch(0.86 0.008 270)",
   },
   {
     value: "qualified",
-    label: "Nitelikli",
+    labelKey: "erp.crm.qualified",
     color: "oklch(0.35 0.18 280)",
     bg: "oklch(0.93 0.04 280)",
     border: "oklch(0.82 0.1 280)",
   },
   {
     value: "proposal",
-    label: "Teklif",
+    labelKey: "erp.crm.proposal",
     color: "oklch(0.45 0.14 75)",
     bg: "oklch(0.94 0.06 75)",
     border: "oklch(0.85 0.1 75)",
   },
   {
     value: "won",
-    label: "Kazanıldı",
+    labelKey: "erp.crm.closed",
     color: "oklch(0.38 0.15 145)",
     bg: "oklch(0.92 0.06 145)",
     border: "oklch(0.8 0.1 145)",
   },
   {
     value: "lost",
-    label: "Kaybedildi",
+    labelKey: "erp.common.rejected",
     color: "oklch(0.45 0.18 25)",
     bg: "oklch(0.95 0.04 25)",
     border: "oklch(0.85 0.1 25)",
@@ -200,7 +200,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
             prev ? { ...prev, ...customerForm } : null,
           );
         }
-        toast.success("Müşteri güncellendi");
+        toast.success(t("erp.crm.customerAdded"));
       } else {
         const newCustomer = await addCustomer.mutateAsync({
           companyId,
@@ -212,12 +212,12 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
             customerCompanyName: customerForm.customerCompanyName,
           },
         });
-        toast.success("Müşteri eklendi");
+        toast.success(t("erp.crm.customerAdded"));
         setSelectedCustomer(newCustomer);
       }
       setShowCustomerDialog(false);
     } catch {
-      toast.error("İşlem başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -225,9 +225,9 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
     try {
       await removeCustomer.mutateAsync({ companyId, customerId });
       if (selectedCustomer?.id === customerId) setSelectedCustomer(null);
-      toast.success("Müşteri silindi");
+      toast.success(t("erp.common.success"));
     } catch {
-      toast.error("Silme başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -245,10 +245,10 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
           closeDate: oppForm.closeDate,
         },
       });
-      toast.success("Fırsat eklendi");
+      toast.success(t("erp.crm.opportunityAdded"));
       setShowOpportunityDialog(false);
     } catch {
-      toast.error("İşlem başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -262,7 +262,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
         opportunity: { ...opp, stage },
       });
     } catch {
-      toast.error("Güncelleme başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -280,10 +280,10 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
           logType: logForm.type,
         },
       });
-      toast.success("İletişim notu eklendi");
+      toast.success(t("erp.crm.customerAdded"));
       setShowLogDialog(false);
     } catch {
-      toast.error("İşlem başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -616,7 +616,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                                   <SelectContent>
                                     {STAGES.map((s) => (
                                       <SelectItem key={s.value} value={s.value}>
-                                        {s.label}
+                                        {t(s.labelKey)}
                                       </SelectItem>
                                     ))}
                                   </SelectContent>
@@ -632,7 +632,9 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                         data-ocid="crm.opportunities.empty_state"
                         style={{ color: "oklch(0.6 0.01 270)" }}
                       >
-                        <p className="text-sm">Henüz fırsat yok</p>
+                        <p className="text-sm">
+                          {t("erp.crm.noOpportunities")}
+                        </p>
                       </div>
                     )}
                   </div>
@@ -742,7 +744,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                           data-ocid="crm.logs.empty_state"
                           style={{ color: "oklch(0.6 0.01 270)" }}
                         >
-                          Henüz iletişim kaydı yok
+                          {t("erp.common.noData")}
                         </p>
                       )}
                     </div>
@@ -812,7 +814,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                           className="text-xs font-bold uppercase tracking-wider"
                           style={{ color: stage.color }}
                         >
-                          {stage.label}
+                          {t(stage.labelKey)}
                         </span>
                         <span
                           className="text-xs font-semibold px-1.5 py-0.5 rounded-full"
@@ -911,7 +913,9 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
         >
           <DialogHeader>
             <DialogTitle style={{ color: "oklch(0.12 0.012 270)" }}>
-              {editingCustomer ? "Müşteri Düzenle" : "Yeni Müşteri Ekle"}
+              {editingCustomer
+                ? t("erp.common.edit")
+                : t("erp.crm.addCustomer")}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">
@@ -922,7 +926,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                 onChange={(e) =>
                   setCustomerForm((p) => ({ ...p, name: e.target.value }))
                 }
-                placeholder="Müşteri adı"
+                placeholder={t("erp.crm.customerName")}
                 style={INPUT_STYLE}
                 data-ocid="crm.customer.name.input"
               />
@@ -937,7 +941,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                     customerCompanyName: e.target.value,
                   }))
                 }
-                placeholder="Şirket adı"
+                placeholder={t("erp.common.company")}
                 style={INPUT_STYLE}
                 data-ocid="crm.customer.company.input"
               />
@@ -964,7 +968,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
               onClick={() => setShowCustomerDialog(false)}
               style={BTN_CANCEL_STYLE}
             >
-              İptal
+              {t("erp.common.cancel")}
             </Button>
             <Button
               onClick={saveCustomer}
@@ -975,7 +979,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
               {addCustomer.isPending || updateCustomer.isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : null}
-              Kaydet
+              {t("erp.common.save")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1022,7 +1026,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                 <SelectContent>
                   {STAGES.map((s) => (
                     <SelectItem key={s.value} value={s.value}>
-                      {s.label}
+                      {t(s.labelKey)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -1047,7 +1051,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
               onClick={() => setShowOpportunityDialog(false)}
               style={BTN_CANCEL_STYLE}
             >
-              İptal
+              {t("erp.common.cancel")}
             </Button>
             <Button
               onClick={saveOpportunity}
@@ -1102,7 +1106,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                 onChange={(e) =>
                   setLogForm((p) => ({ ...p, note: e.target.value }))
                 }
-                placeholder="İletişim notunu yazın..."
+                placeholder={t("erp.common.notes")}
                 rows={3}
                 style={INPUT_STYLE}
                 data-ocid="crm.log.note.textarea"
@@ -1115,7 +1119,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
               onClick={() => setShowLogDialog(false)}
               style={BTN_CANCEL_STYLE}
             >
-              İptal
+              {t("erp.common.cancel")}
             </Button>
             <Button
               onClick={saveLog}
@@ -1126,7 +1130,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
               {addCommunicationLog.isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : null}
-              Kaydet
+              {t("erp.common.save")}
             </Button>
           </DialogFooter>
         </DialogContent>

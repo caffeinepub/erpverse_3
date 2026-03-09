@@ -183,19 +183,19 @@ export default function AccountingModulePage({
           description: txForm.description,
         },
       });
-      toast.success("İşlem eklendi");
+      toast.success(t("erp.accounting.transactionAdded"));
       setShowTxDialog(false);
     } catch {
-      toast.error("İşlem başarısız");
+      toast.error(t("common.error"));
     }
   };
 
   const handleRemoveTransaction = async (txId: string) => {
     try {
       await removeTransaction.mutateAsync({ companyId, txId });
-      toast.success("İşlem silindi");
+      toast.success(t("erp.common.success"));
     } catch {
-      toast.error("Silme başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -221,10 +221,10 @@ export default function AccountingModulePage({
           date: invoiceForm.date || new Date().toISOString().split("T")[0],
         },
       });
-      toast.success("Fatura oluşturuldu");
+      toast.success(t("erp.accounting.invoiceAdded"));
       setShowInvoiceDialog(false);
     } catch {
-      toast.error("İşlem başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -234,9 +234,9 @@ export default function AccountingModulePage({
         companyId,
         invoice: { ...invoice, status },
       });
-      toast.success("Fatura güncellendi");
+      toast.success(t("erp.accounting.invoiceUpdated"));
     } catch {
-      toast.error("Güncelleme başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -262,7 +262,7 @@ export default function AccountingModulePage({
               style={{ color: "oklch(0.42 0.16 145)" }}
             />
           </div>
-          Muhasebe
+          {t("erp.accounting.title")}
         </h1>
         <p className="text-sm mt-1" style={{ color: "oklch(0.5 0.01 270)" }}>
           Gelir, gider ve fatura yönetimi
@@ -291,7 +291,7 @@ export default function AccountingModulePage({
                   className="text-xs font-semibold uppercase tracking-wider"
                   style={{ color: "oklch(0.42 0.14 145)" }}
                 >
-                  Toplam Gelir
+                  {t("erp.accounting.totalIncome")}
                 </p>
                 <p
                   className="text-2xl font-bold mt-1"
@@ -327,7 +327,7 @@ export default function AccountingModulePage({
                   className="text-xs font-semibold uppercase tracking-wider"
                   style={{ color: "oklch(0.42 0.16 25)" }}
                 >
-                  Toplam Gider
+                  {t("erp.accounting.totalExpense")}
                 </p>
                 <p
                   className="text-2xl font-bold mt-1"
@@ -374,7 +374,7 @@ export default function AccountingModulePage({
                         : "oklch(0.42 0.16 25)",
                   }}
                 >
-                  Net Bakiye
+                  {t("erp.accounting.netBalance")}
                 </p>
                 <p
                   className="text-2xl font-bold mt-1"
@@ -425,10 +425,12 @@ export default function AccountingModulePage({
             value="transactions"
             data-ocid="accounting.transactions.tab"
           >
-            İşlemler
+            {t("erp.accounting.addTransaction")
+              .replace("Add", "")
+              .replace("İşlem Ekle", "İşlemler")}
           </TabsTrigger>
           <TabsTrigger value="invoices" data-ocid="accounting.invoices.tab">
-            Faturalar
+            {t("erp.accounting.invoices")}
           </TabsTrigger>
         </TabsList>
 
@@ -454,7 +456,7 @@ export default function AccountingModulePage({
                     color: "oklch(0.12 0.012 270)",
                   }}
                 >
-                  İşlem Geçmişi
+                  {t("erp.accounting.addTransaction")}
                 </h2>
                 <p
                   className="text-xs mt-0.5"
@@ -484,7 +486,7 @@ export default function AccountingModulePage({
                 }}
               >
                 <Plus className="w-4 h-4 mr-1" />
-                İşlem Ekle
+                {t("erp.accounting.addTransaction")}
               </Button>
             </div>
             {isLoading ? (
@@ -500,7 +502,7 @@ export default function AccountingModulePage({
                 style={{ color: "oklch(0.6 0.01 270)" }}
               >
                 <FileText className="w-10 h-10 mb-3 opacity-30" />
-                <p className="text-sm">Henüz işlem kaydı yok</p>
+                <p className="text-sm">{t("erp.accounting.noTransactions")}</p>
               </div>
             ) : (
               <Table>
@@ -552,7 +554,7 @@ export default function AccountingModulePage({
                             style={{ color: "oklch(0.42 0.16 145)" }}
                           >
                             <ArrowUpCircle className="w-4 h-4" />
-                            Gelir
+                            {t("erp.accounting.income")}
                           </span>
                         ) : (
                           <span
@@ -560,7 +562,7 @@ export default function AccountingModulePage({
                             style={{ color: "oklch(0.45 0.18 25)" }}
                           >
                             <ArrowDownCircle className="w-4 h-4" />
-                            Gider
+                            {t("erp.accounting.expense")}
                           </span>
                         )}
                       </TableCell>
@@ -643,7 +645,7 @@ export default function AccountingModulePage({
                     color: "oklch(0.12 0.012 270)",
                   }}
                 >
-                  Faturalar
+                  {t("erp.accounting.invoices")}
                 </h2>
                 <p
                   className="text-xs mt-0.5"
@@ -673,7 +675,7 @@ export default function AccountingModulePage({
                 }}
               >
                 <Plus className="w-4 h-4 mr-1" />
-                Fatura Oluştur
+                {t("erp.accounting.addInvoice")}
               </Button>
             </div>
             {isLoading ? (
@@ -689,7 +691,7 @@ export default function AccountingModulePage({
                 style={{ color: "oklch(0.6 0.01 270)" }}
               >
                 <FileText className="w-10 h-10 mb-3 opacity-30" />
-                <p className="text-sm">Henüz fatura kaydı yok</p>
+                <p className="text-sm">{t("erp.accounting.noInvoices")}</p>
               </div>
             ) : (
               <Table>
@@ -793,7 +795,7 @@ export default function AccountingModulePage({
         >
           <DialogHeader>
             <DialogTitle style={{ color: "oklch(0.12 0.012 270)" }}>
-              Yeni İşlem Ekle
+              {t("erp.accounting.addTransaction")}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">
@@ -801,7 +803,7 @@ export default function AccountingModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                İşlem Türü
+                {t("erp.common.type")}
               </Label>
               <Select
                 value={txForm.type}
@@ -830,14 +832,14 @@ export default function AccountingModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Kategori
+                {t("erp.accounting.category")}
               </Label>
               <Select
                 value={txForm.category}
                 onValueChange={(v) => setTxForm((p) => ({ ...p, category: v }))}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Kategori seçin" />
+                  <SelectValue placeholder={t("erp.accounting.category")} />
                 </SelectTrigger>
                 <SelectContent>
                   {(txForm.type === "income"
@@ -855,7 +857,7 @@ export default function AccountingModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Tutar (₺)
+                {t("erp.accounting.amount")}
               </Label>
               <Input
                 type="number"
@@ -875,7 +877,7 @@ export default function AccountingModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Tarih
+                {t("erp.accounting.date")}
               </Label>
               <Input
                 type="date"
@@ -894,14 +896,14 @@ export default function AccountingModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Açıklama
+                {t("erp.accounting.description")}
               </Label>
               <Textarea
                 value={txForm.description}
                 onChange={(e) =>
                   setTxForm((p) => ({ ...p, description: e.target.value }))
                 }
-                placeholder="İşlem açıklaması..."
+                placeholder={t("erp.accounting.description")}
                 rows={2}
                 style={{
                   backgroundColor: "oklch(1 0 0)",
@@ -921,7 +923,7 @@ export default function AccountingModulePage({
                 backgroundColor: "oklch(1 0 0)",
               }}
             >
-              İptal
+              {t("erp.common.cancel")}
             </Button>
             <Button
               onClick={saveTransaction}
@@ -936,7 +938,7 @@ export default function AccountingModulePage({
               {addTransaction.isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : null}
-              Kaydet
+              {t("erp.common.save")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -954,7 +956,7 @@ export default function AccountingModulePage({
         >
           <DialogHeader>
             <DialogTitle style={{ color: "oklch(0.12 0.012 270)" }}>
-              Yeni Fatura Oluştur
+              {t("erp.accounting.addInvoice")}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">
@@ -962,14 +964,14 @@ export default function AccountingModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Müşteri Adı
+                {t("erp.accounting.customer")}
               </Label>
               <Input
                 value={invoiceForm.client}
                 onChange={(e) =>
                   setInvoiceForm((p) => ({ ...p, client: e.target.value }))
                 }
-                placeholder="Müşteri adı"
+                placeholder={t("erp.accounting.customer")}
                 style={{
                   backgroundColor: "oklch(1 0 0)",
                   color: "oklch(0.12 0.012 270)",
@@ -981,14 +983,14 @@ export default function AccountingModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Hizmet/Ürün Açıklaması
+                {t("erp.accounting.description")}
               </Label>
               <Input
                 value={invoiceForm.description}
                 onChange={(e) =>
                   setInvoiceForm((p) => ({ ...p, description: e.target.value }))
                 }
-                placeholder="Açıklama"
+                placeholder={t("erp.common.description")}
                 style={{
                   backgroundColor: "oklch(1 0 0)",
                   color: "oklch(0.12 0.012 270)",
@@ -1001,7 +1003,7 @@ export default function AccountingModulePage({
                 <Label
                   style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
                 >
-                  Miktar
+                  {t("erp.inventory.quantity")}
                 </Label>
                 <Input
                   type="number"
@@ -1020,7 +1022,7 @@ export default function AccountingModulePage({
                 <Label
                   style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
                 >
-                  Birim Fiyat (₺)
+                  {t("erp.accounting.amount")}
                 </Label>
                 <Input
                   type="number"
@@ -1041,7 +1043,7 @@ export default function AccountingModulePage({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Tarih
+                {t("erp.accounting.date")}
               </Label>
               <Input
                 type="date"
@@ -1089,7 +1091,7 @@ export default function AccountingModulePage({
                 backgroundColor: "oklch(1 0 0)",
               }}
             >
-              İptal
+              {t("erp.common.cancel")}
             </Button>
             <Button
               onClick={saveInvoice}
@@ -1104,7 +1106,7 @@ export default function AccountingModulePage({
               {addInvoice.isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : null}
-              Oluştur
+              {t("erp.accounting.addInvoice")}
             </Button>
           </DialogFooter>
         </DialogContent>

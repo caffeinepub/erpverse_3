@@ -104,6 +104,7 @@ function TaskDialog({
   initial?: TaskFormData;
   saving?: boolean;
 }) {
+  const { t } = useLanguage();
   const [form, setForm] = useState<TaskFormData>({
     id: "",
     title: "",
@@ -146,7 +147,7 @@ function TaskDialog({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.title.trim()) {
-      toast.error("Görev başlığı zorunludur");
+      toast.error(t("erp.workflow.noTasks"));
       return;
     }
     onSave({ ...form, id: form.id || generateId() });
@@ -176,7 +177,7 @@ function TaskDialog({
               onChange={(e) =>
                 setForm((p) => ({ ...p, title: e.target.value }))
               }
-              placeholder="Görev başlığı"
+              placeholder={t("erp.workflow.taskName")}
               style={{
                 backgroundColor: "oklch(1 0 0)",
                 borderColor: "oklch(0.88 0.01 270)",
@@ -267,7 +268,7 @@ function TaskDialog({
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="task-due">Son Tarih</Label>
+              <Label htmlFor="task-due">{t("erp.workflow.dueDate")}</Label>
               <Input
                 id="task-due"
                 type="date"
@@ -613,23 +614,23 @@ export default function WorkflowModulePage({
       const isExisting = tasks.some((t) => t.id === formData.id);
       if (isExisting) {
         await updateTask.mutateAsync({ companyId, task: taskPayload });
-        toast.success("Görev güncellendi");
+        toast.success(t("erp.workflow.taskUpdated"));
       } else {
         await addTask.mutateAsync({ companyId, task: taskPayload });
-        toast.success("Görev oluşturuldu");
+        toast.success(t("erp.workflow.taskAdded"));
       }
       setTaskDialog({ open: false });
     } catch {
-      toast.error("İşlem başarısız oldu");
+      toast.error(t("common.error"));
     }
   };
 
   const handleDeleteTask = async (id: string) => {
     try {
       await removeTask.mutateAsync({ companyId, taskId: id });
-      toast.success("Görev silindi");
+      toast.success(t("erp.workflow.taskAdded"));
     } catch {
-      toast.error("Silme işlemi başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -643,7 +644,7 @@ export default function WorkflowModulePage({
         `Görev "${COLUMNS.find((c) => c.id === status)?.label}" sütununa taşındı`,
       );
     } catch {
-      toast.error("Taşıma işlemi başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -680,7 +681,7 @@ export default function WorkflowModulePage({
               className="w-6 h-6"
               style={{ color: "oklch(0.45 0.18 300)" }}
             />
-            Görev & İş Akışı
+            {t("erp.workflow.title")}
           </h1>
           <p
             className="text-sm mt-0.5"
@@ -699,7 +700,7 @@ export default function WorkflowModulePage({
             border: "none",
           }}
         >
-          <Plus className="h-4 w-4 mr-1.5" /> Yeni Görev
+          <Plus className="h-4 w-4 mr-1.5" /> {t("erp.workflow.addTask")}
         </Button>
       </div>
 

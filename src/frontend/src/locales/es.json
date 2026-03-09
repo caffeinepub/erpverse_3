@@ -471,11 +471,35 @@
       "noData": "Sin datos",
       "totalEmployees": "Total Employees",
       "totalIncome": "Total Income",
-      "totalExpense": "Total Expenses",
+      "totalExpense": "Total de Gastos",
       "netBalance": "Net Balance",
       "activeProjects": "Active Projects",
       "totalCustomers": "Total Customers",
-      "pipelineValue": "Pipeline Value"
+      "pipelineValue": "Pipeline Value",
+      "financialSummary": "Resumen Financiero",
+      "projectStatus": "Estado del Proyecto",
+      "deptDistribution": "Distribución por Departamento",
+      "lowStockAlerts": "Alertas de Stock Bajo",
+      "crmPipeline": "Pipeline CRM",
+      "completionRate": "Tasa de Finalización",
+      "incomeExpenseChart": "Comparación Ingresos / Gastos",
+      "subtitle": "Vista resumen de todos los módulos ERP",
+      "noHRData": "No se encontraron datos de RRHH",
+      "noStockAlert": "No hay alertas de stock",
+      "noOpportunityData": "No se encontraron datos de oportunidades",
+      "noProjectData": "No se encontraron datos de proyectos"
+    },
+    "modulePermissions": {
+      "title": "Permisos de Módulos",
+      "subtitle": "Gestiona a qué módulos ERP puede acceder el personal",
+      "fullAccessTitle": "Usuarios con Acceso Completo",
+      "fullAccessNote": "Los propietarios y gerentes de empresa pueden acceder a todos los módulos automáticamente.",
+      "staffPermissions": "Acceso a Módulos del Personal",
+      "staffPermissionsDesc": "Activar/desactivar acceso a módulos para cada miembro del personal",
+      "noStaff": "No se encontró personal para gestionar permisos",
+      "accessGranted": "acceso concedido",
+      "accessRevoked": "acceso revocado",
+      "operationFailed": "Operación fallida"
     }
   }
 }

@@ -2,32 +2,46 @@
 
 ## Current State
 
-ERPVerse is a full-stack multi-tenant ERP platform built on ICP with Motoko backend and React/TypeScript frontend. It supports 10 languages (TR default, EN, DE, FR, ES, AR, RU, ZH, JA, PT). The platform has 9 ERP modules: HR, Accounting, CRM, Projects, Inventory, Procurement, Manufacturing, Workflow, Reporting.
+The app is a full-stack ERP platform with:
+- 9 ERP module pages (HR, Accounting, CRM, Projects, Inventory, Procurement, Manufacturing, Workflow, Reporting)
+- Multi-language context (`LanguageContext`) with 505 translation keys across 10 languages (tr, en, de, fr, es, ar, ru, zh, ja, pt)
+- Translation function `t()` available via `useLanguage()` hook
+- All 317 ERP translation keys are defined in all locale files
 
-All modules are backend-connected. The locale files (`tr.json`, `en.json`, etc.) have translation keys for the shell UI (nav, landing, dashboard, sidebar) but NOT for ERP module page content. The 9 ERP module pages (~9300 lines total) use hardcoded Turkish strings and do NOT import or use `useLanguage`/`t()`.
+**Confirmed bugs (from grep):**
+1. ALL 12 pages have 0 `t()` calls despite `useLanguage` being imported — every visible string is hardcoded Turkish
+2. `StaffRegistrationPage.tsx` line 42: `companyId: "unassigned"` hardcoded in profile object (should be empty string or left to backend default)
+3. Company owner with multiple companies goes to `staff-dashboard` via `onBack` — no dedicated company selection view
 
 ## Requested Changes (Diff)
 
 ### Add
-- `erp` section in all 10 locale files (tr, en, de, fr, es, ar, ru, zh, ja, pt) with ERP module content translations: common ERP actions, HR terms, Accounting terms, CRM terms, Project terms, Inventory terms, Procurement terms, Manufacturing terms, Workflow terms, Reporting terms
-- `useLanguage` import and usage in all 9 ERP module pages
+- Company selection screen (`CompanySelectPage`) for owners/managers with multiple companies
+- `t()` calls throughout all 12 pages replacing hardcoded Turkish strings
 
 ### Modify
-- All 9 ERP module pages: import `useLanguage`, add `const { t } = useLanguage()`, replace hardcoded Turkish labels/headings/tabs/buttons with `t()` calls using the new `erp.*` keys
-- Locale files: add `erp` section with all module-specific translations
+- `HRModulePage.tsx`: replace all hardcoded Turkish strings with `t('erp.hr.*')` and `t('erp.common.*')` keys
+- `AccountingModulePage.tsx`: replace with `t('erp.accounting.*')` keys
+- `CRMModulePage.tsx`: replace with `t('erp.crm.*')` keys
+- `ProjectManagementModulePage.tsx`: replace with `t('erp.projects.*')` keys
+- `InventoryModulePage.tsx`: replace with `t('erp.inventory.*')` keys
+- `ProcurementModulePage.tsx`: replace with `t('erp.procurement.*')` keys
+- `ManufacturingModulePage.tsx`: replace with `t('erp.manufacturing.*')` keys
+- `WorkflowModulePage.tsx`: replace with `t('erp.workflow.*')` keys
+- `ReportingModulePage.tsx`: replace with `t('erp.reporting.*')` keys
+- `StaffDashboard.tsx`: replace hardcoded strings with `t('staff.*')`, `t('dashboard.*')`, `t('common.*')` keys
+- `LandingPage.tsx`: replace with `t('landing.*')` keys
+- `StaffRegistrationPage.tsx`: fix `companyId: "unassigned"` → `companyId: ""`
+- `App.tsx`: add company select view state, pass list of companies to select from
 
 ### Remove
-- Hardcoded Turkish strings in ERP module page headings, tab labels, button text, table headers, form labels, status labels, and dialog titles
+- Hardcoded Turkish strings from all pages listed above
 
 ## Implementation Plan
 
-1. Add `erp` translation section to all 10 locale files with comprehensive ERP module content keys
-2. Update `HRModulePage.tsx`: add `useLanguage`, replace hardcoded strings with `t('erp.hr.*')` and `t('erp.common.*')`
-3. Update `AccountingModulePage.tsx`: same pattern
-4. Update `CRMModulePage.tsx`: same pattern
-5. Update `ProjectManagementModulePage.tsx`: same pattern
-6. Update `InventoryModulePage.tsx`: same pattern
-7. Update `ProcurementModulePage.tsx`: same pattern
-8. Update `ManufacturingModulePage.tsx`: same pattern
-9. Update `WorkflowModulePage.tsx`: same pattern
-10. Update `ReportingModulePage.tsx`: same pattern
+1. For each ERP module page: add `const { t } = useLanguage()` where missing, then replace every visible hardcoded Turkish string with the matching `t('erp.<module>.<key>')` call. Use `t('erp.common.*')` for shared labels.
+2. For LandingPage and StaffDashboard: replace hardcoded strings with existing `t()` keys.
+3. Fix `StaffRegistrationPage`: change `companyId: "unassigned"` to `companyId: ""`.
+4. In `App.tsx`: add a `"company-select"` view. When owner has multiple company IDs (from `registeredCompanyId` and memberships), show a selection screen before entering dashboard. For now, the `onBack` from company-dashboard for owners goes to `"company-select"` if multiple companies exist, else to `"landing"`.
+5. Create `CompanySelectPage.tsx`: simple page listing company cards for selection.
+6. Validate and build.

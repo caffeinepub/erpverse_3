@@ -106,6 +106,7 @@ function StatusBadge({
   status,
   list,
 }: { status: string; list: typeof PROJECT_STATUSES }) {
+  const { t } = useLanguage();
   const s = list.find((x) => x.value === status);
   if (!s) return <span>{status}</span>;
   return (
@@ -117,7 +118,7 @@ function StatusBadge({
         border: `1px solid ${s.border}`,
       }}
     >
-      {s.label}
+      {t(`erp.projects.${s.label}`)}
     </span>
   );
 }
@@ -189,10 +190,10 @@ export default function ProjectManagementModulePage({
           teamMembers: [],
         },
       });
-      toast.success("Proje oluşturuldu");
+      toast.success(t("erp.projects.projectAdded"));
       setShowProjectDialog(false);
     } catch {
-      toast.error("İşlem başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -202,7 +203,7 @@ export default function ProjectManagementModulePage({
       if (selectedProject?.id === projectId) setSelectedProject(null);
       toast.success("Proje silindi");
     } catch {
-      toast.error("Silme başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -220,10 +221,10 @@ export default function ProjectManagementModulePage({
           status: "todo",
         },
       });
-      toast.success("Görev eklendi");
+      toast.success(t("erp.projects.taskAdded"));
       setShowTaskDialog(false);
     } catch {
-      toast.error("İşlem başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -234,16 +235,16 @@ export default function ProjectManagementModulePage({
         task: { ...task, status },
       });
     } catch {
-      toast.error("Güncelleme başarısız");
+      toast.error(t("common.error"));
     }
   };
 
   const handleRemoveTask = async (taskId: string) => {
     try {
       await removeProjectTask.mutateAsync({ companyId, taskId });
-      toast.success("Görev silindi");
+      toast.success(t("erp.common.delete"));
     } catch {
-      toast.error("Silme başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -311,7 +312,7 @@ export default function ProjectManagementModulePage({
               }}
             >
               <Plus className="w-4 h-4 mr-1" />
-              Yeni
+              {t("erp.common.new")}
             </Button>
           </div>
 
@@ -731,7 +732,7 @@ export default function ProjectManagementModulePage({
                 onChange={(e) =>
                   setProjectForm((p) => ({ ...p, name: e.target.value }))
                 }
-                placeholder="Proje adı"
+                placeholder={t("erp.projects.projectName")}
                 style={INPUT_STYLE}
               />
             </div>
@@ -742,7 +743,7 @@ export default function ProjectManagementModulePage({
                 onChange={(e) =>
                   setProjectForm((p) => ({ ...p, description: e.target.value }))
                 }
-                placeholder="Proje açıklaması..."
+                placeholder={t("erp.projects.description")}
                 rows={2}
                 style={INPUT_STYLE}
               />
@@ -785,7 +786,7 @@ export default function ProjectManagementModulePage({
               onClick={() => setShowProjectDialog(false)}
               style={BTN_CANCEL_STYLE}
             >
-              İptal
+              {t("erp.common.cancel")}
             </Button>
             <Button
               onClick={saveProject}
@@ -821,7 +822,7 @@ export default function ProjectManagementModulePage({
                 onChange={(e) =>
                   setTaskForm((p) => ({ ...p, title: e.target.value }))
                 }
-                placeholder="Görev başlığı"
+                placeholder={t("erp.projects.taskName")}
                 style={INPUT_STYLE}
               />
             </div>
@@ -843,7 +844,7 @@ export default function ProjectManagementModulePage({
               onClick={() => setShowTaskDialog(false)}
               style={BTN_CANCEL_STYLE}
             >
-              İptal
+              {t("erp.common.cancel")}
             </Button>
             <Button
               onClick={saveTask}

@@ -467,11 +467,35 @@
       "noData": "データなし",
       "totalEmployees": "Total Employees",
       "totalIncome": "Total Income",
-      "totalExpense": "Total Expenses",
+      "totalExpense": "総経費",
       "netBalance": "Net Balance",
       "activeProjects": "Active Projects",
       "totalCustomers": "Total Customers",
-      "pipelineValue": "Pipeline Value"
+      "pipelineValue": "Pipeline Value",
+      "financialSummary": "財務サマリー",
+      "projectStatus": "プロジェクトステータス",
+      "deptDistribution": "部門別分布",
+      "lowStockAlerts": "在庫不足アラート",
+      "crmPipeline": "CRM パイプライン",
+      "completionRate": "完了率",
+      "incomeExpenseChart": "収入 / 支出比較",
+      "subtitle": "全ERPモジュールのサマリービュー",
+      "noHRData": "HRデータが見つかりません",
+      "noStockAlert": "在庫アラートなし",
+      "noOpportunityData": "商談データが見つかりません",
+      "noProjectData": "プロジェクトデータが見つかりません"
+    },
+    "modulePermissions": {
+      "title": "モジュール権限",
+      "subtitle": "スタッフがアクセスできるERPモジュールを管理する",
+      "fullAccessTitle": "フルアクセスユーザー",
+      "fullAccessNote": "会社のオーナーとマネージャーはすべてのモジュールに自動的にアクセスできます。",
+      "staffPermissions": "スタッフモジュールアクセス",
+      "staffPermissionsDesc": "各スタッフメンバーのモジュールアクセスを切り替える",
+      "noStaff": "権限を管理するスタッフが見つかりません",
+      "accessGranted": "アクセス権限付与済み",
+      "accessRevoked": "アクセス権限取り消し済み",
+      "operationFailed": "操作に失敗しました"
     }
   }
 }

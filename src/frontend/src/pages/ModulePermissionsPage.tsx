@@ -14,32 +14,44 @@ import {
   useGrantModuleAccess,
   useRevokeModuleAccess,
 } from "@/hooks/useQueries";
-import { CheckCircle, Loader2, Shield, XCircle } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import { CheckCircle, Loader2, Shield } from "lucide-react";
+import React, { useState } from "react";
 import { toast } from "sonner";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface ModulePermissionsPageProps {
   companyId: string;
 }
 
 const ERP_MODULES = [
-  { name: "HR", label: "İnsan Kaynakları" },
-  { name: "Accounting", label: "Muhasebe" },
-  { name: "ProjectManagement", label: "Proje Yönetimi" },
-  { name: "Inventory", label: "Stok/Envanter" },
-  { name: "CRM", label: "CRM" },
+  { name: "HR", labelKey: "erp.hr.title" },
+  { name: "Accounting", labelKey: "erp.accounting.title" },
+  { name: "ProjectManagement", labelKey: "erp.projects.title" },
+  { name: "Inventory", labelKey: "erp.inventory.title" },
+  { name: "CRM", labelKey: "erp.crm.title" },
+  { name: "Procurement", labelKey: "erp.procurement.title" },
+  { name: "Manufacturing", labelKey: "erp.manufacturing.title" },
+  { name: "Workflow", labelKey: "erp.workflow.title" },
+  { name: "Reporting", labelKey: "erp.reporting.title" },
 ];
 
-const ROLE_LABELS: Record<number, string> = {
-  1: "Şirket Sahibi",
-  2: "Yönetici",
-  3: "Yönetici Asistanı",
-  4: "Personel",
-};
+function getRoleLabel(roleCode: number, t: (key: string) => string): string {
+  switch (roleCode) {
+    case 1:
+      return t("roles.companyOwner");
+    case 2:
+      return t("roles.companyManager");
+    case 3:
+      return t("roles.companyAdministrator");
+    default:
+      return t("roles.companyStaff");
+  }
+}
 
 export default function ModulePermissionsPage({
   companyId,
 }: ModulePermissionsPageProps) {
+  const { t } = useLanguage();
   const { data: staffList, isLoading } = useGetStaffForCompany(companyId);
   const grantMutation = useGrantModuleAccess();
   const revokeMutation = useRevokeModuleAccess();
@@ -64,17 +76,21 @@ export default function ModulePermissionsPage({
           staffPrincipal: staff.principal,
           moduleName,
         });
-        toast.success(`${moduleName} erişimi kaldırıldı`);
+        toast.success(
+          `${moduleName} ${t("erp.modulePermissions.accessRevoked")}`,
+        );
       } else {
         await grantMutation.mutateAsync({
           companyId,
           staffPrincipal: staff.principal,
           moduleName,
         });
-        toast.success(`${moduleName} erişimi verildi`);
+        toast.success(
+          `${moduleName} ${t("erp.modulePermissions.accessGranted")}`,
+        );
       }
     } catch {
-      toast.error("İşlem başarısız oldu");
+      toast.error(t("erp.modulePermissions.operationFailed"));
     } finally {
       setPendingToggles((prev) => {
         const next = new Set(prev);
@@ -95,10 +111,10 @@ export default function ModulePermissionsPage({
       <div>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Shield className="w-6 h-6 text-primary" />
-          Modül İzinleri
+          {t("erp.modulePermissions.title")}
         </h1>
         <p className="text-muted-foreground text-sm mt-1">
-          Personelin hangi ERP modüllerine erişebileceğini yönetin
+          {t("erp.modulePermissions.subtitle")}
         </p>
       </div>
 
@@ -107,7 +123,7 @@ export default function ModulePermissionsPage({
         <Card className="border-indigo-200 bg-indigo-50">
           <CardContent className="pt-4 pb-4">
             <p className="text-sm text-indigo-700 font-medium mb-2">
-              Tam Erişimli Kullanıcılar
+              {t("erp.modulePermissions.fullAccessTitle")}
             </p>
             <div className="flex flex-wrap gap-2">
               {privilegedStaff.map((s) => (
@@ -120,14 +136,13 @@ export default function ModulePermissionsPage({
                     {s.name}
                   </span>
                   <Badge className="text-xs h-4 px-1 bg-indigo-100 text-indigo-700 border border-indigo-200">
-                    {ROLE_LABELS[Number(s.roleCode)] || "Bilinmiyor"}
+                    {getRoleLabel(Number(s.roleCode), t)}
                   </Badge>
                 </div>
               ))}
             </div>
             <p className="text-xs text-indigo-500 mt-2">
-              Şirket Sahibi ve Yöneticiler tüm modüllere otomatik olarak
-              erişebilir.
+              {t("erp.modulePermissions.fullAccessNote")}
             </p>
           </CardContent>
         </Card>
@@ -136,9 +151,9 @@ export default function ModulePermissionsPage({
       {/* Staff permissions table */}
       <Card>
         <CardHeader>
-          <CardTitle>Personel Modül Erişimleri</CardTitle>
+          <CardTitle>{t("erp.modulePermissions.staffPermissions")}</CardTitle>
           <CardDescription>
-            Her personel için modül erişimlerini açıp kapatın
+            {t("erp.modulePermissions.staffPermissionsDesc")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -149,9 +164,12 @@ export default function ModulePermissionsPage({
               ))}
             </div>
           ) : managedStaff.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
+            <div
+              className="text-center py-8 text-muted-foreground"
+              data-ocid="permissions.empty_state"
+            >
               <Shield className="w-10 h-10 mx-auto mb-2 opacity-30" />
-              <p className="text-sm">İzin yönetilecek personel bulunamadı</p>
+              <p className="text-sm">{t("erp.modulePermissions.noStaff")}</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -159,14 +177,14 @@ export default function ModulePermissionsPage({
                 <thead>
                   <tr className="border-b border-border">
                     <th className="text-left py-3 px-2 text-sm font-semibold text-muted-foreground w-48">
-                      Personel
+                      {t("dashboard.owner.staffName")}
                     </th>
                     {ERP_MODULES.map((m) => (
                       <th
                         key={m.name}
                         className="text-center py-3 px-2 text-sm font-semibold text-muted-foreground min-w-[100px]"
                       >
-                        {m.label}
+                        {t(m.labelKey)}
                       </th>
                     ))}
                   </tr>
@@ -181,7 +199,7 @@ export default function ModulePermissionsPage({
                         <div>
                           <p className="font-medium text-sm">{staff.name}</p>
                           <Badge variant="secondary" className="text-xs mt-0.5">
-                            {ROLE_LABELS[Number(staff.roleCode)] || "Personel"}
+                            {getRoleLabel(Number(staff.roleCode), t)}
                           </Badge>
                         </div>
                       </td>
@@ -200,6 +218,7 @@ export default function ModulePermissionsPage({
                                   handleToggle(staff, m.name, granted)
                                 }
                                 className="mx-auto"
+                                data-ocid={`permissions.${m.name.toLowerCase()}.switch`}
                               />
                             )}
                           </td>

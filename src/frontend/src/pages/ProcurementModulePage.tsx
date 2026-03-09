@@ -71,7 +71,7 @@ const STATUS_CONFIG: Record<
   { label: string; bg: string; color: string; border: string }
 > = {
   pending: {
-    label: "Beklemede",
+    label: "pending",
     bg: "oklch(0.94 0.06 75)",
     color: "oklch(0.42 0.14 75)",
     border: "oklch(0.85 0.1 75)",
@@ -89,7 +89,7 @@ const STATUS_CONFIG: Record<
     border: "oklch(0.82 0.1 145)",
   },
   cancelled: {
-    label: "İptal Edildi",
+    label: "cancelled",
     bg: "oklch(0.94 0.04 25)",
     color: "oklch(0.45 0.18 25)",
     border: "oklch(0.85 0.1 25)",
@@ -150,6 +150,7 @@ function SupplierDialog({
   initial?: SupplierFormData;
   saving?: boolean;
 }) {
+  const { t } = useLanguage();
   const [form, setForm] = useState<SupplierFormData>(
     initial ?? {
       id: "",
@@ -177,7 +178,7 @@ function SupplierDialog({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim()) {
-      toast.error("Tedarikçi adı zorunludur");
+      toast.error(t("erp.procurement.supplierName"));
       return;
     }
     onSave({ ...form, id: form.id || generateId() });
@@ -195,7 +196,9 @@ function SupplierDialog({
       >
         <DialogHeader>
           <DialogTitle>
-            {initial?.id ? "Tedarikçi Düzenle" : "Yeni Tedarikçi"}
+            {initial?.id
+              ? t("erp.common.edit")
+              : t("erp.procurement.addSupplier")}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
@@ -205,7 +208,7 @@ function SupplierDialog({
               id="sup-name"
               value={form.name}
               onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
-              placeholder="Tedarikçi adı"
+              placeholder={t("erp.procurement.supplierName")}
               style={{
                 backgroundColor: "oklch(1 0 0)",
                 borderColor: "oklch(0.88 0.01 270)",
@@ -343,6 +346,7 @@ function OrderDialog({
   suppliers: Supplier[];
   saving?: boolean;
 }) {
+  const { t } = useLanguage();
   const today = new Date().toISOString().split("T")[0];
   const [form, setForm] = useState<OrderFormData>({
     id: "",
@@ -373,7 +377,7 @@ function OrderDialog({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.supplierId) {
-      toast.error("Tedarikçi seçiniz");
+      toast.error(t("erp.procurement.supplier"));
       return;
     }
     onSave({ ...form, id: form.id || generateId() });
@@ -391,7 +395,7 @@ function OrderDialog({
       >
         <DialogHeader>
           <DialogTitle>
-            {initial?.id ? "Sipariş Düzenle" : "Yeni Sipariş"}
+            {initial?.id ? t("erp.common.edit") : t("erp.procurement.addOrder")}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
@@ -410,7 +414,7 @@ function OrderDialog({
                   }}
                   data-ocid="procurement.order.select"
                 >
-                  <SelectValue placeholder="Tedarikçi seç..." />
+                  <SelectValue placeholder={t("erp.procurement.supplier")} />
                 </SelectTrigger>
                 <SelectContent
                   style={{
@@ -521,7 +525,7 @@ function OrderDialog({
               onChange={(e) =>
                 setForm((p) => ({ ...p, itemsDescription: e.target.value }))
               }
-              placeholder="Sipariş detayları, ürün listesi..."
+              placeholder={t("erp.common.notes")}
               rows={3}
               style={{
                 backgroundColor: "oklch(1 0 0)",
@@ -608,23 +612,23 @@ export default function ProcurementModulePage({
           companyId,
           supplier: supplierPayload,
         });
-        toast.success("Tedarikçi güncellendi");
+        toast.success(t("erp.procurement.supplierAdded"));
       } else {
         await addSupplier.mutateAsync({ companyId, supplier: supplierPayload });
-        toast.success("Tedarikçi eklendi");
+        toast.success(t("erp.procurement.supplierAdded"));
       }
       setSupplierDialog({ open: false });
     } catch {
-      toast.error("İşlem başarısız oldu");
+      toast.error(t("common.error"));
     }
   };
 
   const handleDeleteSupplier = async (id: string) => {
     try {
       await removeSupplier.mutateAsync({ companyId, supplierId: id });
-      toast.success("Tedarikçi silindi");
+      toast.success(t("erp.procurement.supplierAdded"));
     } catch {
-      toast.error("Silme işlemi başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -643,23 +647,23 @@ export default function ProcurementModulePage({
       const isExisting = orders.some((o) => o.id === formData.id);
       if (isExisting) {
         await updateOrder.mutateAsync({ companyId, order: orderPayload });
-        toast.success("Sipariş güncellendi");
+        toast.success(t("erp.procurement.orderAdded"));
       } else {
         await addOrder.mutateAsync({ companyId, order: orderPayload });
-        toast.success("Sipariş oluşturuldu");
+        toast.success(t("erp.procurement.orderAdded"));
       }
       setOrderDialog({ open: false });
     } catch {
-      toast.error("İşlem başarısız oldu");
+      toast.error(t("common.error"));
     }
   };
 
   const handleDeleteOrder = async (id: string) => {
     try {
       await removeOrder.mutateAsync({ companyId, orderId: id });
-      toast.success("Sipariş silindi");
+      toast.success(t("erp.procurement.orderAdded"));
     } catch {
-      toast.error("Silme işlemi başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -710,13 +714,13 @@ export default function ProcurementModulePage({
               className="w-6 h-6"
               style={{ color: "oklch(0.45 0.18 190)" }}
             />
-            Satın Alma & Tedarik
+            {t("erp.procurement.title")}
           </h1>
           <p
             className="text-sm mt-0.5"
             style={{ color: "oklch(0.5 0.01 270)" }}
           >
-            Tedarikçi ve sipariş yönetimi
+            {t("erp.procurement.suppliers")} ve {t("erp.procurement.orders")}
           </p>
         </div>
       </div>
@@ -830,7 +834,7 @@ export default function ProcurementModulePage({
                 className="font-display font-semibold"
                 style={{ color: "oklch(0.12 0.012 270)" }}
               >
-                Satın Alma Siparişleri
+                {t("erp.procurement.orders")}
               </h2>
               <Button
                 size="sm"
@@ -987,7 +991,7 @@ export default function ProcurementModulePage({
                 className="font-display font-semibold"
                 style={{ color: "oklch(0.12 0.012 270)" }}
               >
-                Tedarikçiler
+                {t("erp.procurement.suppliers")}
               </h2>
               <Button
                 size="sm"

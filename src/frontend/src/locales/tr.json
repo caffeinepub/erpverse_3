@@ -566,7 +566,31 @@
       "criticalStock": "Kritik Stok",
       "totalCustomers": "Toplam Müşteri",
       "pipelineValue": "Pipeline Değeri",
-      "noData": "Gösterilecek veri yok"
+      "noData": "Gösterilecek veri yok",
+      "financialSummary": "Finansal Özet",
+      "projectStatus": "Proje Durumu",
+      "deptDistribution": "Departman Dağılımı",
+      "lowStockAlerts": "Düşük Stok Uyarıları",
+      "crmPipeline": "CRM Pipeline",
+      "completionRate": "Tamamlanma Oranı",
+      "incomeExpenseChart": "Gelir / Gider Karşılaştırması",
+      "subtitle": "Tüm ERP modüllerinin özet görünümü",
+      "noHRData": "HR verisi bulunamadı",
+      "noStockAlert": "Stok uyarısı bulunmuyor",
+      "noOpportunityData": "Fırsat verisi bulunamadı",
+      "noProjectData": "Proje verisi bulunamadı"
+    },
+    "modulePermissions": {
+      "title": "Modül İzinleri",
+      "subtitle": "Personelin hangi ERP modüllerine erişebileceğini yönetin",
+      "fullAccessTitle": "Tam Erişimli Kullanıcılar",
+      "fullAccessNote": "Şirket Sahibi ve Yöneticiler tüm modüllere otomatik olarak erişebilir.",
+      "staffPermissions": "Personel Modül Erişimleri",
+      "staffPermissionsDesc": "Her personel için modül erişimlerini açıp kapatın",
+      "noStaff": "İzin yönetilecek personel bulunamadı",
+      "accessGranted": "erişimi verildi",
+      "accessRevoked": "erişimi kaldırıldı",
+      "operationFailed": "İşlem başarısız oldu"
     }
   }
 }

@@ -102,7 +102,7 @@ function getStockLevel(qty: bigint): StockLevel {
 
 const STOCK_LEVEL_CONFIG = {
   critical: {
-    label: "Kritik",
+    label: "criticalStock",
     bg: "oklch(0.95 0.04 25)",
     color: "oklch(0.45 0.18 25)",
     border: "oklch(0.85 0.1 25)",
@@ -110,7 +110,7 @@ const STOCK_LEVEL_CONFIG = {
     rowBgHover: "oklch(0.96 0.02 25)",
   },
   low: {
-    label: "Düşük",
+    label: "lowStock",
     bg: "oklch(0.94 0.07 65)",
     color: "oklch(0.42 0.16 50)",
     border: "oklch(0.84 0.1 65)",
@@ -203,7 +203,7 @@ export default function InventoryModulePage({
             ),
           },
         });
-        toast.success("Ürün güncellendi");
+        toast.success(t("erp.inventory.productAdded"));
       } else {
         await addProduct.mutateAsync({
           companyId,
@@ -219,20 +219,20 @@ export default function InventoryModulePage({
             ),
           },
         });
-        toast.success("Ürün eklendi");
+        toast.success(t("erp.inventory.productAdded"));
       }
       setShowProductDialog(false);
     } catch {
-      toast.error("İşlem başarısız");
+      toast.error(t("common.error"));
     }
   };
 
   const handleRemoveProduct = async (productId: string) => {
     try {
       await removeProduct.mutateAsync({ companyId, productId });
-      toast.success("Ürün silindi");
+      toast.success(t("erp.inventory.productAdded"));
     } catch {
-      toast.error("Silme başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -254,7 +254,7 @@ export default function InventoryModulePage({
       toast.success("Stok hareketi kaydedildi");
       setShowMovementDialog(false);
     } catch {
-      toast.error("İşlem başarısız");
+      toast.error(t("common.error"));
     }
   };
 
@@ -333,17 +333,17 @@ export default function InventoryModulePage({
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
             {
-              label: "Toplam Ürün",
+              label: t("erp.inventory.totalProducts"),
               value: products.length,
               accent: "oklch(0.45 0.22 280)",
             },
             {
-              label: t("erp.inventory.lowStock"),
+              label: "lowStock",
               value: lowStockCount,
               accent: "oklch(0.45 0.18 25)",
             },
             {
-              label: "Toplam Hareket",
+              label: t("erp.common.total"),
               value: movements.length,
               accent: "oklch(0.5 0.16 145)",
             },
@@ -390,10 +390,10 @@ export default function InventoryModulePage({
           }}
         >
           <TabsTrigger value="products" data-ocid="inventory.products.tab">
-            Ürünler
+            {t("erp.inventory.products")}
           </TabsTrigger>
           <TabsTrigger value="movements" data-ocid="inventory.movements.tab">
-            Stok Hareketleri
+            {t("erp.inventory.movements")}
           </TabsTrigger>
         </TabsList>
 
@@ -458,7 +458,7 @@ export default function InventoryModulePage({
                   style={BTN_PRIMARY_STYLE}
                 >
                   <Plus className="w-4 h-4 mr-1" />
-                  Ürün Ekle
+                  {t("erp.inventory.addProduct")}
                 </Button>
               </div>
             </div>
@@ -665,7 +665,7 @@ export default function InventoryModulePage({
                   className="w-48"
                   data-ocid="inventory.movements.filter.select"
                 >
-                  <SelectValue placeholder="Tüm ürünler" />
+                  <SelectValue placeholder={t("erp.inventory.products")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Tüm ürünler</SelectItem>
@@ -801,7 +801,7 @@ export default function InventoryModulePage({
                   onChange={(e) =>
                     setProductForm((p) => ({ ...p, name: e.target.value }))
                   }
-                  placeholder="Ürün adı"
+                  placeholder={t("erp.inventory.productName")}
                   style={INPUT_STYLE}
                 />
               </div>
@@ -826,7 +826,7 @@ export default function InventoryModulePage({
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Kategori seçin" />
+                  <SelectValue placeholder={t("erp.inventory.category")} />
                 </SelectTrigger>
                 <SelectContent>
                   {CATEGORIES.map((c) => (
@@ -873,7 +873,7 @@ export default function InventoryModulePage({
               onClick={() => setShowProductDialog(false)}
               style={BTN_CANCEL_STYLE}
             >
-              İptal
+              {t("erp.common.cancel")}
             </Button>
             <Button
               onClick={saveProduct}
@@ -883,7 +883,7 @@ export default function InventoryModulePage({
               {addProduct.isPending || updateProduct.isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : null}
-              Kaydet
+              {t("erp.common.save")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -911,7 +911,7 @@ export default function InventoryModulePage({
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Ürün seçin" />
+                  <SelectValue placeholder={t("erp.inventory.productName")} />
                 </SelectTrigger>
                 <SelectContent>
                   {products.map((p) => (
@@ -969,7 +969,7 @@ export default function InventoryModulePage({
               onClick={() => setShowMovementDialog(false)}
               style={BTN_CANCEL_STYLE}
             >
-              İptal
+              {t("erp.common.cancel")}
             </Button>
             <Button
               onClick={saveMovement}
@@ -979,7 +979,7 @@ export default function InventoryModulePage({
               {addStockMovement.isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : null}
-              Kaydet
+              {t("erp.common.save")}
             </Button>
           </DialogFooter>
         </DialogContent>

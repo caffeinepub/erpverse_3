@@ -570,7 +570,31 @@
       "criticalStock": "Critical Stock",
       "totalCustomers": "Total Customers",
       "pipelineValue": "Pipeline Value",
-      "noData": "No data to display"
+      "noData": "No data to display",
+      "financialSummary": "Financial Summary",
+      "projectStatus": "Project Status",
+      "deptDistribution": "Department Distribution",
+      "lowStockAlerts": "Low Stock Alerts",
+      "crmPipeline": "CRM Pipeline",
+      "completionRate": "Completion Rate",
+      "incomeExpenseChart": "Income / Expense Comparison",
+      "subtitle": "Summary view of all ERP modules",
+      "noHRData": "No HR data found",
+      "noStockAlert": "No stock alerts",
+      "noOpportunityData": "No opportunity data found",
+      "noProjectData": "No project data found"
+    },
+    "modulePermissions": {
+      "title": "Module Permissions",
+      "subtitle": "Manage which ERP modules staff can access",
+      "fullAccessTitle": "Full Access Users",
+      "fullAccessNote": "Company Owners and Managers can access all modules automatically.",
+      "staffPermissions": "Staff Module Access",
+      "staffPermissionsDesc": "Toggle module access for each staff member",
+      "noStaff": "No staff found to manage permissions",
+      "accessGranted": "access granted",
+      "accessRevoked": "access revoked",
+      "operationFailed": "Operation failed"
     }
   }
 }

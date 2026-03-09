@@ -471,11 +471,35 @@
       "noData": "Aucune donnée",
       "totalEmployees": "Total Employees",
       "totalIncome": "Total Income",
-      "totalExpense": "Total Expenses",
+      "totalExpense": "Total des Dépenses",
       "netBalance": "Net Balance",
       "activeProjects": "Active Projects",
       "totalCustomers": "Total Customers",
-      "pipelineValue": "Pipeline Value"
+      "pipelineValue": "Pipeline Value",
+      "financialSummary": "Résumé Financier",
+      "projectStatus": "Statut des Projets",
+      "deptDistribution": "Répartition par Département",
+      "lowStockAlerts": "Alertes Stock Faible",
+      "crmPipeline": "Pipeline CRM",
+      "completionRate": "Taux de Completion",
+      "incomeExpenseChart": "Comparaison Revenus / Dépenses",
+      "subtitle": "Vue d'ensemble de tous les modules ERP",
+      "noHRData": "Aucune donnée RH trouvée",
+      "noStockAlert": "Aucune alerte de stock",
+      "noOpportunityData": "Aucune donnée d'opportunité trouvée",
+      "noProjectData": "Aucune donnée de projet trouvée"
+    },
+    "modulePermissions": {
+      "title": "Permissions des Modules",
+      "subtitle": "Gérer les modules ERP auxquels le personnel peut accéder",
+      "fullAccessTitle": "Utilisateurs avec Accès Complet",
+      "fullAccessNote": "Les propriétaires et gestionnaires d'entreprise ont accès à tous les modules automatiquement.",
+      "staffPermissions": "Accès aux Modules du Personnel",
+      "staffPermissionsDesc": "Activer/désactiver l'accès aux modules pour chaque membre du personnel",
+      "noStaff": "Aucun personnel trouvé pour gérer les permissions",
+      "accessGranted": "accès accordé",
+      "accessRevoked": "accès révoqué",
+      "operationFailed": "Opération échouée"
     }
   }
 }
