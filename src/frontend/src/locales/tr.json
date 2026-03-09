@@ -9,7 +9,8 @@
     "dashboard": "Panel",
     "logout": "Çıkış Yap",
     "login": "Giriş Yap",
-    "profile": "Profil"
+    "profile": "Profil",
+    "back": "Ana Menüye Dön"
   },
   "landing": {
     "hero": {
@@ -217,5 +218,38 @@
   "footer": {
     "rights": "Tüm hakları saklıdır",
     "builtWith": "Sevgiyle yapıldı"
+  },
+  "notifications": {
+    "title": "Bildirimler",
+    "empty": "Yeni bildirim yok",
+    "lowStock": "ürün kritik stok seviyesinde",
+    "pendingInvoice": "Bekleyen fatura var",
+    "activeProjects": "proje devam ediyor"
+  },
+  "staff": {
+    "editProfile": "Profili Düzenle",
+    "name": "İsim",
+    "position": "Unvan / Pozisyon",
+    "access": "Erişim",
+    "fullAccess": "Tam Erişim",
+    "noModules": "Modül atanmamış"
+  },
+  "sidebar": {
+    "companyPanel": "Şirket Paneli",
+    "general": "Genel",
+    "erpModules": "ERP Modülleri",
+    "settings": "Ayarlar",
+    "backToMenu": "Ana Menüye Dön"
+  },
+  "modules": {
+    "hr": "İnsan Kaynakları",
+    "accounting": "Muhasebe",
+    "projects": "Proje Yönetimi",
+    "inventory": "Stok/Envanter",
+    "crm": "CRM",
+    "procurement": "Satın Alma",
+    "manufacturing": "Üretim",
+    "workflow": "İş Akışları",
+    "reporting": "Raporlama"
   }
 }

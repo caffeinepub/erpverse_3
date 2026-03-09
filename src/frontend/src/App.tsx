@@ -297,6 +297,7 @@ function AppInner() {
         companyId={companyId}
         userName={userProfile?.name}
         userRoleCode={userProfile?.roleCode}
+        onBack={() => setView("staff-dashboard")}
       />
     );
   }
@@ -310,6 +311,7 @@ function AppInner() {
         userName={userProfile?.name}
         userRoleCode={BigInt(4)}
         grantedModules={staffModuleGrantedModules}
+        onBack={() => setView("staff-dashboard")}
       />
     );
   }

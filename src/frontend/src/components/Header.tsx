@@ -131,7 +131,7 @@ export default function Header({
                       color: "oklch(0.4 0.01 270)",
                     }}
                     data-ocid="header.notifications.button"
-                    aria-label="Bildirimler"
+                    aria-label={t("notifications.title")}
                   >
                     <Bell className="h-4 w-4" />
                     {alertCount > 0 && (
@@ -172,7 +172,7 @@ export default function Header({
                       style={{ color: "oklch(0.6 0.01 270)" }}
                       data-ocid="header.notifications.empty_state"
                     >
-                      Yeni bildirim yok
+                      {t("notifications.empty")}
                     </DropdownMenuItem>
                   ) : (
                     notifications.map((notif, idx) => (

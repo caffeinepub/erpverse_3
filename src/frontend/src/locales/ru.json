@@ -9,7 +9,8 @@
     "dashboard": "Панель управления",
     "logout": "Выйти",
     "login": "Войти",
-    "profile": "Профиль"
+    "profile": "Профиль",
+    "back": "Вернуться в меню"
   },
   "landing": {
     "hero": {
@@ -225,5 +226,38 @@
   "footer": {
     "rights": "Все права защищены",
     "builtWith": "Создано с любовью"
+  },
+  "notifications": {
+    "title": "Уведомления",
+    "empty": "Нет новых уведомлений",
+    "lowStock": "товаров на критическом уровне",
+    "pendingInvoice": "Ожидающий счёт",
+    "activeProjects": "активных проектов"
+  },
+  "staff": {
+    "editProfile": "Редактировать профиль",
+    "name": "Имя",
+    "position": "Должность / Позиция",
+    "access": "Доступ",
+    "fullAccess": "Полный доступ",
+    "noModules": "Модули не назначены"
+  },
+  "sidebar": {
+    "companyPanel": "Панель компании",
+    "general": "Общее",
+    "erpModules": "Модули ERP",
+    "settings": "Настройки",
+    "backToMenu": "Вернуться в меню"
+  },
+  "modules": {
+    "hr": "Управление персоналом",
+    "accounting": "Бухгалтерия",
+    "projects": "Управление проектами",
+    "inventory": "Склад/Инвентарь",
+    "crm": "CRM",
+    "procurement": "Закупки",
+    "manufacturing": "Производство",
+    "workflow": "Рабочие процессы",
+    "reporting": "Отчёты"
   }
 }

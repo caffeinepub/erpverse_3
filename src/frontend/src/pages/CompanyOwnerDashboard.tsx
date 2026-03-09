@@ -59,6 +59,7 @@ import ReportingModulePage from "./ReportingModulePage";
 import WorkflowModulePage from "./WorkflowModulePage";
 
 interface CompanyOwnerDashboardProps {
+  onBack?: () => void;
   companyId: string;
   userName?: string;
   userRoleCode?: bigint;
@@ -326,6 +327,7 @@ export default function CompanyOwnerDashboard({
   userName,
   userRoleCode,
   grantedModules: propGrantedModules,
+  onBack,
 }: CompanyOwnerDashboardProps) {
   const { t } = useLanguage();
   const [activeView, setActiveView] = useState<SidebarView>("overview");
@@ -531,6 +533,7 @@ export default function CompanyOwnerDashboard({
           userRoleCode={roleCodeNum}
           grantedModules={currentUserGrantedModules}
           isOwner={isOwner}
+          onBack={onBack}
         />
 
         {/* Main content */}

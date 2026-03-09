@@ -9,7 +9,8 @@
     "dashboard": "Panel",
     "logout": "Cerrar sesión",
     "login": "Iniciar sesión",
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "back": "Volver al menú"
   },
   "landing": {
     "hero": {
@@ -225,5 +226,38 @@
   "footer": {
     "rights": "Todos los derechos reservados",
     "builtWith": "Construido con amor"
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "empty": "Sin notificaciones nuevas",
+    "lowStock": "productos en nivel crítico de stock",
+    "pendingInvoice": "Factura pendiente",
+    "activeProjects": "proyectos activos"
+  },
+  "staff": {
+    "editProfile": "Editar perfil",
+    "name": "Nombre",
+    "position": "Título / Puesto",
+    "access": "Acceso",
+    "fullAccess": "Acceso completo",
+    "noModules": "Sin módulos asignados"
+  },
+  "sidebar": {
+    "companyPanel": "Panel de empresa",
+    "general": "General",
+    "erpModules": "Módulos ERP",
+    "settings": "Configuración",
+    "backToMenu": "Volver al menú"
+  },
+  "modules": {
+    "hr": "Recursos Humanos",
+    "accounting": "Contabilidad",
+    "projects": "Gestión de proyectos",
+    "inventory": "Stock/Inventario",
+    "crm": "CRM",
+    "procurement": "Compras",
+    "manufacturing": "Fabricación",
+    "workflow": "Flujos de trabajo",
+    "reporting": "Informes"
   }
 }

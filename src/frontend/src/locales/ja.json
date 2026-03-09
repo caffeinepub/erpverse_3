@@ -9,7 +9,8 @@
     "dashboard": "ダッシュボード",
     "logout": "ログアウト",
     "login": "ログイン",
-    "profile": "プロフィール"
+    "profile": "プロフィール",
+    "back": "メニューへ戻る"
   },
   "landing": {
     "hero": {
@@ -221,5 +222,38 @@
   "footer": {
     "rights": "全著作権所有",
     "builtWith": "愛を込めて作成"
+  },
+  "notifications": {
+    "title": "通知",
+    "empty": "新しい通知はありません",
+    "lowStock": "製品が在庫不足です",
+    "pendingInvoice": "保留中の請求書",
+    "activeProjects": "つの進行中プロジェクト"
+  },
+  "staff": {
+    "editProfile": "プロフィールを編集",
+    "name": "名前",
+    "position": "役職 / ポジション",
+    "access": "アクセス",
+    "fullAccess": "フルアクセス",
+    "noModules": "モジュール未割り当て"
+  },
+  "sidebar": {
+    "companyPanel": "会社パネル",
+    "general": "一般",
+    "erpModules": "ERPモジュール",
+    "settings": "設定",
+    "backToMenu": "メニューへ戻る"
+  },
+  "modules": {
+    "hr": "人事",
+    "accounting": "会計",
+    "projects": "プロジェクト管理",
+    "inventory": "在庫管理",
+    "crm": "CRM",
+    "procurement": "調達",
+    "manufacturing": "製造",
+    "workflow": "ワークフロー",
+    "reporting": "レポート"
   }
 }

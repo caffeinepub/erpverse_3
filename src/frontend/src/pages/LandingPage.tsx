@@ -404,7 +404,7 @@ export default function LandingPage({
                 data-ocid="landing.cta.primary_button"
                 onClick={() => void triggerLogin("company")}
                 disabled={isLoggingIn}
-                className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap transition-all duration-200 disabled:opacity-50 bg-white text-primary hover:bg-white/90 shadow-md"
+                className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap transition-all duration-200 disabled:opacity-50 bg-white text-indigo-700 hover:bg-white/90 shadow-md font-bold"
               >
                 Şirket Kur
                 <ArrowRight className="h-4 w-4" />
@@ -416,18 +416,10 @@ export default function LandingPage({
 
       {/* FOOTER */}
       <footer className="relative z-10 py-6 px-4 sm:px-6 lg:px-8 border-t border-border bg-background">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
+        <div className="max-w-7xl mx-auto flex items-center justify-center text-xs text-muted-foreground">
           <span>
             © {new Date().getFullYear()} ERPVerse. {t("footer.rights")}.
           </span>
-          <a
-            href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-primary transition-colors"
-          >
-            Built with ♥ using caffeine.ai
-          </a>
         </div>
       </footer>
     </div>

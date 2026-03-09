@@ -9,7 +9,8 @@
     "dashboard": "控制台",
     "logout": "退出登录",
     "login": "登录",
-    "profile": "个人资料"
+    "profile": "个人资料",
+    "back": "返回菜单"
   },
   "landing": {
     "hero": {
@@ -217,5 +218,38 @@
   "footer": {
     "rights": "保留所有权利",
     "builtWith": "用爱构建"
+  },
+  "notifications": {
+    "title": "通知",
+    "empty": "没有新通知",
+    "lowStock": "产品库存严重不足",
+    "pendingInvoice": "待处理发票",
+    "activeProjects": "个活跃项目"
+  },
+  "staff": {
+    "editProfile": "编辑个人资料",
+    "name": "姓名",
+    "position": "职称 / 职位",
+    "access": "访问",
+    "fullAccess": "完全访问",
+    "noModules": "未分配模块"
+  },
+  "sidebar": {
+    "companyPanel": "公司面板",
+    "general": "常规",
+    "erpModules": "ERP模块",
+    "settings": "设置",
+    "backToMenu": "返回菜单"
+  },
+  "modules": {
+    "hr": "人力资源",
+    "accounting": "财务会计",
+    "projects": "项目管理",
+    "inventory": "库存",
+    "crm": "CRM",
+    "procurement": "采购",
+    "manufacturing": "生产",
+    "workflow": "工作流程",
+    "reporting": "报表"
   }
 }

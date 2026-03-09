@@ -46,6 +46,7 @@ const MODULE_LABELS: Record<string, string> = {
   HR: "İnsan Kaynakları",
   Accounting: "Muhasebe",
   Projects: "Proje Yönetimi",
+  ProjectManagement: "Proje Yönetimi",
   Inventory: "Stok/Envanter",
   CRM: "CRM",
   Procurement: "Satın Alma",
@@ -69,6 +70,11 @@ const MODULE_COLORS: Record<
     border: "oklch(0.8 0.1 145)",
   },
   Projects: {
+    bg: "oklch(0.94 0.05 220)",
+    color: "oklch(0.38 0.18 220)",
+    border: "oklch(0.82 0.1 220)",
+  },
+  ProjectManagement: {
     bg: "oklch(0.94 0.05 220)",
     color: "oklch(0.38 0.18 220)",
     border: "oklch(0.82 0.1 220)",
@@ -181,7 +187,7 @@ function StaffCompanyCard({
           className="text-xs font-semibold uppercase tracking-wider mb-2"
           style={{ color: "oklch(0.55 0.01 270)" }}
         >
-          Erişim
+          {t("staff.access")}
         </p>
         <div className="flex flex-wrap gap-1.5">
           {hasFullAccess ? (
@@ -193,7 +199,7 @@ function StaffCompanyCard({
                 border: "1px solid oklch(0.8 0.1 145)",
               }}
             >
-              ✓ Tam Erişim
+              ✓ {t("staff.fullAccess")}
             </span>
           ) : grantedModules.length > 0 ? (
             grantedModules.map((mod) => {
@@ -218,7 +224,7 @@ function StaffCompanyCard({
             })
           ) : (
             <span className="text-xs" style={{ color: "oklch(0.6 0.01 270)" }}>
-              Modül atanmamış
+              {t("staff.noModules")}
             </span>
           )}
         </div>
@@ -571,7 +577,7 @@ export default function StaffDashboard({
                     }}
                   >
                     <Edit2 className="h-3.5 w-3.5" />
-                    Düzenle
+                    {t("common.edit")}
                   </button>
                 </div>
 
@@ -687,7 +693,7 @@ export default function StaffDashboard({
         >
           <DialogHeader>
             <DialogTitle style={{ color: "oklch(0.12 0.012 270)" }}>
-              Profili Düzenle
+              {t("staff.editProfile")}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">
@@ -695,7 +701,7 @@ export default function StaffDashboard({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                İsim
+                {t("staff.name")}
               </Label>
               <Input
                 value={editName}
@@ -713,7 +719,7 @@ export default function StaffDashboard({
               <Label
                 style={{ color: "oklch(0.25 0.012 270)", fontWeight: 600 }}
               >
-                Unvan / Pozisyon
+                {t("staff.position")}
               </Label>
               <Input
                 value={editTitle}
@@ -739,7 +745,7 @@ export default function StaffDashboard({
                 backgroundColor: "oklch(1 0 0)",
               }}
             >
-              İptal
+              {t("common.cancel")}
             </Button>
             <Button
               onClick={handleSaveProfile}
@@ -755,7 +761,7 @@ export default function StaffDashboard({
               {saveProfile.isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : null}
-              Kaydet
+              {t("common.save")}
             </Button>
           </DialogFooter>
         </DialogContent>

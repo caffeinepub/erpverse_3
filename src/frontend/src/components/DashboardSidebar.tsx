@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import {
+  ArrowLeft,
   BarChart2,
   Building2,
   ChevronRight,
@@ -16,6 +17,7 @@ import {
   Workflow,
 } from "lucide-react";
 import type React from "react";
+import { useLanguage } from "../contexts/LanguageContext";
 
 // Keep SidebarView exported for any legacy imports
 export type SidebarView =
@@ -43,6 +45,7 @@ export interface SidebarProps {
   /** @deprecated use onNavigate */
   onViewChange?: (view: SidebarView) => void;
   isOwner?: boolean;
+  onBack?: () => void;
 }
 
 const ERP_MODULES = [
@@ -130,7 +133,9 @@ export default function DashboardSidebar({
   grantedModules,
   companyName,
   isOwner,
+  onBack,
 }: SidebarProps) {
+  const { t } = useLanguage();
   const handleNavigate = (view: SidebarView) => {
     onNavigate?.(view);
     onViewChange?.(view);
@@ -288,7 +293,21 @@ export default function DashboardSidebar({
         className="p-2"
         style={{ borderTop: "1px solid oklch(0.88 0.01 270)" }}
       >
-        {navItem("settings", "Ayarlar", Settings)}
+        {onBack && (
+          <button
+            type="button"
+            onClick={onBack}
+            data-ocid="sidebar.back.button"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150"
+            style={{ color: "oklch(0.5 0.12 280)" }}
+          >
+            <ArrowLeft className="w-4 h-4 shrink-0" />
+            <span className="truncate flex-1 text-left">
+              {t("sidebar.backToMenu")}
+            </span>
+          </button>
+        )}
+        {navItem("settings", t("sidebar.settings"), Settings)}
       </div>
     </aside>
   );

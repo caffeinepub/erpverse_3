@@ -9,7 +9,8 @@
     "dashboard": "Dashboard",
     "logout": "Abmelden",
     "login": "Anmelden",
-    "profile": "Profil"
+    "profile": "Profil",
+    "back": "Zurück zum Menü"
   },
   "landing": {
     "hero": {
@@ -225,5 +226,38 @@
   "footer": {
     "rights": "Alle Rechte vorbehalten",
     "builtWith": "Mit Liebe gebaut"
+  },
+  "notifications": {
+    "title": "Benachrichtigungen",
+    "empty": "Keine neuen Benachrichtigungen",
+    "lowStock": "Produkte mit kritischem Lagerbestand",
+    "pendingInvoice": "Ausstehende Rechnung",
+    "activeProjects": "aktive Projekte"
+  },
+  "staff": {
+    "editProfile": "Profil bearbeiten",
+    "name": "Name",
+    "position": "Titel / Position",
+    "access": "Zugang",
+    "fullAccess": "Vollzugriff",
+    "noModules": "Keine Module zugewiesen"
+  },
+  "sidebar": {
+    "companyPanel": "Firmenpanel",
+    "general": "Allgemein",
+    "erpModules": "ERP-Module",
+    "settings": "Einstellungen",
+    "backToMenu": "Zurück zum Menü"
+  },
+  "modules": {
+    "hr": "Personalwesen",
+    "accounting": "Buchhaltung",
+    "projects": "Projektmanagement",
+    "inventory": "Lager/Inventar",
+    "crm": "CRM",
+    "procurement": "Einkauf",
+    "manufacturing": "Fertigung",
+    "workflow": "Workflows",
+    "reporting": "Berichte"
   }
 }

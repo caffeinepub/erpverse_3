@@ -9,7 +9,8 @@
     "dashboard": "لوحة التحكم",
     "logout": "تسجيل الخروج",
     "login": "تسجيل الدخول",
-    "profile": "الملف الشخصي"
+    "profile": "الملف الشخصي",
+    "back": "العودة للقائمة"
   },
   "landing": {
     "hero": {
@@ -221,5 +222,38 @@
   "footer": {
     "rights": "جميع الحقوق محفوظة",
     "builtWith": "صُنع بحب"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "empty": "لا توجد إشعارات جديدة",
+    "lowStock": "منتجات في مستوى مخزون حرج",
+    "pendingInvoice": "فاتورة معلقة",
+    "activeProjects": "مشاريع نشطة"
+  },
+  "staff": {
+    "editProfile": "تعديل الملف الشخصي",
+    "name": "الاسم",
+    "position": "المسمى / المنصب",
+    "access": "الوصول",
+    "fullAccess": "وصول كامل",
+    "noModules": "لا توجد وحدات مخصصة"
+  },
+  "sidebar": {
+    "companyPanel": "لوحة الشركة",
+    "general": "عام",
+    "erpModules": "وحدات ERP",
+    "settings": "الإعدادات",
+    "backToMenu": "العودة للقائمة"
+  },
+  "modules": {
+    "hr": "الموارد البشرية",
+    "accounting": "المحاسبة",
+    "projects": "إدارة المشاريع",
+    "inventory": "المخزون",
+    "crm": "إدارة علاقات العملاء",
+    "procurement": "المشتريات",
+    "manufacturing": "التصنيع",
+    "workflow": "سير العمل",
+    "reporting": "التقارير"
   }
 }
