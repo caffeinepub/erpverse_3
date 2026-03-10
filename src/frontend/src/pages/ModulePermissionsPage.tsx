@@ -26,7 +26,7 @@ interface ModulePermissionsPageProps {
 const ERP_MODULES = [
   { name: "HR", labelKey: "erp.hr.title" },
   { name: "Accounting", labelKey: "erp.accounting.title" },
-  { name: "ProjectManagement", labelKey: "erp.projects.title" },
+  { name: "Projects", labelKey: "erp.projects.title" },
   { name: "Inventory", labelKey: "erp.inventory.title" },
   { name: "CRM", labelKey: "erp.crm.title" },
   { name: "Procurement", labelKey: "erp.procurement.title" },

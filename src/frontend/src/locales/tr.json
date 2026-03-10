@@ -173,7 +173,24 @@
       "removing": "Çıkarılıyor...",
       "cancel": "İptal",
       "updateRole": "Rol Güncelle",
-      "updating": "Güncelleniyor..."
+      "updating": "Güncelleniyor...",
+      "erpSummary": "ERP Özeti",
+      "hrEmployees": "HR Çalışan",
+      "openProjects": "Açık Projeler",
+      "lowStock": "Düşük Stok",
+      "pendingInvoices": "Bekl. Fatura",
+      "customers": "Müşteriler",
+      "deleteRole": "Rolü sil",
+      "newRolePlaceholder": "Yeni rol adı...",
+      "staffListLoadError": "Personel listesi yüklenemedi",
+      "staffListUnauthorized": "Bu listeyi görüntüleme yetkiniz bulunmuyor.",
+      "staffListError": "Bir hata oluştu. Lütfen tekrar deneyin.",
+      "invalidStaffCode": "Geçerli bir 12 haneli personel kodu girin",
+      "invalidCode": "Geçersiz personel kodu",
+      "alreadyAssigned": "Bu personel zaten şirkete ekli",
+      "insufficientPermissions": "Bu rolü atamak için yetkiniz yok",
+      "operationFailed": "İşlem başarısız oldu",
+      "customRoleAdded": "Özel rol eklendi"
     },
     "staff": {
       "title": "Personel Paneli",
@@ -624,7 +641,11 @@
       "colRating": "Puan",
       "colTotal": "Toplam",
       "colEstDelivery": "Tahmini Teslimat",
-      "approvedLabel": "Onaylı"
+      "approvedLabel": "Onaylı",
+      "catRawMaterial2": "Hammadde",
+      "catService": "Hizmet",
+      "catLogistics": "Lojistik",
+      "catOfficeSupplies": "Ofis Malzemeleri"
     },
     "manufacturing": {
       "title": "Üretim Yönetimi",

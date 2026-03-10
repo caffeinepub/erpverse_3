@@ -181,7 +181,24 @@
       "removing": "Eliminando...",
       "cancel": "Cancelar",
       "updateRole": "Actualizar rol",
-      "updating": "Actualizando..."
+      "updating": "Actualizando...",
+      "erpSummary": "Resumen ERP",
+      "hrEmployees": "Empleados RR.HH.",
+      "openProjects": "Proyectos abiertos",
+      "lowStock": "Stock bajo",
+      "pendingInvoices": "Facturas pendientes",
+      "customers": "Clientes",
+      "deleteRole": "Eliminar rol",
+      "newRolePlaceholder": "Nuevo nombre de rol...",
+      "staffListLoadError": "No se pudo cargar la lista de personal",
+      "staffListUnauthorized": "No tienes permiso para ver esta lista.",
+      "staffListError": "Ocurrió un error. Por favor intenta de nuevo.",
+      "invalidStaffCode": "Ingresa un código de empleado válido de 12 dígitos",
+      "invalidCode": "Código de empleado inválido",
+      "alreadyAssigned": "Este empleado ya está en la empresa",
+      "insufficientPermissions": "No tienes permiso para asignar este rol",
+      "operationFailed": "Operación fallida",
+      "customRoleAdded": "Rol personalizado agregado"
     },
     "staff": {
       "title": "Panel de Personal",
@@ -632,7 +649,11 @@
       "amount": "Monto",
       "orderStatus": "Estado",
       "supplierAdded": "Proveedor añadido",
-      "orderAdded": "Pedido añadido"
+      "orderAdded": "Pedido añadido",
+      "catRawMaterial2": "Materia prima",
+      "catService": "Servicio",
+      "catLogistics": "Logística",
+      "catOfficeSupplies": "Material de oficina"
     },
     "manufacturing": {
       "title": "Producción",

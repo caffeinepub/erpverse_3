@@ -177,7 +177,24 @@
       "removing": "Removing...",
       "cancel": "Cancel",
       "updateRole": "Update Role",
-      "updating": "Updating..."
+      "updating": "Updating...",
+      "erpSummary": "ERP Summary",
+      "hrEmployees": "HR Employees",
+      "openProjects": "Open Projects",
+      "lowStock": "Low Stock",
+      "pendingInvoices": "Pending Invoices",
+      "customers": "Customers",
+      "deleteRole": "Delete role",
+      "newRolePlaceholder": "New role name...",
+      "staffListLoadError": "Failed to load staff list",
+      "staffListUnauthorized": "You don't have permission to view this list.",
+      "staffListError": "An error occurred. Please try again.",
+      "invalidStaffCode": "Enter a valid 12-digit employee code",
+      "invalidCode": "Invalid employee code",
+      "alreadyAssigned": "This employee is already in the company",
+      "insufficientPermissions": "You don't have permission to assign this role",
+      "operationFailed": "Operation failed",
+      "customRoleAdded": "Custom role added"
     },
     "staff": {
       "title": "Staff Dashboard",
@@ -628,7 +645,11 @@
       "colRating": "Rating",
       "colTotal": "Total",
       "colEstDelivery": "Est. Delivery",
-      "approvedLabel": "Approved"
+      "approvedLabel": "Approved",
+      "catRawMaterial2": "Raw Material",
+      "catService": "Service",
+      "catLogistics": "Logistics",
+      "catOfficeSupplies": "Office Supplies"
     },
     "manufacturing": {
       "title": "Manufacturing",

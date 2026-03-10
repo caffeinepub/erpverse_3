@@ -181,7 +181,24 @@
       "removing": "Удаление...",
       "cancel": "Отмена",
       "updateRole": "Обновить роль",
-      "updating": "Обновление..."
+      "updating": "Обновление...",
+      "erpSummary": "Сводка ERP",
+      "hrEmployees": "Сотрудники HR",
+      "openProjects": "Открытые проекты",
+      "lowStock": "Низкий запас",
+      "pendingInvoices": "Ожидающие счета",
+      "customers": "Клиенты",
+      "deleteRole": "Удалить роль",
+      "newRolePlaceholder": "Новое название роли...",
+      "staffListLoadError": "Не удалось загрузить список персонала",
+      "staffListUnauthorized": "У вас нет разрешения просматривать этот список.",
+      "staffListError": "Произошла ошибка. Пожалуйста, повторите попытку.",
+      "invalidStaffCode": "Введите действительный 12-значный код сотрудника",
+      "invalidCode": "Недействительный код сотрудника",
+      "alreadyAssigned": "Этот сотрудник уже в компании",
+      "insufficientPermissions": "У вас нет разрешения назначать эту роль",
+      "operationFailed": "Операция не выполнена",
+      "customRoleAdded": "Пользовательская роль добавлена"
     },
     "staff": {
       "title": "Панель сотрудника",
@@ -632,7 +649,11 @@
       "amount": "Сумма",
       "orderStatus": "Статус",
       "supplierAdded": "Поставщик добавлен",
-      "orderAdded": "Заказ добавлен"
+      "orderAdded": "Заказ добавлен",
+      "catRawMaterial2": "Сырьё",
+      "catService": "Услуга",
+      "catLogistics": "Логистика",
+      "catOfficeSupplies": "Офисные принадлежности"
     },
     "manufacturing": {
       "title": "Производство",

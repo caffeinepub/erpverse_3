@@ -123,12 +123,12 @@ const SUPPLIER_CAT_KEYS = [
   { key: "catHardware", tr: "Donanım" },
   { key: "catOther", tr: "Diğer" },
 ];
-// Additional categories without dedicated keys
-const SUPPLIER_CATS_EXTRA = [
-  "Hammadde",
-  "Hizmet",
-  "Lojistik",
-  "Ofis Malzemeleri",
+// Additional categories using translation keys
+const SUPPLIER_CAT_EXTRA_KEYS = [
+  "catRawMaterial2",
+  "catService",
+  "catLogistics",
+  "catOfficeSupplies",
 ];
 
 // ─── Supplier Dialog ──────────────────────────────────────────────────────────
@@ -250,9 +250,9 @@ function SupplierDialog({
                     {t(`erp.procurement.${key}`)}
                   </SelectItem>
                 ))}
-                {SUPPLIER_CATS_EXTRA.map((c) => (
-                  <SelectItem key={c} value={c}>
-                    {c}
+                {SUPPLIER_CAT_EXTRA_KEYS.map((key) => (
+                  <SelectItem key={key} value={t(`erp.procurement.${key}`)}>
+                    {t(`erp.procurement.${key}`)}
                   </SelectItem>
                 ))}
               </SelectContent>

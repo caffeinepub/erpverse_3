@@ -177,7 +177,24 @@
       "removing": "削除中...",
       "cancel": "キャンセル",
       "updateRole": "ロールを更新",
-      "updating": "更新中..."
+      "updating": "更新中...",
+      "erpSummary": "ERPサマリー",
+      "hrEmployees": "HR従業員",
+      "openProjects": "進行中プロジェクト",
+      "lowStock": "在庫不足",
+      "pendingInvoices": "未払い請求書",
+      "customers": "顧客",
+      "deleteRole": "役割を削除",
+      "newRolePlaceholder": "新しい役割名...",
+      "staffListLoadError": "スタッフリストを読み込めませんでした",
+      "staffListUnauthorized": "このリストを表示する権限がありません。",
+      "staffListError": "エラーが発生しました。もう一度試してください。",
+      "invalidStaffCode": "有効な12桁の従業員コードを入力してください",
+      "invalidCode": "無効な従業員コード",
+      "alreadyAssigned": "この従業員はすでに会社に登録されています",
+      "insufficientPermissions": "この役割を割り当てる権限がありません",
+      "operationFailed": "操作に失敗しました",
+      "customRoleAdded": "カスタム役割が追加されました"
     },
     "staff": {
       "title": "スタッフダッシュボード",
@@ -628,7 +645,11 @@
       "amount": "金額",
       "orderStatus": "ステータス",
       "supplierAdded": "サプライヤーを追加しました",
-      "orderAdded": "注文を追加しました"
+      "orderAdded": "注文を追加しました",
+      "catRawMaterial2": "原材料",
+      "catService": "サービス",
+      "catLogistics": "物流",
+      "catOfficeSupplies": "事務用品"
     },
     "manufacturing": {
       "title": "製造",

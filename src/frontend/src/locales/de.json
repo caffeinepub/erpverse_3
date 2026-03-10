@@ -181,7 +181,24 @@
       "removing": "Wird entfernt...",
       "cancel": "Abbrechen",
       "updateRole": "Rolle aktualisieren",
-      "updating": "Wird aktualisiert..."
+      "updating": "Wird aktualisiert...",
+      "erpSummary": "ERP-Übersicht",
+      "hrEmployees": "Mitarbeiter",
+      "openProjects": "Offene Projekte",
+      "lowStock": "Niedriger Bestand",
+      "pendingInvoices": "Ausstehende Rechnungen",
+      "customers": "Kunden",
+      "deleteRole": "Rolle löschen",
+      "newRolePlaceholder": "Neuer Rollenname...",
+      "staffListLoadError": "Mitarbeiterliste konnte nicht geladen werden",
+      "staffListUnauthorized": "Sie haben keine Berechtigung, diese Liste anzuzeigen.",
+      "staffListError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+      "invalidStaffCode": "Geben Sie einen gültigen 12-stelligen Mitarbeitercode ein",
+      "invalidCode": "Ungültiger Mitarbeitercode",
+      "alreadyAssigned": "Dieser Mitarbeiter ist bereits im Unternehmen",
+      "insufficientPermissions": "Sie haben keine Berechtigung, diese Rolle zuzuweisen",
+      "operationFailed": "Vorgang fehlgeschlagen",
+      "customRoleAdded": "Benutzerdefinierte Rolle hinzugefügt"
     },
     "staff": {
       "title": "Mitarbeiter-Dashboard",
@@ -632,7 +649,11 @@
       "amount": "Betrag",
       "orderStatus": "Status",
       "supplierAdded": "Lieferant hinzugefügt",
-      "orderAdded": "Bestellung hinzugefügt"
+      "orderAdded": "Bestellung hinzugefügt",
+      "catRawMaterial2": "Rohstoff",
+      "catService": "Dienstleistung",
+      "catLogistics": "Logistik",
+      "catOfficeSupplies": "Bürobedarf"
     },
     "manufacturing": {
       "title": "Produktion",

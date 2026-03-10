@@ -68,15 +68,15 @@ interface CompanyOwnerDashboardProps {
 }
 
 const ERP_MODULES = [
-  { name: "HR", label: "İnsan Kaynakları" },
-  { name: "Accounting", label: "Muhasebe" },
-  { name: "ProjectManagement", label: "Proje Yönetimi" },
-  { name: "Inventory", label: "Stok/Envanter" },
-  { name: "CRM", label: "CRM" },
-  { name: "Procurement", label: "Satın Alma" },
-  { name: "Manufacturing", label: "Üretim" },
-  { name: "Workflow", label: "İş Akışları" },
-  { name: "Reporting", label: "Raporlama" },
+  { name: "HR", labelKey: "modules.hr" },
+  { name: "Accounting", labelKey: "modules.accounting" },
+  { name: "ProjectManagement", labelKey: "modules.projects" },
+  { name: "Inventory", labelKey: "modules.inventory" },
+  { name: "CRM", labelKey: "modules.crm" },
+  { name: "Procurement", labelKey: "modules.procurement" },
+  { name: "Manufacturing", labelKey: "modules.manufacturing" },
+  { name: "Workflow", labelKey: "modules.workflow" },
+  { name: "Reporting", labelKey: "modules.reporting" },
 ];
 
 function getRoleName(roleCode: bigint): string {
@@ -121,6 +121,7 @@ function ModulePermissionsView({
   staffList: Staff[];
   staffLoading: boolean;
 }) {
+  const { t } = useLanguage();
   const grantMutation = useGrantModuleAccess();
   const revokeMutation = useRevokeModuleAccess();
   const [pendingToggles, setPendingToggles] = useState<Set<string>>(new Set());
@@ -150,7 +151,7 @@ function ModulePermissionsView({
         toast.success(`${moduleName} erişimi verildi`);
       }
     } catch {
-      toast.error("İşlem başarısız oldu");
+      toast.error(t("dashboard.owner.operationFailed"));
     } finally {
       setPendingToggles((prev) => {
         const next = new Set(prev);
@@ -233,7 +234,7 @@ function ModulePermissionsView({
                       key={m.name}
                       className="text-center py-3 px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider min-w-[110px]"
                     >
-                      {m.label}
+                      {t(m.labelKey)}
                     </th>
                   ))}
                 </tr>
@@ -376,7 +377,7 @@ export default function CompanyOwnerDashboard({
     setAddError("");
     setAddSuccess("");
     if (!addCode.trim() || addCode.trim().length !== 12) {
-      setAddError("Geçerli bir 12 haneli personel kodu girin");
+      setAddError(t("dashboard.owner.invalidStaffCode"));
       return;
     }
     try {
@@ -390,11 +391,11 @@ export default function CompanyOwnerDashboard({
         setAddCode("");
         refetchStaff();
       } else if (result === RoleAssignmentResult.invalidCode) {
-        setAddError("Geçersiz personel kodu");
+        setAddError(t("dashboard.owner.invalidCode"));
       } else if (result === RoleAssignmentResult.alreadyAssigned) {
-        setAddError("Bu personel zaten şirkete ekli");
+        setAddError(t("dashboard.owner.alreadyAssigned"));
       } else if (result === RoleAssignmentResult.insufficientPermissions) {
-        setAddError("Bu rolü atamak için yetkiniz yok");
+        setAddError(t("dashboard.owner.insufficientPermissions"));
       } else {
         setAddError(t("common.error"));
       }
@@ -446,7 +447,7 @@ export default function CompanyOwnerDashboard({
           parentRole: "Company Staff",
         },
       });
-      toast.success("Özel rol eklendi");
+      toast.success(t("dashboard.owner.customRoleAdded"));
       setNewRoleName("");
     } catch {
       toast.error("Rol eklenemedi");
@@ -637,7 +638,7 @@ export default function CompanyOwnerDashboard({
                   className="font-semibold text-sm uppercase tracking-wider mb-3"
                   style={{ color: "oklch(0.5 0.01 270)" }}
                 >
-                  ERP Özeti
+                  {t("dashboard.owner.erpSummary")}
                 </h2>
                 {dashboardLoading ? (
                   <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
@@ -650,7 +651,7 @@ export default function CompanyOwnerDashboard({
                     {[
                       {
                         icon: Users,
-                        label: "HR Çalışan",
+                        label: t("dashboard.owner.hrEmployees"),
                         value: dashboardSummary
                           ? Number(dashboardSummary.totalEmployees)
                           : 0,
@@ -660,7 +661,7 @@ export default function CompanyOwnerDashboard({
                       },
                       {
                         icon: FolderKanban,
-                        label: "Açık Projeler",
+                        label: t("dashboard.owner.openProjects"),
                         value: dashboardSummary
                           ? Number(dashboardSummary.openProjects)
                           : 0,
@@ -670,7 +671,7 @@ export default function CompanyOwnerDashboard({
                       },
                       {
                         icon: Boxes,
-                        label: "Düşük Stok",
+                        label: t("dashboard.owner.lowStock"),
                         value: dashboardSummary
                           ? Number(dashboardSummary.lowStockProducts)
                           : 0,
@@ -680,7 +681,7 @@ export default function CompanyOwnerDashboard({
                       },
                       {
                         icon: BookOpen,
-                        label: "Bekl. Fatura",
+                        label: t("dashboard.owner.pendingInvoices"),
                         value: dashboardSummary
                           ? Number(dashboardSummary.pendingInvoices)
                           : 0,
@@ -690,7 +691,7 @@ export default function CompanyOwnerDashboard({
                       },
                       {
                         icon: Contact,
-                        label: "Müşteriler",
+                        label: t("dashboard.owner.customers"),
                         value: dashboardSummary
                           ? Number(dashboardSummary.totalCustomers)
                           : 0,
@@ -908,7 +909,7 @@ export default function CompanyOwnerDashboard({
                               onClick={() => handleRemoveCustomRole(role.name)}
                               data-ocid="roles.custom.delete_button.1"
                               className="ml-0.5 hover:text-destructive transition-colors"
-                              title="Rolü sil"
+                              title={t("dashboard.owner.deleteRole")}
                             >
                               <Trash2 className="h-3 w-3" />
                             </button>
@@ -923,7 +924,7 @@ export default function CompanyOwnerDashboard({
                     <Input
                       value={newRoleName}
                       onChange={(e) => setNewRoleName(e.target.value)}
-                      placeholder="Yeni rol adı..."
+                      placeholder={t("dashboard.owner.newRolePlaceholder")}
                       className="flex-1 h-9 text-sm"
                       data-ocid="roles.custom.input"
                       style={{
@@ -987,14 +988,14 @@ export default function CompanyOwnerDashboard({
                     </div>
                     <div className="text-center">
                       <p className="text-sm font-medium text-destructive mb-1">
-                        Personel listesi yüklenemedi
+                        {t("dashboard.owner.staffListLoadError")}
                       </p>
                       <p className="text-xs text-muted-foreground max-w-xs">
                         {(staffErrorObj as Error)?.message?.includes(
                           "Unauthorized",
                         )
-                          ? "Bu listeyi görüntüleme yetkiniz bulunmuyor."
-                          : "Bir hata oluştu. Lütfen tekrar deneyin."}
+                          ? t("dashboard.owner.staffListUnauthorized")
+                          : t("dashboard.owner.staffListError")}
                       </p>
                     </div>
                     <button

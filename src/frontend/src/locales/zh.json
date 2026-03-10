@@ -173,7 +173,24 @@
       "removing": "移除中...",
       "cancel": "取消",
       "updateRole": "更新角色",
-      "updating": "更新中..."
+      "updating": "更新中...",
+      "erpSummary": "ERP概览",
+      "hrEmployees": "人事员工",
+      "openProjects": "开放项目",
+      "lowStock": "库存不足",
+      "pendingInvoices": "待处理发票",
+      "customers": "客户",
+      "deleteRole": "删除角色",
+      "newRolePlaceholder": "新角色名称...",
+      "staffListLoadError": "无法加载员工列表",
+      "staffListUnauthorized": "您没有查看此列表的权限。",
+      "staffListError": "发生错误。请重试。",
+      "invalidStaffCode": "请输入有效的12位员工编号",
+      "invalidCode": "无效的员工编号",
+      "alreadyAssigned": "该员工已在公司中",
+      "insufficientPermissions": "您没有分配此角色的权限",
+      "operationFailed": "操作失败",
+      "customRoleAdded": "自定义角色已添加"
     },
     "staff": {
       "title": "员工控制台",
@@ -624,7 +641,11 @@
       "amount": "金额",
       "orderStatus": "状态",
       "supplierAdded": "供应商已添加",
-      "orderAdded": "订单已添加"
+      "orderAdded": "订单已添加",
+      "catRawMaterial2": "原材料",
+      "catService": "服务",
+      "catLogistics": "物流",
+      "catOfficeSupplies": "办公用品"
     },
     "manufacturing": {
       "title": "生产",

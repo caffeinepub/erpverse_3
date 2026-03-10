@@ -181,7 +181,24 @@
       "removing": "Suppression en cours...",
       "cancel": "Annuler",
       "updateRole": "Mettre à jour le rôle",
-      "updating": "Mise à jour..."
+      "updating": "Mise à jour...",
+      "erpSummary": "Résumé ERP",
+      "hrEmployees": "Employés RH",
+      "openProjects": "Projets ouverts",
+      "lowStock": "Stock bas",
+      "pendingInvoices": "Factures en attente",
+      "customers": "Clients",
+      "deleteRole": "Supprimer le rôle",
+      "newRolePlaceholder": "Nouveau nom de rôle...",
+      "staffListLoadError": "Impossible de charger la liste du personnel",
+      "staffListUnauthorized": "Vous n'avez pas la permission de voir cette liste.",
+      "staffListError": "Une erreur s'est produite. Veuillez réessayer.",
+      "invalidStaffCode": "Entrez un code employé valide à 12 chiffres",
+      "invalidCode": "Code employé invalide",
+      "alreadyAssigned": "Cet employé est déjà dans l'entreprise",
+      "insufficientPermissions": "Vous n'avez pas la permission d'attribuer ce rôle",
+      "operationFailed": "Opération échouée",
+      "customRoleAdded": "Rôle personnalisé ajouté"
     },
     "staff": {
       "title": "Tableau de Bord Personnel",
@@ -632,7 +649,11 @@
       "amount": "Montant",
       "orderStatus": "Statut",
       "supplierAdded": "Fournisseur ajouté",
-      "orderAdded": "Commande ajoutée"
+      "orderAdded": "Commande ajoutée",
+      "catRawMaterial2": "Matière première",
+      "catService": "Service",
+      "catLogistics": "Logistique",
+      "catOfficeSupplies": "Fournitures de bureau"
     },
     "manufacturing": {
       "title": "Production",

@@ -44,17 +44,17 @@ function getRoleName(roleCode: bigint, t: (key: string) => string): string {
   return t("roles.unknown");
 }
 
-const MODULE_LABELS: Record<string, string> = {
-  HR: "İnsan Kaynakları",
-  Accounting: "Muhasebe",
-  Projects: "Proje Yönetimi",
-  ProjectManagement: "Proje Yönetimi",
-  Inventory: "Stok/Envanter",
-  CRM: "CRM",
-  Procurement: "Satın Alma",
-  Manufacturing: "Üretim",
-  Workflow: "İş Akışları",
-  Reporting: "Raporlama",
+const MODULE_TRANSLATION_KEYS: Record<string, string> = {
+  HR: "modules.hr",
+  Accounting: "modules.accounting",
+  Projects: "modules.projects",
+  ProjectManagement: "modules.projects",
+  Inventory: "modules.inventory",
+  CRM: "modules.crm",
+  Procurement: "modules.procurement",
+  Manufacturing: "modules.manufacturing",
+  Workflow: "modules.workflow",
+  Reporting: "modules.reporting",
 };
 
 const MODULE_COLORS: Record<
@@ -235,7 +235,7 @@ function StaffCompanyCard({
                     border: `1px solid ${colors.border}`,
                   }}
                 >
-                  {MODULE_LABELS[mod] ?? mod}
+                  {t(MODULE_TRANSLATION_KEYS[mod] ?? "") || mod}
                 </span>
               );
             })
@@ -724,7 +724,7 @@ export default function StaffDashboard({
               <Input
                 value={editName}
                 onChange={(e) => setEditName(e.target.value)}
-                placeholder="Adınız Soyadınız"
+                placeholder={t("staffRegistration.fields.namePlaceholder")}
                 data-ocid="staff.profile.edit.name.input"
                 style={{
                   backgroundColor: "oklch(1 0 0)",
@@ -742,7 +742,7 @@ export default function StaffDashboard({
               <Input
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
-                placeholder="Örn: Yazılım Geliştirici"
+                placeholder={t("staffRegistration.fields.titlePlaceholder")}
                 data-ocid="staff.profile.edit.title.input"
                 style={{
                   backgroundColor: "oklch(1 0 0)",

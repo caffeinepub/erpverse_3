@@ -177,7 +177,24 @@
       "removing": "جارٍ الإزالة...",
       "cancel": "إلغاء",
       "updateRole": "تحديث الدور",
-      "updating": "جارٍ التحديث..."
+      "updating": "جارٍ التحديث...",
+      "erpSummary": "ملخص النظام",
+      "hrEmployees": "موظفو الموارد البشرية",
+      "openProjects": "المشاريع المفتوحة",
+      "lowStock": "مخزون منخفض",
+      "pendingInvoices": "الفواتير المعلقة",
+      "customers": "العملاء",
+      "deleteRole": "حذف الدور",
+      "newRolePlaceholder": "اسم دور جديد...",
+      "staffListLoadError": "فشل تحميل قائمة الموظفين",
+      "staffListUnauthorized": "ليس لديك صلاحية لعرض هذه القائمة.",
+      "staffListError": "حدث خطأ. يرجى المحاولة مرة أخرى.",
+      "invalidStaffCode": "أدخل رمز موظف صالح مكون من 12 رقماً",
+      "invalidCode": "رمز موظف غير صالح",
+      "alreadyAssigned": "هذا الموظف موجود بالفعل في الشركة",
+      "insufficientPermissions": "ليس لديك صلاحية لتعيين هذا الدور",
+      "operationFailed": "فشلت العملية",
+      "customRoleAdded": "تمت إضافة دور مخصص"
     },
     "staff": {
       "title": "لوحة تحكم الموظف",
@@ -628,7 +645,11 @@
       "amount": "المبلغ",
       "orderStatus": "الحالة",
       "supplierAdded": "تم إضافة المورد",
-      "orderAdded": "تم إضافة الطلب"
+      "orderAdded": "تم إضافة الطلب",
+      "catRawMaterial2": "مواد خام",
+      "catService": "خدمة",
+      "catLogistics": "لوجستيات",
+      "catOfficeSupplies": "لوازم مكتبية"
     },
     "manufacturing": {
       "title": "التصنيع",
