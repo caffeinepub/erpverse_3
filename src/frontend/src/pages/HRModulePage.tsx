@@ -55,19 +55,19 @@ interface HRModulePageProps {
   isOwnerOrManager: boolean;
 }
 
-const DEPARTMENTS = [
-  "Mühendislik",
-  "Pazarlama",
-  "Satış",
-  "İK",
-  "Finans",
-  "Operasyon",
+const DEPT_KEYS = [
+  "deptEngineering",
+  "deptMarketing",
+  "deptSales",
+  "deptHR",
+  "deptFinance",
+  "deptOperations",
 ];
-const LEAVE_TYPES = [
-  "Yıllık İzin",
-  "Hastalık İzni",
-  "Mazeret İzni",
-  "Ücretsiz İzin",
+const LEAVE_TYPE_KEYS = [
+  "leaveAnnual",
+  "leaveSick",
+  "leaveExcused",
+  "leaveUnpaid",
 ];
 const CURRENCIES = ["TRY", "USD", "EUR"];
 
@@ -333,7 +333,7 @@ export default function HRModulePage({
             {t("erp.hr.title")}
           </h1>
           <p className="text-sm mt-1" style={{ color: "oklch(0.5 0.01 270)" }}>
-            Personel, izin ve maaş yönetimi
+            {t("erp.hr.subtitle")}
           </p>
         </div>
       </div>
@@ -443,7 +443,7 @@ export default function HRModulePage({
                   className="text-xs mt-0.5"
                   style={{ color: "oklch(0.55 0.01 270)" }}
                 >
-                  {employees.length} personel kayıtlı
+                  {employees.length} {t("erp.hr.staffRegistered")}
                 </p>
               </div>
               {isOwnerOrManager && (
@@ -627,7 +627,7 @@ export default function HRModulePage({
                   className="text-xs mt-0.5"
                   style={{ color: "oklch(0.55 0.01 270)" }}
                 >
-                  Personel izin talepleri ve durumları
+                  {t("erp.hr.leaveRequestsDesc")}
                 </p>
               </div>
               <Button
@@ -810,13 +810,13 @@ export default function HRModulePage({
                       color: "oklch(0.12 0.012 270)",
                     }}
                   >
-                    Maaş Bilgileri
+                    {t("erp.hr.salaryRecords")}
                   </h2>
                   <p
                     className="text-xs mt-0.5"
                     style={{ color: "oklch(0.55 0.01 270)" }}
                   >
-                    Personel maaş kayıtları (gizli)
+                    {t("erp.hr.salaryRecordsDesc")}
                   </p>
                 </div>
                 <Button
@@ -1013,9 +1013,9 @@ export default function HRModulePage({
                   <SelectValue placeholder={t("erp.hr.department")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {DEPARTMENTS.map((d) => (
-                    <SelectItem key={d} value={d}>
-                      {d}
+                  {DEPT_KEYS.map((k) => (
+                    <SelectItem key={k} value={t(`erp.hr.${k}`)}>
+                      {t(`erp.hr.${k}`)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -1131,9 +1131,9 @@ export default function HRModulePage({
                   <SelectValue placeholder={t("erp.hr.leaveType")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {LEAVE_TYPES.map((t) => (
-                    <SelectItem key={t} value={t}>
-                      {t}
+                  {LEAVE_TYPE_KEYS.map((k) => (
+                    <SelectItem key={k} value={t(`erp.hr.${k}`)}>
+                      {t(`erp.hr.${k}`)}
                     </SelectItem>
                   ))}
                 </SelectContent>

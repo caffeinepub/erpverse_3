@@ -165,12 +165,14 @@ function TaskDialog({
       >
         <DialogHeader>
           <DialogTitle>
-            {initial?.id ? "Görevi Düzenle" : "Yeni Görev"}
+            {initial?.id
+              ? t("erp.workflow.editTask")
+              : t("erp.workflow.newTask")}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
           <div className="space-y-1.5">
-            <Label htmlFor="task-title">Başlık *</Label>
+            <Label htmlFor="task-title">{t("erp.workflow.titleLabel")} *</Label>
             <Input
               id="task-title"
               value={form.title}
@@ -297,7 +299,7 @@ function TaskDialog({
                     addTag();
                   }
                 }}
-                placeholder="Etiket gir + Enter"
+                placeholder={t("erp.common.add")}
                 style={{
                   backgroundColor: "oklch(1 0 0)",
                   borderColor: "oklch(0.88 0.01 270)",
@@ -364,7 +366,9 @@ function TaskDialog({
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
               ) : null}
-              {initial?.id ? "Güncelle" : "Oluştur"}
+              {initial?.id
+                ? t("erp.workflow.updateBtn")
+                : t("erp.workflow.createBtn")}
             </Button>
           </DialogFooter>
         </form>
@@ -414,7 +418,7 @@ function TaskCard({
             onClick={() => onEdit(task)}
             className="p-1 rounded hover:bg-secondary transition-colors text-xs"
             style={{ color: "oklch(0.5 0.01 270)" }}
-            title="Düzenle"
+            title={t("erp.common.edit")}
           >
             ✎
           </button>
@@ -423,7 +427,7 @@ function TaskCard({
             onClick={() => onDelete(task.id)}
             className="p-1 rounded hover:bg-red-50 transition-colors text-xs"
             style={{ color: "oklch(0.55 0.18 25)" }}
-            title="Sil"
+            title={t("erp.common.delete")}
           >
             ×
           </button>

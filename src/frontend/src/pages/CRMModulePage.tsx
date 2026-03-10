@@ -97,9 +97,9 @@ const STAGES = [
 ];
 
 const LOG_TYPES = [
-  { value: "call", label: "Arama", icon: Phone },
-  { value: "email", label: "E-posta", icon: Mail },
-  { value: "meeting", label: "Toplantı", icon: Users },
+  { value: "call", labelKey: "erp.crm.contactTypeCall", icon: Phone },
+  { value: "email", labelKey: "erp.crm.contactTypeEmail", icon: Mail },
+  { value: "meeting", labelKey: "erp.crm.contactTypeMeeting", icon: Users },
 ];
 
 const DIALOG_STYLE: React.CSSProperties = {
@@ -298,8 +298,8 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
     : [];
 
   const logTypeIcon = (type: string) => {
-    const t = LOG_TYPES.find((x) => x.value === type);
-    const Icon = t?.icon || MessageSquare;
+    const lt = LOG_TYPES.find((x) => x.value === type);
+    const Icon = lt?.icon || MessageSquare;
     return <Icon className="w-3.5 h-3.5" />;
   };
 
@@ -553,7 +553,11 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                           <TableRow
                             style={{ backgroundColor: "oklch(0.97 0.005 270)" }}
                           >
-                            {["Tahmini Değer", "Kapanış", "Aşama"].map((h) => (
+                            {[
+                              t("erp.crm.colEstimatedValue"),
+                              t("erp.crm.colClosingDate"),
+                              t("erp.accounting.invoiceStatus"),
+                            ].map((h) => (
                               <TableHead
                                 key={h}
                                 style={{
@@ -665,7 +669,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                           className="w-4 h-4"
                           style={{ color: "oklch(0.45 0.22 280)" }}
                         />
-                        İletişim Geçmişi
+                        {t("erp.crm.contactHistory")}
                       </h2>
                       <Button
                         size="sm"
@@ -717,9 +721,11 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                                       border: "1px solid oklch(0.82 0.1 280)",
                                     }}
                                   >
-                                    {LOG_TYPES.find(
-                                      (t) => t.value === log.logType,
-                                    )?.label ?? log.logType}
+                                    {t(
+                                      LOG_TYPES.find(
+                                        (lt) => lt.value === log.logType,
+                                      )?.labelKey ?? "erp.crm.contactTypeCall",
+                                    )}
                                   </span>
                                   <span
                                     className="text-xs"
@@ -932,7 +938,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
               />
             </div>
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Şirket Adı</Label>
+              <Label style={LABEL_STYLE}>{t("erp.crm.companyNameLabel")}</Label>
               <Input
                 value={customerForm.customerCompanyName}
                 onChange={(e) =>
@@ -947,7 +953,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
               />
             </div>
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>İletişim Bilgisi</Label>
+              <Label style={LABEL_STYLE}>{t("erp.crm.contactInfoLabel")}</Label>
               <Input
                 value={customerForm.contactInfo}
                 onChange={(e) =>
@@ -956,7 +962,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                     contactInfo: e.target.value,
                   }))
                 }
-                placeholder="E-posta veya telefon"
+                placeholder={t("erp.crm.contactInfoLabel")}
                 style={INPUT_STYLE}
                 data-ocid="crm.customer.contact.input"
               />
@@ -1002,7 +1008,9 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
           </DialogHeader>
           <div className="space-y-4 py-2">
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Tahmini Değer (₺)</Label>
+              <Label style={LABEL_STYLE}>
+                {t("erp.crm.estimatedValueLabel")}
+              </Label>
               <Input
                 type="number"
                 value={oppForm.estimatedValue}
@@ -1015,7 +1023,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
               />
             </div>
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Aşama</Label>
+              <Label style={LABEL_STYLE}>{t("erp.common.status")}</Label>
               <Select
                 value={oppForm.stage}
                 onValueChange={(v) => setOppForm((p) => ({ ...p, stage: v }))}
@@ -1033,7 +1041,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Tahmini Kapanış Tarihi</Label>
+              <Label style={LABEL_STYLE}>{t("erp.crm.closingDateLabel")}</Label>
               <Input
                 type="date"
                 value={oppForm.closeDate}
@@ -1077,12 +1085,12 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
         >
           <DialogHeader>
             <DialogTitle style={{ color: "oklch(0.12 0.012 270)" }}>
-              İletişim Notu Ekle
+              {t("erp.crm.addContactNote")}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>İletişim Türü</Label>
+              <Label style={LABEL_STYLE}>{t("erp.crm.contactTypeLabel")}</Label>
               <Select
                 value={logForm.type}
                 onValueChange={(v) => setLogForm((p) => ({ ...p, type: v }))}
@@ -1091,9 +1099,9 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {LOG_TYPES.map((t) => (
-                    <SelectItem key={t.value} value={t.value}>
-                      {t.label}
+                  {LOG_TYPES.map((lt) => (
+                    <SelectItem key={lt.value} value={lt.value}>
+                      {t(lt.labelKey)}
                     </SelectItem>
                   ))}
                 </SelectContent>

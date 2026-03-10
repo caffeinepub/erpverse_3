@@ -45,19 +45,19 @@ export default function Header({
 
     if (lowStock > 0) {
       notifications.push({
-        message: `${lowStock} ürün kritik stok seviyesinde`,
+        message: `${lowStock} ${t("notifications.lowStock")}`,
         type: "warning",
       });
     }
     if (pending > 0) {
       notifications.push({
-        message: `${pending} bekleyen fatura var`,
+        message: `${pending} ${t("notifications.pendingInvoice")}`,
         type: "warning",
       });
     }
     if (open > 0) {
       notifications.push({
-        message: `${open} proje devam ediyor`,
+        message: `${open} ${t("notifications.activeProjects")}`,
         type: "info",
       });
     }
@@ -164,7 +164,7 @@ export default function Header({
                       borderBottom: "1px solid oklch(0.9 0.005 270)",
                     }}
                   >
-                    Bildirimler
+                    {t("notifications.title")}
                   </div>
                   {notifications.length === 0 ? (
                     <DropdownMenuItem

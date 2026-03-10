@@ -100,6 +100,81 @@ export default function ModulePermissionsPage({
     }
   };
 
+  const handleGrantAll = async (staff: Staff) => {
+    for (const m of ERP_MODULES) {
+      if (!staff.grantedModules.includes(m.name)) {
+        const key = `${staff.principal.toString()}-${m.name}`;
+        setPendingToggles((prev) => new Set(prev).add(key));
+        try {
+          await grantMutation.mutateAsync({
+            companyId,
+            staffPrincipal: staff.principal,
+            moduleName: m.name,
+          });
+        } catch {
+          // continue
+        } finally {
+          setPendingToggles((prev) => {
+            const next = new Set(prev);
+            next.delete(key);
+            return next;
+          });
+        }
+      }
+    }
+    toast.success(`${t("erp.modulePermissions.grantAll")} ✓`);
+  };
+
+  const handleRevokeAll = async (staff: Staff) => {
+    for (const m of ERP_MODULES) {
+      if (staff.grantedModules.includes(m.name)) {
+        const key = `${staff.principal.toString()}-${m.name}`;
+        setPendingToggles((prev) => new Set(prev).add(key));
+        try {
+          await revokeMutation.mutateAsync({
+            companyId,
+            staffPrincipal: staff.principal,
+            moduleName: m.name,
+          });
+        } catch {
+          // continue
+        } finally {
+          setPendingToggles((prev) => {
+            const next = new Set(prev);
+            next.delete(key);
+            return next;
+          });
+        }
+      }
+    }
+    toast.success(`${t("erp.modulePermissions.revokeAll")} ✓`);
+  };
+
+  const handleGrantColumn = async (moduleName: string) => {
+    for (const staff of managedStaff) {
+      if (!staff.grantedModules.includes(moduleName)) {
+        const key = `${staff.principal.toString()}-${moduleName}`;
+        setPendingToggles((prev) => new Set(prev).add(key));
+        try {
+          await grantMutation.mutateAsync({
+            companyId,
+            staffPrincipal: staff.principal,
+            moduleName,
+          });
+        } catch {
+          // continue
+        } finally {
+          setPendingToggles((prev) => {
+            const next = new Set(prev);
+            next.delete(key);
+            return next;
+          });
+        }
+      }
+    }
+    toast.success(`${t("erp.modulePermissions.grantColumn")} ✓`);
+  };
+
   // Filter out owners and managers (they always have full access)
   const managedStaff = (staffList || []).filter((s) => Number(s.roleCode) >= 3);
   const privilegedStaff = (staffList || []).filter(
@@ -184,7 +259,23 @@ export default function ModulePermissionsPage({
                         key={m.name}
                         className="text-center py-3 px-2 text-sm font-semibold text-muted-foreground min-w-[100px]"
                       >
-                        {t(m.labelKey)}
+                        <div className="flex flex-col items-center gap-1">
+                          <span>{t(m.labelKey)}</span>
+                          <button
+                            type="button"
+                            onClick={() => handleGrantColumn(m.name)}
+                            className="text-xs px-1.5 py-0.5 rounded font-medium transition-colors"
+                            style={{
+                              backgroundColor: "oklch(0.93 0.04 280)",
+                              color: "oklch(0.35 0.18 280)",
+                              border: "1px solid oklch(0.82 0.1 280)",
+                            }}
+                            title={t("erp.modulePermissions.grantColumn")}
+                            data-ocid={`permissions.${m.name.toLowerCase()}.grant_all.button`}
+                          >
+                            ↓{t("erp.modulePermissions.grantColumn")}
+                          </button>
+                        </div>
                       </th>
                     ))}
                   </tr>
@@ -201,6 +292,36 @@ export default function ModulePermissionsPage({
                           <Badge variant="secondary" className="text-xs mt-0.5">
                             {getRoleLabel(Number(staff.roleCode), t)}
                           </Badge>
+                          <div className="flex gap-1 mt-1.5">
+                            <button
+                              type="button"
+                              onClick={() => handleGrantAll(staff)}
+                              className="text-xs px-2 py-0.5 rounded font-medium transition-colors"
+                              style={{
+                                backgroundColor: "oklch(0.93 0.04 145)",
+                                color: "oklch(0.35 0.15 145)",
+                                border: "1px solid oklch(0.8 0.1 145)",
+                              }}
+                              title={t("erp.modulePermissions.grantAll")}
+                              data-ocid="permissions.grant_all.button"
+                            >
+                              +{t("erp.modulePermissions.grantAll")}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleRevokeAll(staff)}
+                              className="text-xs px-2 py-0.5 rounded font-medium transition-colors"
+                              style={{
+                                backgroundColor: "oklch(0.95 0.04 25)",
+                                color: "oklch(0.42 0.16 25)",
+                                border: "1px solid oklch(0.85 0.1 25)",
+                              }}
+                              title={t("erp.modulePermissions.revokeAll")}
+                              data-ocid="permissions.revoke_all.button"
+                            >
+                              -{t("erp.modulePermissions.revokeAll")}
+                            </button>
+                          </div>
                         </div>
                       </td>
                       {ERP_MODULES.map((m) => {

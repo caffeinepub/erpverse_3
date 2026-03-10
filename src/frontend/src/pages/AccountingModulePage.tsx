@@ -55,20 +55,20 @@ interface AccountingModulePageProps {
   companyId: string;
 }
 
-const INCOME_CATEGORIES = [
-  "Satış Geliri",
-  "Hizmet Geliri",
-  "Kira Geliri",
-  "Faiz Geliri",
-  "Diğer Gelir",
+const INCOME_CAT_KEYS = [
+  "catSalesRevenue",
+  "catServiceRevenue",
+  "catRentalIncome",
+  "catInterestIncome",
+  "catOtherIncome",
 ];
-const EXPENSE_CATEGORIES = [
-  "Personel Gideri",
-  "Kira Gideri",
-  "Malzeme Gideri",
-  "Pazarlama",
-  "Vergi",
-  "Diğer Gider",
+const EXPENSE_CAT_KEYS = [
+  "catPersonnelExp",
+  "catRentExp",
+  "catMaterialExp",
+  "catMarketing",
+  "catTax",
+  "catOtherExp",
 ];
 
 function InvoiceStatusBadge({ status }: { status: string }) {
@@ -91,8 +91,8 @@ function InvoiceStatusBadge({ status }: { status: string }) {
     },
   };
   const labels: Record<string, string> = {
-    draft: "Taslak",
-    sent: "Gönderildi",
+    draft: t("erp.accounting.draft"),
+    sent: t("erp.accounting.sent"),
     paid: t("erp.accounting.paid"),
   };
   const style = styles[status] ?? styles.draft;
@@ -265,7 +265,7 @@ export default function AccountingModulePage({
           {t("erp.accounting.title")}
         </h1>
         <p className="text-sm mt-1" style={{ color: "oklch(0.5 0.01 270)" }}>
-          Gelir, gider ve fatura yönetimi
+          {t("erp.accounting.subtitle")}
         </p>
       </div>
 
@@ -425,9 +425,7 @@ export default function AccountingModulePage({
             value="transactions"
             data-ocid="accounting.transactions.tab"
           >
-            {t("erp.accounting.addTransaction")
-              .replace("Add", "")
-              .replace("İşlem Ekle", "İşlemler")}
+            {t("erp.accounting.income")}/{t("erp.accounting.expense")}
           </TabsTrigger>
           <TabsTrigger value="invoices" data-ocid="accounting.invoices.tab">
             {t("erp.accounting.invoices")}
@@ -462,7 +460,7 @@ export default function AccountingModulePage({
                   className="text-xs mt-0.5"
                   style={{ color: "oklch(0.55 0.01 270)" }}
                 >
-                  {transactions.length} işlem kayıtlı
+                  {transactions.length} {t("erp.accounting.transactionCount")}
                 </p>
               </div>
               <Button
@@ -511,12 +509,12 @@ export default function AccountingModulePage({
                     style={{ backgroundColor: "oklch(0.97 0.005 270)" }}
                   >
                     {[
-                      "Tür",
-                      "Kategori",
-                      "Tutar",
-                      "Tarih",
-                      "Açıklama",
-                      "actions",
+                      t("erp.accounting.colType"),
+                      t("erp.accounting.category"),
+                      t("erp.accounting.amount"),
+                      t("erp.accounting.date"),
+                      t("erp.accounting.colDescription"),
+                      t("erp.common.actions"),
                     ].map((h) => (
                       <TableHead
                         key={h}
@@ -651,7 +649,7 @@ export default function AccountingModulePage({
                   className="text-xs mt-0.5"
                   style={{ color: "oklch(0.55 0.01 270)" }}
                 >
-                  {invoices.length} fatura kayıtlı
+                  {invoices.length} {t("erp.accounting.invoiceCount")}
                 </p>
               </div>
               <Button
@@ -700,11 +698,11 @@ export default function AccountingModulePage({
                     style={{ backgroundColor: "oklch(0.97 0.005 270)" }}
                   >
                     {[
-                      "Müşteri",
-                      "Toplam",
-                      "Tarih",
-                      "Durum",
-                      "Durum Güncelle",
+                      t("erp.accounting.colCustomer"),
+                      t("erp.accounting.amount"),
+                      t("erp.accounting.date"),
+                      t("erp.accounting.invoiceStatus"),
+                      t("erp.accounting.updateStatus"),
                     ].map((h, i) => (
                       <TableHead
                         key={h}
@@ -766,8 +764,12 @@ export default function AccountingModulePage({
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="draft">Taslak</SelectItem>
-                            <SelectItem value="sent">Gönderildi</SelectItem>
+                            <SelectItem value="draft">
+                              {t("erp.accounting.draft")}
+                            </SelectItem>
+                            <SelectItem value="sent">
+                              {t("erp.accounting.sent")}
+                            </SelectItem>
                             <SelectItem value="paid">
                               {t("erp.accounting.paid")}
                             </SelectItem>
@@ -843,11 +845,11 @@ export default function AccountingModulePage({
                 </SelectTrigger>
                 <SelectContent>
                   {(txForm.type === "income"
-                    ? INCOME_CATEGORIES
-                    : EXPENSE_CATEGORIES
-                  ).map((c) => (
-                    <SelectItem key={c} value={c}>
-                      {c}
+                    ? INCOME_CAT_KEYS
+                    : EXPENSE_CAT_KEYS
+                  ).map((k) => (
+                    <SelectItem key={k} value={t(`erp.accounting.${k}`)}>
+                      {t(`erp.accounting.${k}`)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -1067,7 +1069,7 @@ export default function AccountingModulePage({
                 }}
               >
                 <p className="text-sm" style={{ color: "oklch(0.4 0.12 280)" }}>
-                  Toplam:{" "}
+                  {t("erp.common.total")}:{" "}
                   <span
                     className="font-bold"
                     style={{ color: "oklch(0.35 0.18 280)" }}

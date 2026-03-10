@@ -81,7 +81,7 @@ const STATUS_CONFIG: Record<
     icon: Clock,
   },
   in_progress: {
-    label: "Devam Ediyor",
+    label: "inProgress",
     bg: "oklch(0.94 0.06 75)",
     color: "oklch(0.42 0.14 75)",
     border: "oklch(0.85 0.1 75)",
@@ -95,7 +95,7 @@ const STATUS_CONFIG: Record<
     icon: CheckCircle2,
   },
   cancelled: {
-    label: "İptal Edildi",
+    label: "cancelled",
     bg: "oklch(0.94 0.04 25)",
     color: "oklch(0.45 0.18 25)",
     border: "oklch(0.85 0.1 25)",
@@ -356,7 +356,9 @@ function WorkOrderDialog({
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
               ) : null}
-              {initial?.id ? "Güncelle" : "Oluştur"}
+              {initial?.id
+                ? t("erp.manufacturing.updateBtn")
+                : t("erp.manufacturing.createBtn")}
             </Button>
           </DialogFooter>
         </form>
@@ -436,12 +438,16 @@ function BOMDialog({
       >
         <DialogHeader>
           <DialogTitle>
-            {initial?.id ? "Malzeme Düzenle" : "Malzeme Ekle"}
+            {initial?.id
+              ? t("erp.manufacturing.editMaterial")
+              : t("erp.manufacturing.addMaterial")}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
           <div className="space-y-1.5">
-            <Label htmlFor="bom-mat">Malzeme Adı *</Label>
+            <Label htmlFor="bom-mat">
+              {t("erp.manufacturing.materialNameLabel")} *
+            </Label>
             <Input
               id="bom-mat"
               value={form.materialName}
@@ -537,7 +543,9 @@ function BOMDialog({
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
               ) : null}
-              {initial?.id ? "Güncelle" : "Ekle"}
+              {initial?.id
+                ? t("erp.manufacturing.updateBtn")
+                : t("erp.manufacturing.addBtn")}
             </Button>
           </DialogFooter>
         </form>
@@ -625,7 +633,7 @@ export default function ManufacturingModulePage({
         toast.success(t("erp.manufacturing.bomAdded"));
       } else {
         await addBOMItem.mutateAsync({ companyId, bomItem: bomPayload });
-        toast.success("Malzeme eklendi");
+        toast.success(t("erp.manufacturing.materialAdded"));
       }
       setBOMDialog({ open: false, workOrderId: "" });
     } catch {
@@ -636,7 +644,7 @@ export default function ManufacturingModulePage({
   const handleDeleteBOM = async (id: string) => {
     try {
       await removeBOMItem.mutateAsync({ companyId, bomItemId: id });
-      toast.success("Malzeme silindi");
+      toast.success(t("erp.manufacturing.materialDeleted"));
     } catch {
       toast.error(t("common.error"));
     }
@@ -707,13 +715,13 @@ export default function ManufacturingModulePage({
             color: "oklch(0.5 0.18 25)",
           },
           {
-            label: "planned",
+            label: t("erp.manufacturing.planned"),
             value: stats.planned,
             bg: "oklch(0.93 0.04 280)",
             color: "oklch(0.35 0.18 280)",
           },
           {
-            label: "Devam Ediyor",
+            label: t("erp.manufacturing.inProgress"),
             value: stats.inProgress,
             bg: "oklch(0.94 0.06 75)",
             color: "oklch(0.42 0.14 75)",
@@ -1040,8 +1048,8 @@ export default function ManufacturingModulePage({
                   style={{ color: "oklch(0.12 0.012 270)" }}
                 >
                   {activeWO
-                    ? `${activeWO.productName} — Malzeme Listesi`
-                    : "Malzeme Listesi"}
+                    ? `${activeWO.productName} — ${t("erp.manufacturing.bom")}`
+                    : t("erp.manufacturing.bom")}
                 </h3>
                 {selectedWO && (
                   <Button

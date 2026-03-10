@@ -53,13 +53,11 @@ interface InventoryModulePageProps {
   companyId: string;
 }
 
-const CATEGORIES = [
-  "Elektronik",
-  "Ofis Malzemesi",
-  "Hammadde",
-  "Yarı Mamul",
-  "Bitmiş Ürün",
-  "Diğer",
+const INV_CAT_KEYS = [
+  "catRawMaterial",
+  "catSemiFinished",
+  "catFinishedProduct",
+  "catOther",
 ];
 
 const DIALOG_STYLE: React.CSSProperties = {
@@ -251,7 +249,7 @@ export default function InventoryModulePage({
           reason: movementForm.reason,
         },
       });
-      toast.success("Stok hareketi kaydedildi");
+      toast.success(t("erp.inventory.movementAdded2"));
       setShowMovementDialog(false);
     } catch {
       toast.error(t("common.error"));
@@ -294,10 +292,10 @@ export default function InventoryModulePage({
                 style={{ color: "oklch(0.45 0.16 50)" }}
               />
             </div>
-            Stok / Envanter
+            {t("erp.inventory.title")}
           </h1>
           <p className="text-sm mt-1" style={{ color: "oklch(0.5 0.01 270)" }}>
-            Ürün ve stok hareketi yönetimi
+            {t("erp.inventory.subtitle")}
           </p>
         </div>
         {lowStockCount > 0 && (
@@ -348,7 +346,7 @@ export default function InventoryModulePage({
               accent: "oklch(0.5 0.16 145)",
             },
             {
-              label: "Toplam Stok Değeri",
+              label: t("erp.inventory.totalStockValue"),
               value: `₺${totalStockValue.toLocaleString("tr-TR")}`,
               accent: "oklch(0.45 0.16 50)",
             },
@@ -425,7 +423,7 @@ export default function InventoryModulePage({
                   className="text-xs mt-0.5"
                   style={{ color: "oklch(0.55 0.01 270)" }}
                 >
-                  {products.length} ürün kayıtlı
+                  {products.length} {t("erp.inventory.productsRegistered")}
                 </p>
               </div>
               <div className="flex gap-2">
@@ -449,7 +447,7 @@ export default function InventoryModulePage({
                   }}
                 >
                   <History className="w-4 h-4 mr-1" />
-                  Stok Hareketi
+                  {t("erp.inventory.stockMovement")}
                 </Button>
                 <Button
                   size="sm"
@@ -484,13 +482,13 @@ export default function InventoryModulePage({
                     style={{ backgroundColor: "oklch(0.97 0.005 270)" }}
                   >
                     {[
-                      "Ürün Adı",
+                      t("erp.inventory.colProductName"),
                       "SKU",
-                      "Kategori",
-                      "Birim Fiyat",
-                      "Stok",
-                      "Seviye",
-                      "İşlem",
+                      t("erp.inventory.category"),
+                      t("erp.accounting.amount"),
+                      t("erp.inventory.quantity"),
+                      t("erp.common.status"),
+                      t("erp.inventory.colAction"),
                     ].map((h, i) => (
                       <TableHead
                         key={h}
@@ -646,13 +644,13 @@ export default function InventoryModulePage({
                     color: "oklch(0.12 0.012 270)",
                   }}
                 >
-                  Stok Hareketleri
+                  {t("erp.inventory.movements")}
                 </h2>
                 <p
                   className="text-xs mt-0.5"
                   style={{ color: "oklch(0.55 0.01 270)" }}
                 >
-                  Giriş ve çıkış kayıtları
+                  {t("erp.inventory.movementsDesc")}
                 </p>
               </div>
               <Select
@@ -698,7 +696,13 @@ export default function InventoryModulePage({
                   <TableRow
                     style={{ backgroundColor: "oklch(0.97 0.005 270)" }}
                   >
-                    {["Tür", "Ürün", "Miktar", "Tarih", "Neden"].map((h) => (
+                    {[
+                      t("erp.inventory.colMovType"),
+                      t("erp.inventory.colProduct"),
+                      t("erp.inventory.colQty"),
+                      t("erp.common.date"),
+                      t("erp.inventory.colReason"),
+                    ].map((h) => (
                       <TableHead
                         key={h}
                         style={{
@@ -789,13 +793,17 @@ export default function InventoryModulePage({
         >
           <DialogHeader>
             <DialogTitle style={{ color: "oklch(0.12 0.012 270)" }}>
-              {editingProduct ? "Ürün Düzenle" : "Yeni Ürün Ekle"}
+              {editingProduct
+                ? t("erp.inventory.editProductTitle")
+                : t("erp.inventory.newProductTitle")}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <Label style={LABEL_STYLE}>Ürün Adı</Label>
+                <Label style={LABEL_STYLE}>
+                  {t("erp.inventory.productNameLabel")}
+                </Label>
                 <Input
                   value={productForm.name}
                   onChange={(e) =>
@@ -812,7 +820,7 @@ export default function InventoryModulePage({
                   onChange={(e) =>
                     setProductForm((p) => ({ ...p, sku: e.target.value }))
                   }
-                  placeholder="SKU kodu"
+                  placeholder="SKU"
                   style={INPUT_STYLE}
                 />
               </div>
@@ -829,9 +837,9 @@ export default function InventoryModulePage({
                   <SelectValue placeholder={t("erp.inventory.category")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {CATEGORIES.map((c) => (
-                    <SelectItem key={c} value={c}>
-                      {c}
+                  {INV_CAT_KEYS.map((k) => (
+                    <SelectItem key={k} value={t(`erp.inventory.${k}`)}>
+                      {t(`erp.inventory.${k}`)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -839,7 +847,9 @@ export default function InventoryModulePage({
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <Label style={LABEL_STYLE}>Birim Fiyat (₺)</Label>
+                <Label style={LABEL_STYLE}>
+                  {t("erp.accounting.amount")} (₺)
+                </Label>
                 <Input
                   type="number"
                   value={productForm.unitPrice}
@@ -851,7 +861,9 @@ export default function InventoryModulePage({
                 />
               </div>
               <div className="space-y-1.5">
-                <Label style={LABEL_STYLE}>Stok Miktarı</Label>
+                <Label style={LABEL_STYLE}>
+                  {t("erp.inventory.stockQtyLabel")}
+                </Label>
                 <Input
                   type="number"
                   value={productForm.quantityOnHand}
@@ -898,12 +910,14 @@ export default function InventoryModulePage({
         >
           <DialogHeader>
             <DialogTitle style={{ color: "oklch(0.12 0.012 270)" }}>
-              Stok Hareketi Kaydet
+              {t("erp.inventory.addMovementTitle")}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Ürün</Label>
+              <Label style={LABEL_STYLE}>
+                {t("erp.inventory.productLabel")}
+              </Label>
               <Select
                 value={movementForm.productId}
                 onValueChange={(v) =>
@@ -923,7 +937,9 @@ export default function InventoryModulePage({
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Hareket Türü</Label>
+              <Label style={LABEL_STYLE}>
+                {t("erp.inventory.movementTypeLabel")}
+              </Label>
               <Select
                 value={movementForm.type}
                 onValueChange={(v) =>
@@ -934,13 +950,17 @@ export default function InventoryModulePage({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="in">Stok Girişi</SelectItem>
-                  <SelectItem value="out">Stok Çıkışı</SelectItem>
+                  <SelectItem value="in">
+                    {t("erp.inventory.stockIn")}
+                  </SelectItem>
+                  <SelectItem value="out">
+                    {t("erp.inventory.stockOut")}
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Miktar</Label>
+              <Label style={LABEL_STYLE}>{t("erp.inventory.quantity")}</Label>
               <Input
                 type="number"
                 value={movementForm.quantity}
@@ -952,13 +972,13 @@ export default function InventoryModulePage({
               />
             </div>
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Neden</Label>
+              <Label style={LABEL_STYLE}>{t("erp.inventory.colReason")}</Label>
               <Input
                 value={movementForm.reason}
                 onChange={(e) =>
                   setMovementForm((p) => ({ ...p, reason: e.target.value }))
                 }
-                placeholder="Hareket nedeni"
+                placeholder={t("erp.common.notes")}
                 style={INPUT_STYLE}
               />
             </div>

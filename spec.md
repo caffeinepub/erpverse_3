@@ -1,47 +1,25 @@
 # ERPVerse
 
 ## Current State
-
-The app is a full-stack ERP platform with:
-- 9 ERP module pages (HR, Accounting, CRM, Projects, Inventory, Procurement, Manufacturing, Workflow, Reporting)
-- Multi-language context (`LanguageContext`) with 505 translation keys across 10 languages (tr, en, de, fr, es, ar, ru, zh, ja, pt)
-- Translation function `t()` available via `useLanguage()` hook
-- All 317 ERP translation keys are defined in all locale files
-
-**Confirmed bugs (from grep):**
-1. ALL 12 pages have 0 `t()` calls despite `useLanguage` being imported — every visible string is hardcoded Turkish
-2. `StaffRegistrationPage.tsx` line 42: `companyId: "unassigned"` hardcoded in profile object (should be empty string or left to backend default)
-3. Company owner with multiple companies goes to `staff-dashboard` via `onBack` — no dedicated company selection view
+ERPVerse is a full ERP platform with 9 modules (HR, Accounting, CRM, Projects, Inventory, Procurement, Manufacturing, Workflow, Reporting), all connected to Motoko backend. Multi-language system exists (10 languages) with locale JSON files containing all translation keys. However ERP module pages use t() in only ~4-7% of their UI strings — the vast majority are hardcoded Turkish. Additionally: StaffRegistrationPage saves companyId as empty string causing routing issues; no dedicated company selection screen for multi-company owners; ModulePermissionsPage only has simple toggles.
 
 ## Requested Changes (Diff)
 
 ### Add
-- Company selection screen (`CompanySelectPage`) for owners/managers with multiple companies
-- `t()` calls throughout all 12 pages replacing hardcoded Turkish strings
+- Bulk assignment controls to ModulePermissionsPage ("Grant All" / "Revoke All" per row or per module column)
+- Company selector screen/modal for users who own multiple companies
 
 ### Modify
-- `HRModulePage.tsx`: replace all hardcoded Turkish strings with `t('erp.hr.*')` and `t('erp.common.*')` keys
-- `AccountingModulePage.tsx`: replace with `t('erp.accounting.*')` keys
-- `CRMModulePage.tsx`: replace with `t('erp.crm.*')` keys
-- `ProjectManagementModulePage.tsx`: replace with `t('erp.projects.*')` keys
-- `InventoryModulePage.tsx`: replace with `t('erp.inventory.*')` keys
-- `ProcurementModulePage.tsx`: replace with `t('erp.procurement.*')` keys
-- `ManufacturingModulePage.tsx`: replace with `t('erp.manufacturing.*')` keys
-- `WorkflowModulePage.tsx`: replace with `t('erp.workflow.*')` keys
-- `ReportingModulePage.tsx`: replace with `t('erp.reporting.*')` keys
-- `StaffDashboard.tsx`: replace hardcoded strings with `t('staff.*')`, `t('dashboard.*')`, `t('common.*')` keys
-- `LandingPage.tsx`: replace with `t('landing.*')` keys
-- `StaffRegistrationPage.tsx`: fix `companyId: "unassigned"` → `companyId: ""`
-- `App.tsx`: add company select view state, pass list of companies to select from
+- All 9 ERP module pages: replace every hardcoded Turkish string with t() calls using the already-existing locale keys (erp.hr.*, erp.accounting.*, erp.crm.*, erp.projects.*, erp.inventory.*, erp.procurement.*, erp.manufacturing.*, erp.workflow.*, erp.reporting.*). Also use erp.common.* for shared labels (add, edit, delete, save, cancel, close, search, filter, loading, noData, confirm, actions, status, notes, date, name, description, amount)
+- StaffRegistrationPage: remove companyId field from the saved profile (backend handles company assignment separately); just omit companyId or send as empty string but ensure it doesn't break App.tsx routing
+- App.tsx: when onBack is called from company-dashboard and user has multiple companies (check memberships array), show a company selection modal/view instead of going straight to staff-dashboard
 
 ### Remove
-- Hardcoded Turkish strings from all pages listed above
+- Nothing
 
 ## Implementation Plan
-
-1. For each ERP module page: add `const { t } = useLanguage()` where missing, then replace every visible hardcoded Turkish string with the matching `t('erp.<module>.<key>')` call. Use `t('erp.common.*')` for shared labels.
-2. For LandingPage and StaffDashboard: replace hardcoded strings with existing `t()` keys.
-3. Fix `StaffRegistrationPage`: change `companyId: "unassigned"` to `companyId: ""`.
-4. In `App.tsx`: add a `"company-select"` view. When owner has multiple company IDs (from `registeredCompanyId` and memberships), show a selection screen before entering dashboard. For now, the `onBack` from company-dashboard for owners goes to `"company-select"` if multiple companies exist, else to `"landing"`.
-5. Create `CompanySelectPage.tsx`: simple page listing company cards for selection.
-6. Validate and build.
+1. Update all 9 ERP module pages to wrap every hardcoded Turkish label, button text, tab name, placeholder, toast message, table header, badge, empty state, and dialog title with t() using the correct key from erp.* namespace
+2. Add erp.common.* keys usage for repeated labels across modules (Save, Cancel, Edit, Delete, Add, Search, Filter, Status, Date, Name, Description, Notes, Amount, Actions)
+3. Improve ModulePermissionsPage: add "Grant All" button per staff row and "Revoke All" button; add per-column "Grant All" header button to give all staff access to a module at once
+4. Fix routing in App.tsx to handle multi-company owner scenario on back navigation
+5. Validate and build

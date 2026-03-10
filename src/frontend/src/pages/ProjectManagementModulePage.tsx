@@ -50,28 +50,28 @@ interface ProjectManagementModulePageProps {
 const PROJECT_STATUSES = [
   {
     value: "planning",
-    label: "Planlama",
+    label: "planning",
     color: "oklch(0.4 0.01 270)",
     bg: "oklch(0.94 0.005 270)",
     border: "oklch(0.86 0.008 270)",
   },
   {
     value: "active",
-    label: "Aktif",
+    label: "active",
     color: "oklch(0.35 0.18 280)",
     bg: "oklch(0.93 0.04 280)",
     border: "oklch(0.82 0.1 280)",
   },
   {
     value: "completed",
-    label: "Tamamlandı",
+    label: "completed",
     color: "oklch(0.38 0.15 145)",
     bg: "oklch(0.92 0.06 145)",
     border: "oklch(0.8 0.1 145)",
   },
   {
     value: "on-hold",
-    label: "Beklemede",
+    label: "onHold2",
     color: "oklch(0.45 0.14 75)",
     bg: "oklch(0.94 0.06 75)",
     border: "oklch(0.85 0.1 75)",
@@ -81,21 +81,21 @@ const PROJECT_STATUSES = [
 const TASK_STATUSES = [
   {
     value: "todo",
-    label: "Yapılacak",
+    label: "todo2",
     color: "oklch(0.4 0.01 270)",
     bg: "oklch(0.94 0.005 270)",
     border: "oklch(0.86 0.008 270)",
   },
   {
     value: "in-progress",
-    label: "Devam Ediyor",
+    label: "inProgress2",
     color: "oklch(0.35 0.18 280)",
     bg: "oklch(0.93 0.04 280)",
     border: "oklch(0.82 0.1 280)",
   },
   {
     value: "done",
-    label: "Tamamlandı",
+    label: "done",
     color: "oklch(0.38 0.15 145)",
     bg: "oklch(0.92 0.06 145)",
     border: "oklch(0.8 0.1 145)",
@@ -201,7 +201,7 @@ export default function ProjectManagementModulePage({
     try {
       await removeProject.mutateAsync({ companyId, projectId });
       if (selectedProject?.id === projectId) setSelectedProject(null);
-      toast.success("Proje silindi");
+      toast.success(t("erp.projects.deleted"));
     } catch {
       toast.error(t("common.error"));
     }

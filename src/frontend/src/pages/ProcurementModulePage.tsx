@@ -118,14 +118,17 @@ function StatusBadge({ status }: { status: string }) {
   );
 }
 
-const SUPPLIER_CATEGORIES = [
+const SUPPLIER_CAT_KEYS = [
+  { key: "catSoftware", tr: "Yazılım" },
+  { key: "catHardware", tr: "Donanım" },
+  { key: "catOther", tr: "Diğer" },
+];
+// Additional categories without dedicated keys
+const SUPPLIER_CATS_EXTRA = [
   "Hammadde",
-  "Yazılım",
-  "Donanım",
   "Hizmet",
   "Lojistik",
   "Ofis Malzemeleri",
-  "Diğer",
 ];
 
 // ─── Supplier Dialog ──────────────────────────────────────────────────────────
@@ -156,7 +159,7 @@ function SupplierDialog({
       id: "",
       name: "",
       contactInfo: "",
-      category: "Diğer",
+      category: "",
       rating: 0,
     },
   );
@@ -168,7 +171,7 @@ function SupplierDialog({
           id: "",
           name: "",
           contactInfo: "",
-          category: "Diğer",
+          category: "",
           rating: 0,
         },
       );
@@ -240,7 +243,12 @@ function SupplierDialog({
                   color: "oklch(0.12 0.012 270)",
                 }}
               >
-                {SUPPLIER_CATEGORIES.map((c) => (
+                {SUPPLIER_CAT_KEYS.map(({ key }) => (
+                  <SelectItem key={key} value={t(`erp.procurement.${key}`)}>
+                    {t(`erp.procurement.${key}`)}
+                  </SelectItem>
+                ))}
+                {SUPPLIER_CATS_EXTRA.map((c) => (
                   <SelectItem key={c} value={c}>
                     {c}
                   </SelectItem>
@@ -256,7 +264,7 @@ function SupplierDialog({
               onChange={(e) =>
                 setForm((p) => ({ ...p, contactInfo: e.target.value }))
               }
-              placeholder="Adres, telefon ve ek bilgiler..."
+              placeholder={t("erp.crm.contactInfoLabel")}
               rows={2}
               style={{
                 backgroundColor: "oklch(1 0 0)",
@@ -311,7 +319,9 @@ function SupplierDialog({
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
               ) : null}
-              {initial?.id ? "Güncelle" : "Ekle"}
+              {initial?.id
+                ? t("erp.procurement.updateBtn")
+                : t("erp.procurement.addBtn")}
             </Button>
           </DialogFooter>
         </form>
@@ -562,7 +572,9 @@ function OrderDialog({
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
               ) : null}
-              {initial?.id ? "Güncelle" : "Oluştur"}
+              {initial?.id
+                ? t("erp.procurement.updateBtn")
+                : t("erp.procurement.createBtn")}
             </Button>
           </DialogFooter>
         </form>
@@ -720,7 +732,7 @@ export default function ProcurementModulePage({
             className="text-sm mt-0.5"
             style={{ color: "oklch(0.5 0.01 270)" }}
           >
-            {t("erp.procurement.suppliers")} ve {t("erp.procurement.orders")}
+            {t("erp.procurement.suppliers")} & {t("erp.procurement.orders")}
           </p>
         </div>
       </div>
@@ -729,7 +741,7 @@ export default function ProcurementModulePage({
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
           {
-            label: "Toplam Sipariş",
+            label: t("erp.procurement.totalOrders"),
             value: stats.total,
             icon: ShoppingCart,
             bg: "oklch(0.93 0.04 190)",
@@ -743,14 +755,14 @@ export default function ProcurementModulePage({
             color: "oklch(0.42 0.14 75)",
           },
           {
-            label: "Onaylı",
+            label: t("erp.procurement.approvedLabel"),
             value: stats.approved,
             icon: Package,
             bg: "oklch(0.93 0.04 280)",
             color: "oklch(0.35 0.18 280)",
           },
           {
-            label: "delivered",
+            label: t("erp.procurement.delivered"),
             value: stats.delivered,
             icon: Truck,
             bg: "oklch(0.92 0.06 145)",
