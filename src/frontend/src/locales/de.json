@@ -62,6 +62,17 @@
         "title": "Sichere Identität",
         "desc": "Sichere Anmeldung mit Internet Identity"
       }
+    },
+    "stats": {
+      "erpModules": "ERP-Modul",
+      "companyCapacity": "Unternehmenskapazität",
+      "languageSupport": "Sprachunterstützung",
+      "secureInfra": "Sichere Infrastruktur"
+    },
+    "cta": {
+      "title": "Jetzt starten",
+      "desc": "Erstellen Sie ein kostenloses Unternehmenskonto und verwalten Sie es mit Blockchain-Sicherheit.",
+      "button": "Unternehmen gründen"
     }
   },
   "companySetup": {
@@ -244,7 +255,8 @@
     "noData": "Keine Daten gefunden",
     "success": "Vorgang erfolgreich",
     "unauthorized": "Sie haben keine Berechtigung, auf diese Seite zuzugreifen",
-    "notFound": "Seite nicht gefunden"
+    "notFound": "Seite nicht gefunden",
+    "redirecting": "Weiterleiten..."
   },
   "footer": {
     "rights": "Alle Rechte vorbehalten",
@@ -751,7 +763,8 @@
       "overdueTasks": "Überfällig",
       "taskAdded": "Aufgabe hinzugefügt",
       "taskUpdated": "Aufgabe aktualisiert",
-      "tags": "Schlagwörter"
+      "tags": "Schlagwörter",
+      "taskMoved": "verschoben nach"
     },
     "reporting": {
       "title": "Berichte & Analytik",
@@ -808,5 +821,11 @@
       "revokeAll": "Keine",
       "grantColumn": "Alle"
     }
+  },
+  "settings": {
+    "subtitle": "Unternehmenseinstellungen und Konfiguration",
+    "customRoles": "Benutzerdefinierte Rollen",
+    "customRolesDesc": "Unternehmensrollen hinzufügen oder entfernen",
+    "defaultRoles": "Standardrollen"
   }
 }

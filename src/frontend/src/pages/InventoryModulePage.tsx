@@ -314,7 +314,7 @@ export default function InventoryModulePage({
               className="text-sm font-semibold"
               style={{ color: "oklch(0.42 0.18 25)" }}
             >
-              {lowStockCount} ürün düşük stokta
+              {lowStockCount} {t("erp.inventory.lowStockAlert")}
             </span>
           </div>
         )}

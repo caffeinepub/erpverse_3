@@ -58,6 +58,17 @@
         "title": "هوية آمنة",
         "desc": "تسجيل دخول آمن مع Internet Identity"
       }
+    },
+    "stats": {
+      "erpModules": "وحدة ERP",
+      "companyCapacity": "سعة الشركة",
+      "languageSupport": "دعم اللغات",
+      "secureInfra": "بنية تحتية آمنة"
+    },
+    "cta": {
+      "title": "ابدأ الآن",
+      "desc": "أنشئ حساب شركة مجاني وادر بأمان blockchain.",
+      "button": "إنشاء شركة"
     }
   },
   "companySetup": {
@@ -240,7 +251,8 @@
     "noData": "لم يتم العثور على بيانات",
     "success": "العملية ناجحة",
     "unauthorized": "ليس لديك إذن للوصول إلى هذه الصفحة",
-    "notFound": "الصفحة غير موجودة"
+    "notFound": "الصفحة غير موجودة",
+    "redirecting": "جاري إعادة التوجيه..."
   },
   "footer": {
     "rights": "جميع الحقوق محفوظة",
@@ -747,7 +759,8 @@
       "overdueTasks": "متأخر",
       "taskAdded": "تم إضافة المهمة",
       "taskUpdated": "تم تحديث المهمة",
-      "tags": "علامات"
+      "tags": "علامات",
+      "taskMoved": "تم النقل إلى"
     },
     "reporting": {
       "title": "التقارير والتحليلات",
@@ -804,5 +817,11 @@
       "revokeAll": "لا شيء",
       "grantColumn": "الكل"
     }
+  },
+  "settings": {
+    "subtitle": "إعدادات الشركة والتكوين",
+    "customRoles": "الأدوار المخصصة",
+    "customRolesDesc": "إضافة أو إزالة الأدوار الخاصة بالشركة",
+    "defaultRoles": "الأدوار الافتراضية"
   }
 }

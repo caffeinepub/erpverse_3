@@ -54,6 +54,17 @@
         "title": "安全身份",
         "desc": "使用 Internet Identity 安全登录"
       }
+    },
+    "stats": {
+      "erpModules": "ERP 模块",
+      "companyCapacity": "公司容量",
+      "languageSupport": "语言支持",
+      "secureInfra": "安全基础设施"
+    },
+    "cta": {
+      "title": "立即开始",
+      "desc": "创建免费公司账户，使用区块链安全管理。",
+      "button": "创建公司"
     }
   },
   "companySetup": {
@@ -236,7 +247,8 @@
     "noData": "未找到数据",
     "success": "操作成功",
     "unauthorized": "您没有权限访问此页面",
-    "notFound": "页面未找到"
+    "notFound": "页面未找到",
+    "redirecting": "正在重定向..."
   },
   "footer": {
     "rights": "保留所有权利",
@@ -743,7 +755,8 @@
       "overdueTasks": "已超期",
       "taskAdded": "任务已添加",
       "taskUpdated": "任务已更新",
-      "tags": "标签"
+      "tags": "标签",
+      "taskMoved": "已移至"
     },
     "reporting": {
       "title": "报告与分析",
@@ -800,5 +813,11 @@
       "revokeAll": "全无",
       "grantColumn": "全部"
     }
+  },
+  "settings": {
+    "subtitle": "公司设置和配置",
+    "customRoles": "自定义角色",
+    "customRolesDesc": "添加或删除公司特定角色",
+    "defaultRoles": "默认角色"
   }
 }

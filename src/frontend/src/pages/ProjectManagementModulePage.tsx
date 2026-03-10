@@ -410,7 +410,8 @@ export default function ProjectManagementModulePage({
                       className="text-xs"
                       style={{ color: "oklch(0.55 0.01 270)" }}
                     >
-                      {project.teamMembers.length} üye
+                      {project.teamMembers.length}{" "}
+                      {t("erp.projects.membersCount")}
                     </span>
                   </div>
                 </button>
@@ -489,7 +490,8 @@ export default function ProjectManagementModulePage({
                     style={{ color: "oklch(0.5 0.01 270)" }}
                   >
                     <Users className="w-4 h-4" />
-                    {selectedProject.teamMembers.length} üye
+                    {selectedProject.teamMembers.length}{" "}
+                    {t("erp.projects.membersCount")}
                   </span>
                 </div>
               </div>

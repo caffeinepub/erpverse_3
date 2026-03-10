@@ -58,6 +58,17 @@
         "title": "セキュアな認証",
         "desc": "Internet Identityによる安全なログイン"
       }
+    },
+    "stats": {
+      "erpModules": "ERP モジュール",
+      "companyCapacity": "企業容量",
+      "languageSupport": "言語サポート",
+      "secureInfra": "安全なインフラ"
+    },
+    "cta": {
+      "title": "今すぐ始める",
+      "desc": "無料の会社アカウントを作成し、ブロックチェーンセキュリティで管理します。",
+      "button": "会社を設立"
     }
   },
   "companySetup": {
@@ -240,7 +251,8 @@
     "noData": "データが見つかりません",
     "success": "操作が成功しました",
     "unauthorized": "このページへのアクセス権限がありません",
-    "notFound": "ページが見つかりません"
+    "notFound": "ページが見つかりません",
+    "redirecting": "リダイレクト中..."
   },
   "footer": {
     "rights": "全著作権所有",
@@ -747,7 +759,8 @@
       "overdueTasks": "期限超過",
       "taskAdded": "タスクを追加しました",
       "taskUpdated": "タスクを更新しました",
-      "tags": "タグ"
+      "tags": "タグ",
+      "taskMoved": "に移動しました"
     },
     "reporting": {
       "title": "レポート・分析",
@@ -804,5 +817,11 @@
       "revokeAll": "なし",
       "grantColumn": "全て"
     }
+  },
+  "settings": {
+    "subtitle": "会社の設定と構成",
+    "customRoles": "カスタムロール",
+    "customRolesDesc": "会社固有のロールを追加または削除",
+    "defaultRoles": "デフォルトロール"
   }
 }

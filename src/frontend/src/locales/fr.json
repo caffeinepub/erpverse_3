@@ -62,6 +62,17 @@
         "title": "Identité Sécurisée",
         "desc": "Connexion sécurisée avec Internet Identity"
       }
+    },
+    "stats": {
+      "erpModules": "Module ERP",
+      "companyCapacity": "Capacité d'entreprise",
+      "languageSupport": "Support linguistique",
+      "secureInfra": "Infrastructure sécurisée"
+    },
+    "cta": {
+      "title": "Commencer maintenant",
+      "desc": "Créez un compte d'entreprise gratuit et gérez avec la sécurité blockchain.",
+      "button": "Créer une entreprise"
     }
   },
   "companySetup": {
@@ -244,7 +255,8 @@
     "noData": "Aucune donnée trouvée",
     "success": "Opération réussie",
     "unauthorized": "Vous n'avez pas la permission d'accéder à cette page",
-    "notFound": "Page non trouvée"
+    "notFound": "Page non trouvée",
+    "redirecting": "Redirection..."
   },
   "footer": {
     "rights": "Tous droits réservés",
@@ -751,7 +763,8 @@
       "overdueTasks": "En retard",
       "taskAdded": "Tâche ajoutée",
       "taskUpdated": "Tâche mise à jour",
-      "tags": "Étiquettes"
+      "tags": "Étiquettes",
+      "taskMoved": "déplacé vers"
     },
     "reporting": {
       "title": "Rapports & Analytique",
@@ -808,5 +821,11 @@
       "revokeAll": "Aucun",
       "grantColumn": "Tout"
     }
+  },
+  "settings": {
+    "subtitle": "Paramètres et configuration d'entreprise",
+    "customRoles": "Rôles personnalisés",
+    "customRolesDesc": "Ajouter ou supprimer des rôles spécifiques à l'entreprise",
+    "defaultRoles": "Rôles par défaut"
   }
 }

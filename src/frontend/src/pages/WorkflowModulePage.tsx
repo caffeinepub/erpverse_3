@@ -647,7 +647,7 @@ export default function WorkflowModulePage({
     try {
       await updateTask.mutateAsync({ companyId, task: updatedTask });
       toast.success(
-        `Görev "${COLUMNS.find((c) => c.id === status)?.label}" sütununa taşındı`,
+        `${t("erp.workflow.taskMoved")} "${COLUMNS.find((c) => c.id === status)?.label}"`,
       );
     } catch {
       toast.error(t("common.error"));

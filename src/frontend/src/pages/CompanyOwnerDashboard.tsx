@@ -169,17 +169,17 @@ function ModulePermissionsView({
       <div>
         <h1 className="font-display text-2xl font-bold text-foreground mb-1 flex items-center gap-2">
           <Shield className="w-6 h-6 text-primary" />
-          Modül İzinleri
+          {t("erp.modulePermissions.title")}
         </h1>
         <p className="text-muted-foreground text-sm">
-          Personelin hangi ERP modüllerine erişebileceğini yönetin
+          {t("erp.modulePermissions.subtitle")}
         </p>
       </div>
 
       {privilegedStaff.length > 0 && (
         <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
           <p className="text-sm text-indigo-700 font-medium mb-2">
-            Tam Erişimli Kullanıcılar
+            {t("erp.modulePermissions.fullAccessTitle")}
           </p>
           <div className="flex flex-wrap gap-2">
             {privilegedStaff.map((s) => (
@@ -195,8 +195,7 @@ function ModulePermissionsView({
             ))}
           </div>
           <p className="text-xs text-indigo-500 mt-2">
-            Şirket Sahibi ve Yöneticiler tüm modüllere otomatik olarak
-            erişebilir.
+            {t("erp.modulePermissions.fullAccessNote")}
           </p>
         </div>
       )}
@@ -204,10 +203,10 @@ function ModulePermissionsView({
       <div className="bg-card border border-border rounded-xl overflow-hidden">
         <div className="p-5 border-b border-border">
           <h2 className="font-display font-semibold text-foreground">
-            Personel Modül Erişimleri
+            {t("erp.modulePermissions.staffPermissions")}
           </h2>
           <p className="text-sm text-muted-foreground mt-0.5">
-            Her personel için modül erişimlerini açıp kapatın
+            {t("erp.modulePermissions.staffPermissionsDesc")}
           </p>
         </div>
         {staffLoading ? (
@@ -219,7 +218,7 @@ function ModulePermissionsView({
         ) : managedStaff.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
             <Shield className="h-10 w-10 mb-3 opacity-30" />
-            <p className="text-sm">İzin yönetilecek personel bulunamadı</p>
+            <p className="text-sm">{t("erp.modulePermissions.noStaff")}</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -302,15 +301,16 @@ function SettingsView({
   company: NonNullable<ReturnType<typeof useGetCompany>["data"]>;
   isOwner: boolean;
 }) {
+  const { t } = useLanguage();
   return (
     <div className="max-w-4xl mx-auto flex flex-col gap-6 animate-fade-in">
       <div>
         <h1 className="font-display text-2xl font-bold text-foreground mb-1 flex items-center gap-2">
           <Settings className="w-6 h-6 text-primary" />
-          Ayarlar
+          {t("dashboard.owner.settings")}
         </h1>
         <p className="text-muted-foreground text-sm">
-          Şirket ayarları ve yapılandırma
+          {t("settings.subtitle")}
         </p>
       </div>
       <CompanyInfoCard
@@ -850,10 +850,10 @@ export default function CompanyOwnerDashboard({
                   }}
                 >
                   <h2 className="font-display font-semibold text-foreground mb-1">
-                    Özel Roller
+                    {t("settings.customRoles")}
                   </h2>
                   <p className="text-muted-foreground text-sm mb-4">
-                    Şirkete özel yeni roller ekleyin veya kaldırın
+                    {t("settings.customRolesDesc")}
                   </p>
 
                   {/* Default roles */}
@@ -862,7 +862,7 @@ export default function CompanyOwnerDashboard({
                       className="text-xs uppercase tracking-wider font-semibold mb-2"
                       style={{ color: "oklch(0.55 0.01 270)" }}
                     >
-                      Varsayılan Roller
+                      {t("settings.defaultRoles")}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {DEFAULT_ROLE_NAMES.map((rn) => (
@@ -889,7 +889,7 @@ export default function CompanyOwnerDashboard({
                         className="text-xs uppercase tracking-wider font-semibold mb-2"
                         style={{ color: "oklch(0.55 0.01 270)" }}
                       >
-                        Özel Roller ({customRoles.length})
+                        {t("settings.customRoles")} ({customRoles.length})
                       </p>
                       <div className="flex flex-wrap gap-2">
                         {customRoles.map((role) => (

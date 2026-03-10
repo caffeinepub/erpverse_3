@@ -27,28 +27,28 @@ interface LandingPageProps {
 const STATS = [
   {
     value: "10+",
-    label: "ERP Modülü",
+    labelKey: "landing.stats.erpModules",
     bg: "bg-indigo-50",
     color: "text-indigo-700",
     border: "border-indigo-200",
   },
   {
     value: "∞",
-    label: "Şirket Kapasitesi",
+    labelKey: "landing.stats.companyCapacity",
     bg: "bg-orange-50",
     color: "text-orange-700",
     border: "border-orange-200",
   },
   {
     value: "10",
-    label: "Dil Desteği",
+    labelKey: "landing.stats.languageSupport",
     bg: "bg-emerald-50",
     color: "text-emerald-700",
     border: "border-emerald-200",
   },
   {
     value: "100%",
-    label: "Güvenli Altyapı",
+    labelKey: "landing.stats.secureInfra",
     bg: "bg-blue-50",
     color: "text-blue-700",
     border: "border-blue-200",
@@ -239,16 +239,16 @@ export default function LandingPage({
 
             {/* Stats row — pill badges for visual rhythm */}
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-              {STATS.map(({ value, label, bg, color, border }) => (
+              {STATS.map(({ value, labelKey, bg, color, border }) => (
                 <div
-                  key={label}
+                  key={labelKey}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full border ${bg} ${border}`}
                 >
                   <span className={`font-display text-lg font-black ${color}`}>
                     {value}
                   </span>
                   <span className={`text-xs font-semibold ${color} opacity-80`}>
-                    {label}
+                    {t(labelKey)}
                   </span>
                 </div>
               ))}
@@ -392,11 +392,10 @@ export default function LandingPage({
             >
               <div className="flex flex-col gap-1 text-center sm:text-left">
                 <span className="font-display text-xl font-bold text-white">
-                  Hemen Başlayın
+                  {t("landing.cta.title")}
                 </span>
                 <span className="text-sm text-white/75">
-                  Ücretsiz şirket hesabı oluşturun, blockchain güvencesiyle
-                  yönetin.
+                  {t("landing.cta.desc")}
                 </span>
               </div>
               <button
@@ -406,7 +405,7 @@ export default function LandingPage({
                 disabled={isLoggingIn}
                 className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap transition-all duration-200 disabled:opacity-50 bg-white text-indigo-700 hover:bg-white/90 shadow-md font-bold"
               >
-                Şirket Kur
+                {t("landing.cta.button")}
                 <ArrowRight className="h-4 w-4" />
               </button>
             </div>

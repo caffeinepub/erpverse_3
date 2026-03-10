@@ -54,6 +54,17 @@
         "title": "Güvenli Kimlik",
         "desc": "Internet Identity ile güvenli giriş"
       }
+    },
+    "stats": {
+      "erpModules": "ERP Modülü",
+      "companyCapacity": "Şirket Kapasitesi",
+      "languageSupport": "Dil Desteği",
+      "secureInfra": "Güvenli Altyapı"
+    },
+    "cta": {
+      "title": "Hemen Başlayın",
+      "desc": "Ücretsiz şirket hesabı oluşturun, blockchain güvencesiyle yönetin.",
+      "button": "Şirket Kur"
     }
   },
   "companySetup": {
@@ -236,7 +247,8 @@
     "noData": "Veri bulunamadı",
     "success": "İşlem başarılı",
     "unauthorized": "Bu sayfaya erişim yetkiniz yok",
-    "notFound": "Sayfa bulunamadı"
+    "notFound": "Sayfa bulunamadı",
+    "redirecting": "Yönlendiriliyor..."
   },
   "footer": {
     "rights": "Tüm hakları saklıdır",
@@ -743,7 +755,8 @@
       "noTasksShort": "Görev yok",
       "editTitle": "Düzenle",
       "urgent": "Acil",
-      "tags": "Etiketler"
+      "tags": "Etiketler",
+      "taskMoved": "Taşındı"
     },
     "reporting": {
       "title": "Raporlama & Analitik",
@@ -800,5 +813,11 @@
       "revokeAll": "Hiçbiri",
       "grantColumn": "Tümü"
     }
+  },
+  "settings": {
+    "subtitle": "Şirket ayarları ve yapılandırma",
+    "customRoles": "Özel Roller",
+    "customRolesDesc": "Şirkete özel yeni roller ekleyin veya kaldırın",
+    "defaultRoles": "Varsayılan Roller"
   }
 }

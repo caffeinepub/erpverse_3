@@ -1,6 +1,6 @@
 import { Loader2 } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
-import { LanguageProvider } from "./contexts/LanguageContext";
+import { LanguageProvider, useLanguage } from "./contexts/LanguageContext";
 import { useInternetIdentity } from "./hooks/useInternetIdentity";
 import {
   useGetCallerUserProfile,
@@ -49,6 +49,7 @@ declare global {
 }
 
 function AppInner() {
+  const { t } = useLanguage();
   const { identity, isInitializing, isLoginError } = useInternetIdentity();
   const isAuthenticated = !!identity;
   const splashHidden = useRef(false);
@@ -256,7 +257,7 @@ function AppInner() {
               ERPVerse
             </span>
             <span className="text-xs text-muted-foreground tracking-widest uppercase">
-              Yönlendiriliyor...
+              {t("common.redirecting")}
             </span>
           </div>
           {/* Animated progress bar */}
