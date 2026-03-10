@@ -285,7 +285,18 @@
       "approve": "Approve",
       "reject": "Reject",
       "total": "Total",
-      "loadingData": "データを読み込み中..."
+      "loadingData": "データを読み込み中...",
+      "active": "アクティブ",
+      "inactive": "非アクティブ",
+      "currency": "通貨",
+      "notes": "メモ",
+      "company": "会社",
+      "email": "メール",
+      "phone": "電話",
+      "address": "住所",
+      "new": "新規",
+      "view": "表示",
+      "update": "更新"
     },
     "hr": {
       "title": "人事管理",
@@ -327,7 +338,23 @@
       "leaveSick": "Sick Leave",
       "leaveExcused": "Excused Leave",
       "leaveUnpaid": "Unpaid Leave",
-      "leaveRequestsDesc": "Employee leave requests and statuses"
+      "leaveRequestsDesc": "Employee leave requests and statuses",
+      "email": "メール",
+      "phone": "電話",
+      "leaveType": "休暇タイプ",
+      "leaveStart": "開始",
+      "leaveEnd": "終了",
+      "leaveDays": "日数",
+      "leaveStatus": "ステータス",
+      "leaveReason": "理由",
+      "salary": "給与",
+      "employeeAdded": "従業員を追加しました",
+      "employeeUpdated": "従業員を更新しました",
+      "employeeDeleted": "従業員を削除しました",
+      "leaveCreated": "休暇申請を作成しました",
+      "leaveApproved": "休暇が承認されました",
+      "leaveRejected": "休暇が却下されました",
+      "salaryAdded": "給与情報を保存しました"
     },
     "accounting": {
       "title": "会計",
@@ -370,7 +397,14 @@
       "colType": "Type",
       "colDescription": "Description",
       "colCustomer": "Customer",
-      "updateStatus": "Update Status"
+      "updateStatus": "Update Status",
+      "transactionType": "取引タイプ",
+      "description": "説明",
+      "date": "日付",
+      "invoiceStatus": "ステータス",
+      "transactionAdded": "取引を追加しました",
+      "invoiceAdded": "請求書を追加しました",
+      "invoiceUpdated": "請求書を更新しました"
     },
     "crm": {
       "title": "顧客管理",
@@ -411,7 +445,22 @@
       "closingDateLabel": "Estimated Closing Date",
       "addContactNote": "Add Contact Note",
       "contactTypeLabel": "Contact Type",
-      "addNoteBtn": "Add Note"
+      "addNoteBtn": "Add Note",
+      "email": "メール",
+      "phone": "電話",
+      "industry": "業種",
+      "status": "ステータス",
+      "leadName": "氏名",
+      "source": "ソース",
+      "probability": "確率",
+      "prospect": "見込み客",
+      "qualified": "適格",
+      "proposal": "提案",
+      "negotiation": "交渉",
+      "closed": "クローズ",
+      "customerAdded": "顧客を追加しました",
+      "leadAdded": "リードを追加しました",
+      "opportunityAdded": "商談を追加しました"
     },
     "projects": {
       "title": "プロジェクト管理",
@@ -448,7 +497,20 @@
       "todo2": "To Do",
       "inProgress2": "In Progress",
       "done": "Done",
-      "deleted": "Project deleted"
+      "deleted": "Project deleted",
+      "description": "説明",
+      "startDate": "開始日",
+      "endDate": "終了日",
+      "status": "ステータス",
+      "teamMembers": "チームメンバー",
+      "activeProjects": "アクティブプロジェクト",
+      "completedProjects": "完了プロジェクト",
+      "totalTasks": "総タスク",
+      "completedTasks": "完了タスク",
+      "notStarted": "未開始",
+      "onHold": "保留中",
+      "projectAdded": "プロジェクトを追加しました",
+      "taskAdded": "タスクを追加しました"
     },
     "inventory": {
       "title": "在庫管理",
@@ -500,7 +562,12 @@
       "stockOut": "Stock Out",
       "addMovementTitle": "Record Stock Movement",
       "movementAdded2": "Stock movement recorded",
-      "stockMovement": "Stock Movement"
+      "stockMovement": "Stock Movement",
+      "criticalItems": "重大在庫",
+      "lowItems": "低在庫",
+      "totalValue": "総価値",
+      "productAdded": "製品を追加しました",
+      "movementAdded": "移動を記録しました"
     },
     "procurement": {
       "title": "調達",
@@ -553,7 +620,15 @@
       "colRating": "Rating",
       "colTotal": "Total",
       "colEstDelivery": "Est. Delivery",
-      "approvedLabel": "Approved"
+      "approvedLabel": "Approved",
+      "contactPerson": "担当者",
+      "email": "メール",
+      "phone": "電話",
+      "category": "カテゴリ",
+      "amount": "金額",
+      "orderStatus": "ステータス",
+      "supplierAdded": "サプライヤーを追加しました",
+      "orderAdded": "注文を追加しました"
     },
     "manufacturing": {
       "title": "製造",
@@ -596,7 +671,16 @@
       "selectWorkOrderLeft": "Select a work order from the left",
       "noMaterialsAdded": "No materials added for this work order",
       "materialAdded": "Material added",
-      "materialDeleted": "Material deleted"
+      "materialDeleted": "Material deleted",
+      "startDate": "開始日",
+      "endDate": "終了日",
+      "status": "ステータス",
+      "priority": "優先度",
+      "inProduction2": "製造中",
+      "completedOrders": "完了",
+      "efficiency": "効率",
+      "workOrderAdded": "作業指示を追加しました",
+      "bomAdded": "部品表を追加しました"
     },
     "workflow": {
       "title": "タスク・ワークフロー",
@@ -628,7 +712,15 @@
       "createBtn": "Create",
       "moveToColumn": "Move",
       "noTasksShort": "No tasks",
-      "editTitle": "Edit"
+      "editTitle": "Edit",
+      "description": "説明",
+      "status": "ステータス",
+      "completedTasks": "完了",
+      "inProgressTasks": "進行中",
+      "overdueTasks": "期限超過",
+      "taskAdded": "タスクを追加しました",
+      "taskUpdated": "タスクを更新しました",
+      "tags": "タグ"
     },
     "reporting": {
       "title": "レポート・分析",
@@ -652,7 +744,23 @@
       "noHRData": "HRデータが見つかりません",
       "noStockAlert": "在庫アラートなし",
       "noOpportunityData": "商談データが見つかりません",
-      "noProjectData": "プロジェクトデータが見つかりません"
+      "noProjectData": "プロジェクトデータが見つかりません",
+      "hr": "人事レポート",
+      "accounting": "会計レポート",
+      "projects": "プロジェクトレポート",
+      "inventory": "在庫レポート",
+      "crm": "CRMレポート",
+      "totalTasks": "総タスク",
+      "totalProducts": "総製品",
+      "criticalStock": "重大在庫",
+      "procurementSummary": "調達サマリー",
+      "manufacturingSummary": "製造サマリー",
+      "workflowSummary": "ワークフローサマリー",
+      "totalSuppliers": "サプライヤー",
+      "pendingOrders": "保留中の注文",
+      "totalOrders": "総注文数",
+      "totalWorkOrders": "作業指示",
+      "inProduction": "生産中"
     },
     "modulePermissions": {
       "title": "モジュール権限",

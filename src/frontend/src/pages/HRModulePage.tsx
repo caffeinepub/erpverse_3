@@ -968,7 +968,7 @@ export default function HRModulePage({
                 onChange={(e) =>
                   setEmpForm((p) => ({ ...p, name: e.target.value }))
                 }
-                placeholder="Ad Soyad"
+                placeholder={t("erp.hr.employeeName")}
                 data-ocid="hr.employee.name.input"
                 style={{
                   backgroundColor: "oklch(1 0 0)",
@@ -988,7 +988,7 @@ export default function HRModulePage({
                 onChange={(e) =>
                   setEmpForm((p) => ({ ...p, title: e.target.value }))
                 }
-                placeholder="Unvan"
+                placeholder={t("erp.hr.position")}
                 data-ocid="hr.employee.title.input"
                 style={{
                   backgroundColor: "oklch(1 0 0)",

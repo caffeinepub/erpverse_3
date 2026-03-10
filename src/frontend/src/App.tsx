@@ -7,6 +7,7 @@ import {
   useIsRegisteredAsCompany,
 } from "./hooks/useQueries";
 import CompanyOwnerDashboard from "./pages/CompanyOwnerDashboard";
+import CompanySelectPage from "./pages/CompanySelectPage";
 import CompanySetupPage from "./pages/CompanySetupPage";
 import LandingPage from "./pages/LandingPage";
 import StaffDashboard from "./pages/StaffDashboard";
@@ -37,7 +38,8 @@ type AppView =
   | "company-dashboard"
   | "staff-registration"
   | "staff-dashboard"
-  | "staff-module-view";
+  | "staff-module-view"
+  | "company-select";
 
 // Declare the global helper injected by index.html
 declare global {
@@ -140,7 +142,12 @@ function AppInner() {
         setView("staff-registration");
       } else {
         setPortalMode("staff");
-        setView("staff-dashboard");
+        const staffMemberships = userProfile.memberships ?? [];
+        if (staffMemberships.length > 1) {
+          setView("company-select");
+        } else {
+          setView("staff-dashboard");
+        }
       }
     }
   }, [
@@ -312,6 +319,20 @@ function AppInner() {
         userRoleCode={BigInt(4)}
         grantedModules={staffModuleGrantedModules}
         onBack={() => setView("staff-dashboard")}
+      />
+    );
+  }
+
+  if (view === "company-select") {
+    return (
+      <CompanySelectPage
+        onSelectCompany={(cid) => {
+          setCompanyId(cid);
+          setView("staff-dashboard");
+        }}
+        onLogout={() => {
+          setView("landing");
+        }}
       />
     );
   }

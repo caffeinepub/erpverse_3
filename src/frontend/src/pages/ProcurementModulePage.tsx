@@ -206,7 +206,9 @@ function SupplierDialog({
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
           <div className="space-y-1.5">
-            <Label htmlFor="sup-name">Tedarikçi Adı *</Label>
+            <Label htmlFor="sup-name">
+              {t("erp.procurement.supplierNameLabel")}
+            </Label>
             <Input
               id="sup-name"
               value={form.name}
@@ -221,7 +223,7 @@ function SupplierDialog({
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="sup-cat">Kategori</Label>
+            <Label htmlFor="sup-cat">{t("erp.procurement.category")}</Label>
             <Select
               value={form.category}
               onValueChange={(v) => setForm((p) => ({ ...p, category: v }))}
@@ -257,7 +259,9 @@ function SupplierDialog({
             </Select>
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="sup-contact">İletişim Bilgisi</Label>
+            <Label htmlFor="sup-contact">
+              {t("erp.procurement.contactInfoLabel")}
+            </Label>
             <Textarea
               id="sup-contact"
               value={form.contactInfo}
@@ -275,7 +279,9 @@ function SupplierDialog({
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="sup-rating">Puan (0-5)</Label>
+            <Label htmlFor="sup-rating">
+              {t("erp.procurement.ratingLabel")}
+            </Label>
             <Input
               id="sup-rating"
               type="number"
@@ -303,7 +309,7 @@ function SupplierDialog({
                 color: "oklch(0.4 0.01 270)",
               }}
             >
-              İptal
+              {t("erp.procurement.cancelBtn")}
             </Button>
             <Button
               type="submit"
@@ -411,7 +417,7 @@ function OrderDialog({
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <Label>Tedarikçi *</Label>
+              <Label>{t("erp.procurement.supplierLabel")} *</Label>
               <Select
                 value={form.supplierId}
                 onValueChange={(v) => setForm((p) => ({ ...p, supplierId: v }))}
@@ -441,7 +447,7 @@ function OrderDialog({
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label>Durum</Label>
+              <Label>{t("erp.procurement.orderStatus")}</Label>
               <Select
                 value={form.status}
                 onValueChange={(v) =>
@@ -477,7 +483,9 @@ function OrderDialog({
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <Label htmlFor="ord-date">Sipariş Tarihi</Label>
+              <Label htmlFor="ord-date">
+                {t("erp.procurement.orderDateLabel")}
+              </Label>
               <Input
                 id="ord-date"
                 type="date"
@@ -493,7 +501,9 @@ function OrderDialog({
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="ord-exp">Tahmini Teslimat</Label>
+              <Label htmlFor="ord-exp">
+                {t("erp.procurement.estDelivery")}
+              </Label>
               <Input
                 id="ord-exp"
                 type="date"
@@ -510,7 +520,9 @@ function OrderDialog({
             </div>
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="ord-total">Toplam Tutar (₺)</Label>
+            <Label htmlFor="ord-total">
+              {t("erp.procurement.totalAmount")}
+            </Label>
             <Input
               id="ord-total"
               type="number"
@@ -528,7 +540,9 @@ function OrderDialog({
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="ord-items">Sipariş Kalemleri / Notlar</Label>
+            <Label htmlFor="ord-items">
+              {t("erp.procurement.orderItemsLabel")}
+            </Label>
             <Textarea
               id="ord-items"
               value={form.itemsDescription}
@@ -556,7 +570,7 @@ function OrderDialog({
                 color: "oklch(0.4 0.01 270)",
               }}
             >
-              İptal
+              {t("erp.procurement.cancelBtn")}
             </Button>
             <Button
               type="submit"
@@ -707,7 +721,7 @@ export default function ProcurementModulePage({
           style={{ color: "oklch(0.5 0.01 270)" }}
         >
           <Loader2 className="h-5 w-5 animate-spin" />
-          <span>Veriler yükleniyor...</span>
+          <span>{t("erp.common.loading")}</span>
         </div>
       </div>
     );
@@ -859,7 +873,8 @@ export default function ProcurementModulePage({
                   border: "none",
                 }}
               >
-                <Plus className="h-4 w-4 mr-1.5" /> Yeni Sipariş
+                <Plus className="h-4 w-4 mr-1.5" />{" "}
+                {t("erp.procurement.newOrderBtn")}
               </Button>
             </div>
             {orders.length === 0 ? (
@@ -869,9 +884,9 @@ export default function ProcurementModulePage({
                 data-ocid="procurement.orders.empty_state"
               >
                 <ShoppingCart className="h-10 w-10 mb-3 opacity-30" />
-                <p className="text-sm">Henüz sipariş bulunmuyor</p>
+                <p className="text-sm">{t("erp.procurement.noOrdersShort")}</p>
                 <p className="text-xs mt-1 opacity-70">
-                  Yukarıdaki butonu kullanarak yeni sipariş ekleyin
+                  {t("erp.procurement.addOrderHint")}
                 </p>
               </div>
             ) : (
@@ -882,13 +897,13 @@ export default function ProcurementModulePage({
                       style={{ borderBottom: "1px solid oklch(0.88 0.01 270)" }}
                     >
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                        Tedarikçi
+                        {t("erp.procurement.colSupplier")}
                       </TableHead>
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                        Durum
+                        {t("erp.common.status")}
                       </TableHead>
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                        Sipariş Tarihi
+                        {t("erp.procurement.orderDateLabel")}
                       </TableHead>
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
                         Tahmini Teslimat
@@ -1016,7 +1031,8 @@ export default function ProcurementModulePage({
                   border: "none",
                 }}
               >
-                <Plus className="h-4 w-4 mr-1.5" /> Yeni Tedarikçi
+                <Plus className="h-4 w-4 mr-1.5" />{" "}
+                {t("erp.procurement.newSupplierBtn")}
               </Button>
             </div>
             {suppliers.length === 0 ? (
@@ -1026,7 +1042,9 @@ export default function ProcurementModulePage({
                 data-ocid="procurement.suppliers.empty_state"
               >
                 <Truck className="h-10 w-10 mb-3 opacity-30" />
-                <p className="text-sm">Henüz tedarikçi bulunmuyor</p>
+                <p className="text-sm">
+                  {t("erp.procurement.noSuppliersShort")}
+                </p>
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -1036,13 +1054,13 @@ export default function ProcurementModulePage({
                       style={{ borderBottom: "1px solid oklch(0.88 0.01 270)" }}
                     >
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                        Ad
+                        {t("erp.procurement.colName")}
                       </TableHead>
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                        Kategori
+                        {t("erp.procurement.category")}
                       </TableHead>
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                        İletişim
+                        {t("erp.procurement.colContact")}
                       </TableHead>
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
                         Puan

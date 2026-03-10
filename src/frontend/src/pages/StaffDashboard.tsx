@@ -21,9 +21,11 @@ import { toast } from "sonner";
 import CompanyMembershipCard from "../components/CompanyMembershipCard";
 import Header from "../components/Header";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useInternetIdentity } from "../hooks/useInternetIdentity";
 import {
   useGetCallerUserProfile,
   useGetCompany,
+  useGetGrantedModules,
   useGetMyEmployeeCode,
   useSaveCallerUserProfile,
 } from "../hooks/useQueries";
@@ -114,7 +116,7 @@ const MODULE_COLORS: Record<
 interface StaffCompanyCardProps {
   companyId: string;
   roleCode: bigint;
-  grantedModules: Array<string>;
+  membershipGrantedModules: Array<string>;
   onEnter: () => void;
   onEnterStaffModules?: (companyId: string, grantedModules: string[]) => void;
 }
@@ -122,12 +124,28 @@ interface StaffCompanyCardProps {
 function StaffCompanyCard({
   companyId,
   roleCode,
-  grantedModules,
+  membershipGrantedModules,
   onEnter,
   onEnterStaffModules,
 }: StaffCompanyCardProps) {
   const { t } = useLanguage();
+  const { identity } = useInternetIdentity();
   const { data: company, isLoading } = useGetCompany(companyId);
+
+  const isOwnerOrManager = Number(roleCode) === 1 || Number(roleCode) === 2;
+
+  // For non-owner/manager staff, fetch the real granted modules directly from
+  // the backend Staff record (source of truth) rather than relying on
+  // UserProfile.memberships[].grantedModules which may be stale.
+  const staffPrincipal =
+    !isOwnerOrManager && identity ? identity.getPrincipal() : null;
+  const { data: fetchedGrantedModules } = useGetGrantedModules(
+    !isOwnerOrManager ? companyId : null,
+    staffPrincipal,
+  );
+
+  // Backend-fetched modules take priority; fall back to membership snapshot
+  const grantedModules = fetchedGrantedModules ?? membershipGrantedModules;
 
   if (isLoading) {
     return (
@@ -151,14 +169,13 @@ function StaffCompanyCard({
 
   if (!company) return null;
 
-  const isOwnerOrManager = Number(roleCode) === 1 || Number(roleCode) === 2;
-  const hasFullAccess = isOwnerOrManager && grantedModules.length === 0;
+  const hasFullAccess = isOwnerOrManager;
 
   const handleEnterClick = () => {
     if (isOwnerOrManager) {
       onEnter();
     } else {
-      // Staff/Administrator role: use module-specific navigation
+      // Staff/Administrator role: use module-specific navigation with real modules
       onEnterStaffModules?.(companyId, grantedModules);
     }
   };
@@ -409,18 +426,18 @@ export default function StaffDashboard({
                           key={membership.companyId}
                           companyId={membership.companyId}
                           roleCode={membership.roleCode}
-                          grantedModules={membership.grantedModules}
+                          membershipGrantedModules={membership.grantedModules}
                           onEnter={() => onEnterCompany?.(membership.companyId)}
                           onEnterStaffModules={onEnterStaffModules}
                         />
                       ))}
                     </>
                   ) : (
-                    /* Fallback: legacy single companyId */
+                    /* Fallback: legacy single companyId — also fetches real modules */
                     <StaffCompanyCard
                       companyId={profile!.companyId}
                       roleCode={profile!.roleCode}
-                      grantedModules={[]}
+                      membershipGrantedModules={[]}
                       onEnter={() => onEnterCompany?.(profile!.companyId)}
                       onEnterStaffModules={onEnterStaffModules}
                     />

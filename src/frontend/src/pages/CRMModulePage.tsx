@@ -326,7 +326,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
           CRM
         </h1>
         <p className="text-sm mt-1" style={{ color: "oklch(0.5 0.01 270)" }}>
-          Müşteri, satış fırsatı ve iletişim yönetimi
+          {t("erp.crm.subtitle")}
         </p>
       </div>
 
@@ -381,7 +381,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                   }}
                 >
                   <Plus className="w-4 h-4 mr-1" />
-                  Ekle
+                  {t("erp.common.add")}
                 </Button>
               </div>
               {isLoading ? (
@@ -397,7 +397,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                   style={{ color: "oklch(0.6 0.01 270)" }}
                 >
                   <Handshake className="w-8 h-8 mb-2 opacity-30" />
-                  <p className="text-sm">Henüz müşteri yok</p>
+                  <p className="text-sm">{t("erp.crm.noCustomers")}</p>
                 </div>
               ) : (
                 <ScrollArea className="h-[480px]">
@@ -522,7 +522,8 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                           className="text-xs mt-0.5"
                           style={{ color: "oklch(0.55 0.01 270)" }}
                         >
-                          {selectedCustomer.name} için fırsatlar
+                          {selectedCustomer.name}{" "}
+                          {t("erp.crm.customerOpportunities")}
                         </p>
                       </div>
                       <Button
@@ -686,7 +687,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                         }}
                       >
                         <Plus className="w-4 h-4 mr-1" />
-                        Not Ekle
+                        {t("erp.crm.addNoteBtn")}
                       </Button>
                     </div>
                     <div className="p-4">
@@ -770,7 +771,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                       style={{ color: "oklch(0.7 0.05 270)" }}
                     />
                     <p style={{ color: "oklch(0.5 0.01 270)" }}>
-                      Detayları görmek için bir müşteri seçin
+                      {t("erp.crm.selectCustomer")}
                     </p>
                   </div>
                 </div>
@@ -848,7 +849,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
                           className="text-center text-xs py-6 opacity-50"
                           style={{ color: stage.color }}
                         >
-                          Fırsat yok
+                          {t("erp.crm.noOpportunitiesShort")}
                         </p>
                       ) : (
                         stageOpps.map((opp, i) => {
@@ -926,7 +927,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
           </DialogHeader>
           <div className="space-y-4 py-2">
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Ad Soyad</Label>
+              <Label style={LABEL_STYLE}>{t("erp.crm.leadName")}</Label>
               <Input
                 value={customerForm.name}
                 onChange={(e) =>
@@ -1003,7 +1004,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
         >
           <DialogHeader>
             <DialogTitle style={{ color: "oklch(0.12 0.012 270)" }}>
-              Yeni Satış Fırsatı
+              {t("erp.crm.newOpportunity")}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">
@@ -1070,7 +1071,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
               {addSalesOpportunity.isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : null}
-              Ekle
+              {t("erp.common.add")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1108,7 +1109,7 @@ export default function CRMModulePage({ companyId }: CRMModulePageProps) {
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Not</Label>
+              <Label style={LABEL_STYLE}>{t("erp.common.notes")}</Label>
               <Textarea
                 value={logForm.note}
                 onChange={(e) =>

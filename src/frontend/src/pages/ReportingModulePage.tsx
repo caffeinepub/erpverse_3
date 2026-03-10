@@ -6,9 +6,11 @@ import {
   Boxes,
   Contact,
   FolderKanban,
+  ShoppingCart,
   TrendingDown,
   TrendingUp,
   Users,
+  Wrench,
 } from "lucide-react";
 import {
   useGetCRMData,
@@ -16,7 +18,10 @@ import {
   useGetFinancialSummary,
   useGetHRData,
   useGetInventoryData,
+  useGetManufacturingData,
+  useGetProcurementData,
   useGetProjectData,
+  useGetWorkflowData,
 } from "../hooks/useQueries";
 
 interface ReportingModulePageProps {
@@ -174,6 +179,11 @@ export default function ReportingModulePage({
   const { data: inventoryData, isLoading: inventoryLoading } =
     useGetInventoryData(companyId);
   const { data: crmData, isLoading: crmLoading } = useGetCRMData(companyId);
+  const { data: procData, isLoading: procLoading } =
+    useGetProcurementData(companyId);
+  const { data: mfgData, isLoading: mfgLoading } =
+    useGetManufacturingData(companyId);
+  const { data: wfData, isLoading: wfLoading } = useGetWorkflowData(companyId);
 
   // ── Derived stats ──
   const totalEmployees = summary ? Number(summary.totalEmployees) : 0;
@@ -234,6 +244,28 @@ export default function ReportingModulePage({
     value: crmData?.opportunities?.filter((o) => o.stage === s.key).length ?? 0,
   }));
   const opportunityTotal = opportunityByStage.reduce((s, o) => s + o.value, 0);
+
+  // ── Procurement stats ──
+  const totalSuppliers = procData?.suppliers?.length ?? 0;
+  const pendingOrders =
+    procData?.orders?.filter((o) => o.status === "pending").length ?? 0;
+  const totalProcOrders = procData?.orders?.length ?? 0;
+
+  // ── Manufacturing stats ──
+  const totalWorkOrders = mfgData?.workOrders?.length ?? 0;
+  const inProductionOrders =
+    mfgData?.workOrders?.filter((w) => w.status === "in_progress").length ?? 0;
+  const completedWorkOrders =
+    mfgData?.workOrders?.filter((w) => w.status === "completed").length ?? 0;
+
+  // ── Workflow stats ──
+  const totalTasks = wfData?.tasks?.length ?? 0;
+  const doneTasks =
+    wfData?.tasks?.filter((t) => t.status === "done").length ?? 0;
+  const inProgressTasks =
+    wfData?.tasks?.filter((t) => t.status === "in_progress").length ?? 0;
+  const wfProgress =
+    totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
 
   // ── Financial bar chart ──
   const financialBars = [
@@ -514,6 +546,235 @@ export default function ReportingModulePage({
                   {t("erp.reporting.noProjectData")}
                 </p>
               )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Row 2.5: Procurement + Manufacturing + Workflow Summary */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* Procurement Summary */}
+        <div
+          className="rounded-xl p-5"
+          style={{
+            backgroundColor: "oklch(1 0 0)",
+            border: "1px solid oklch(0.88 0.01 270)",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+          }}
+        >
+          <h2
+            className="font-display font-semibold mb-4 flex items-center gap-2"
+            style={{ color: "oklch(0.12 0.012 270)" }}
+          >
+            <ShoppingCart
+              className="h-5 w-5"
+              style={{ color: "oklch(0.45 0.22 280)" }}
+            />
+            {t("erp.reporting.procurementSummary")}
+          </h2>
+          {procLoading ? (
+            <div className="space-y-2">
+              {[1, 2, 3].map((i) => (
+                <Skeleton key={i} className="h-8 w-full" />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                {
+                  label: t("erp.reporting.totalSuppliers"),
+                  value: totalSuppliers,
+                  color: "oklch(0.45 0.22 280)",
+                },
+                {
+                  label: t("erp.reporting.pendingOrders"),
+                  value: pendingOrders,
+                  color: "oklch(0.45 0.14 75)",
+                },
+                {
+                  label: t("erp.reporting.totalOrders"),
+                  value: totalProcOrders,
+                  color: "oklch(0.42 0.16 145)",
+                },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-lg p-3 text-center"
+                  style={{
+                    backgroundColor: "oklch(0.96 0.02 270)",
+                    border: "1px solid oklch(0.9 0.01 270)",
+                  }}
+                >
+                  <p
+                    className="font-bold text-2xl leading-none"
+                    style={{ color: item.color }}
+                  >
+                    {item.value}
+                  </p>
+                  <p
+                    className="text-[10px] mt-1 font-medium"
+                    style={{ color: "oklch(0.55 0.01 270)" }}
+                  >
+                    {item.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Manufacturing Summary */}
+        <div
+          className="rounded-xl p-5"
+          style={{
+            backgroundColor: "oklch(1 0 0)",
+            border: "1px solid oklch(0.88 0.01 270)",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+          }}
+        >
+          <h2
+            className="font-display font-semibold mb-4 flex items-center gap-2"
+            style={{ color: "oklch(0.12 0.012 270)" }}
+          >
+            <Wrench
+              className="h-5 w-5"
+              style={{ color: "oklch(0.5 0.18 35)" }}
+            />
+            {t("erp.reporting.manufacturingSummary")}
+          </h2>
+          {mfgLoading ? (
+            <div className="space-y-2">
+              {[1, 2, 3].map((i) => (
+                <Skeleton key={i} className="h-8 w-full" />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                {
+                  label: t("erp.reporting.totalWorkOrders"),
+                  value: totalWorkOrders,
+                  color: "oklch(0.35 0.18 280)",
+                },
+                {
+                  label: t("erp.reporting.inProduction"),
+                  value: inProductionOrders,
+                  color: "oklch(0.45 0.14 75)",
+                },
+                {
+                  label: t("erp.common.completed"),
+                  value: completedWorkOrders,
+                  color: "oklch(0.38 0.15 145)",
+                },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-lg p-3 text-center"
+                  style={{
+                    backgroundColor: "oklch(0.96 0.02 270)",
+                    border: "1px solid oklch(0.9 0.01 270)",
+                  }}
+                >
+                  <p
+                    className="font-bold text-2xl leading-none"
+                    style={{ color: item.color }}
+                  >
+                    {item.value}
+                  </p>
+                  <p
+                    className="text-[10px] mt-1 font-medium"
+                    style={{ color: "oklch(0.55 0.01 270)" }}
+                  >
+                    {item.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Workflow / Task Summary */}
+        <div
+          className="rounded-xl p-5"
+          style={{
+            backgroundColor: "oklch(1 0 0)",
+            border: "1px solid oklch(0.88 0.01 270)",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+          }}
+        >
+          <h2
+            className="font-display font-semibold mb-4 flex items-center gap-2"
+            style={{ color: "oklch(0.12 0.012 270)" }}
+          >
+            <FolderKanban
+              className="h-5 w-5"
+              style={{ color: "oklch(0.42 0.16 145)" }}
+            />
+            {t("erp.reporting.workflowSummary")}
+          </h2>
+          {wfLoading ? (
+            <div className="space-y-2">
+              {[1, 2, 3].map((i) => (
+                <Skeleton key={i} className="h-8 w-full" />
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col gap-3">
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  {
+                    label: t("erp.reporting.totalTasks"),
+                    value: totalTasks,
+                    color: "oklch(0.35 0.18 280)",
+                  },
+                  {
+                    label: t("erp.workflow.inProgress"),
+                    value: inProgressTasks,
+                    color: "oklch(0.45 0.14 75)",
+                  },
+                  {
+                    label: t("erp.common.completed"),
+                    value: doneTasks,
+                    color: "oklch(0.38 0.15 145)",
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="rounded-lg p-2 text-center"
+                    style={{
+                      backgroundColor: "oklch(0.96 0.02 270)",
+                      border: "1px solid oklch(0.9 0.01 270)",
+                    }}
+                  >
+                    <p
+                      className="font-bold text-xl leading-none"
+                      style={{ color: item.color }}
+                    >
+                      {item.value}
+                    </p>
+                    <p
+                      className="text-[10px] mt-1 font-medium"
+                      style={{ color: "oklch(0.55 0.01 270)" }}
+                    >
+                      {item.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <div className="space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span style={{ color: "oklch(0.5 0.01 270)" }}>
+                    {t("erp.reporting.completionRate")}
+                  </span>
+                  <span
+                    className="font-mono font-bold"
+                    style={{ color: "oklch(0.38 0.15 145)" }}
+                  >
+                    {wfProgress}%
+                  </span>
+                </div>
+                <Progress value={wfProgress} className="h-2" />
+              </div>
             </div>
           )}
         </div>

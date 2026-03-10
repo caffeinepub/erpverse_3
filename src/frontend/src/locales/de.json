@@ -289,7 +289,18 @@
       "approve": "Approve",
       "reject": "Reject",
       "total": "Total",
-      "loadingData": "Daten werden geladen..."
+      "loadingData": "Daten werden geladen...",
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "currency": "Währung",
+      "notes": "Notizen",
+      "company": "Unternehmen",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "address": "Adresse",
+      "new": "Neu",
+      "view": "Ansehen",
+      "update": "Aktualisieren"
     },
     "hr": {
       "title": "Personalwesen",
@@ -331,7 +342,23 @@
       "salaryRecordsDesc": "Gehaltsunterlagen (vertraulich)",
       "staffRegistered": "Mitarbeiter registriert",
       "subtitle": "Mitarbeiter-, Urlaubs- und Gehaltsmanagement",
-      "leaveRequestsDesc": "Urlaubsanträge der Mitarbeiter und Status"
+      "leaveRequestsDesc": "Urlaubsanträge der Mitarbeiter und Status",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "leaveType": "Urlaubsart",
+      "leaveStart": "Start",
+      "leaveEnd": "Ende",
+      "leaveDays": "Tage",
+      "leaveStatus": "Status",
+      "leaveReason": "Grund",
+      "salary": "Gehalt",
+      "employeeAdded": "Mitarbeiter hinzugefügt",
+      "employeeUpdated": "Mitarbeiter aktualisiert",
+      "employeeDeleted": "Mitarbeiter gelöscht",
+      "leaveCreated": "Urlaubsantrag erstellt",
+      "leaveApproved": "Urlaub genehmigt",
+      "leaveRejected": "Urlaub abgelehnt",
+      "salaryAdded": "Gehaltsinformation gespeichert"
     },
     "accounting": {
       "title": "Buchhaltung",
@@ -374,7 +401,14 @@
       "catMaterialExp": "Material Expense",
       "catMarketing": "Marketing",
       "catTax": "Tax",
-      "catOtherExp": "Other Expense"
+      "catOtherExp": "Other Expense",
+      "transactionType": "Transaktionsart",
+      "description": "Beschreibung",
+      "date": "Datum",
+      "invoiceStatus": "Status",
+      "transactionAdded": "Transaktion hinzugefügt",
+      "invoiceAdded": "Rechnung hinzugefügt",
+      "invoiceUpdated": "Rechnung aktualisiert"
     },
     "crm": {
       "title": "Kundenbeziehungen",
@@ -415,7 +449,22 @@
       "closingDateLabel": "Voraussichtliches Abschlussdatum",
       "addContactNote": "Kontaktnotiz hinzufügen",
       "contactTypeLabel": "Kontaktart",
-      "addNoteBtn": "Notiz hinzufügen"
+      "addNoteBtn": "Notiz hinzufügen",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "industry": "Branche",
+      "status": "Status",
+      "leadName": "Vollständiger Name",
+      "source": "Quelle",
+      "probability": "Wahrscheinlichkeit",
+      "prospect": "Interessent",
+      "qualified": "Qualifiziert",
+      "proposal": "Angebot",
+      "negotiation": "Verhandlung",
+      "closed": "Abgeschlossen",
+      "customerAdded": "Kunde hinzugefügt",
+      "leadAdded": "Interessent hinzugefügt",
+      "opportunityAdded": "Chance hinzugefügt"
     },
     "projects": {
       "title": "Projektmanagement",
@@ -452,7 +501,20 @@
       "onHold2": "On Hold",
       "todo2": "To Do",
       "inProgress2": "In Progress",
-      "done": "Done"
+      "done": "Done",
+      "description": "Beschreibung",
+      "startDate": "Startdatum",
+      "endDate": "Enddatum",
+      "status": "Status",
+      "teamMembers": "Teammitglieder",
+      "activeProjects": "Aktive Projekte",
+      "completedProjects": "Abgeschlossene Projekte",
+      "totalTasks": "Gesamtaufgaben",
+      "completedTasks": "Abgeschlossene Aufgaben",
+      "notStarted": "Nicht gestartet",
+      "onHold": "Pausiert",
+      "projectAdded": "Projekt hinzugefügt",
+      "taskAdded": "Aufgabe hinzugefügt"
     },
     "inventory": {
       "title": "Inventar",
@@ -504,7 +566,12 @@
       "stockIn": "Stock In",
       "stockOut": "Stock Out",
       "addMovementTitle": "Record Stock Movement",
-      "movementAdded2": "Stock movement recorded"
+      "movementAdded2": "Stock movement recorded",
+      "criticalItems": "Kritischer Bestand",
+      "lowItems": "Niedriger Bestand",
+      "totalValue": "Gesamtwert",
+      "productAdded": "Produkt hinzugefügt",
+      "movementAdded": "Bewegung erfasst"
     },
     "procurement": {
       "title": "Beschaffung",
@@ -557,7 +624,15 @@
       "colRating": "Rating",
       "colTotal": "Total",
       "colEstDelivery": "Est. Delivery",
-      "approvedLabel": "Approved"
+      "approvedLabel": "Approved",
+      "contactPerson": "Kontaktperson",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "category": "Kategorie",
+      "amount": "Betrag",
+      "orderStatus": "Status",
+      "supplierAdded": "Lieferant hinzugefügt",
+      "orderAdded": "Bestellung hinzugefügt"
     },
     "manufacturing": {
       "title": "Produktion",
@@ -600,7 +675,16 @@
       "colStart": "Start",
       "colEnd": "End",
       "materialAdded": "Material added",
-      "materialDeleted": "Material deleted"
+      "materialDeleted": "Material deleted",
+      "startDate": "Startdatum",
+      "endDate": "Enddatum",
+      "status": "Status",
+      "priority": "Priorität",
+      "inProduction2": "In Produktion",
+      "completedOrders": "Abgeschlossen",
+      "efficiency": "Effizienz",
+      "workOrderAdded": "Arbeitsauftrag hinzugefügt",
+      "bomAdded": "Stückliste hinzugefügt"
     },
     "workflow": {
       "title": "Aufgaben & Workflow",
@@ -632,7 +716,15 @@
       "kanbanDesc": "Kanban-Board — Aufgaben zwischen Spalten verschieben",
       "noTasksShort": "Keine Aufgaben",
       "urgent": "Dringend",
-      "editTitle": "Edit"
+      "editTitle": "Edit",
+      "description": "Beschreibung",
+      "status": "Status",
+      "completedTasks": "Abgeschlossen",
+      "inProgressTasks": "In Bearbeitung",
+      "overdueTasks": "Überfällig",
+      "taskAdded": "Aufgabe hinzugefügt",
+      "taskUpdated": "Aufgabe aktualisiert",
+      "tags": "Schlagwörter"
     },
     "reporting": {
       "title": "Berichte & Analytik",
@@ -656,7 +748,23 @@
       "noHRData": "Keine HR-Daten gefunden",
       "noStockAlert": "Keine Lagerbestandsalarme",
       "noOpportunityData": "Keine Opportunity-Daten gefunden",
-      "noProjectData": "Keine Projektdaten gefunden"
+      "noProjectData": "Keine Projektdaten gefunden",
+      "hr": "HR-Bericht",
+      "accounting": "Buchhaltungsbericht",
+      "projects": "Projektbericht",
+      "inventory": "Inventarbericht",
+      "crm": "CRM-Bericht",
+      "totalTasks": "Gesamtaufgaben",
+      "totalProducts": "Gesamtprodukte",
+      "criticalStock": "Kritischer Bestand",
+      "procurementSummary": "Beschaffungsübersicht",
+      "manufacturingSummary": "Produktionsübersicht",
+      "workflowSummary": "Workflow-Übersicht",
+      "totalSuppliers": "Lieferanten",
+      "pendingOrders": "Ausstehende Bestellungen",
+      "totalOrders": "Gesamtbestellungen",
+      "totalWorkOrders": "Arbeitsaufträge",
+      "inProduction": "In Produktion"
     },
     "modulePermissions": {
       "title": "Modulberechtigungen",

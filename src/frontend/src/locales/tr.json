@@ -715,7 +715,8 @@
       "kanbanDesc": "Kanban board — görevi sütunlar arasında taşıyın",
       "noTasksShort": "Görev yok",
       "editTitle": "Düzenle",
-      "urgent": "Acil"
+      "urgent": "Acil",
+      "tags": "Etiketler"
     },
     "reporting": {
       "title": "Raporlama & Analitik",
@@ -747,7 +748,15 @@
       "noHRData": "HR verisi bulunamadı",
       "noStockAlert": "Stok uyarısı bulunmuyor",
       "noOpportunityData": "Fırsat verisi bulunamadı",
-      "noProjectData": "Proje verisi bulunamadı"
+      "noProjectData": "Proje verisi bulunamadı",
+      "procurementSummary": "Satın Alma Özeti",
+      "manufacturingSummary": "Üretim Özeti",
+      "workflowSummary": "İş Akışı Özeti",
+      "totalSuppliers": "Tedarikçi",
+      "pendingOrders": "Bekleyen Sipariş",
+      "totalOrders": "Toplam Sipariş",
+      "totalWorkOrders": "İş Emirleri",
+      "inProduction": "Üretimde"
     },
     "modulePermissions": {
       "title": "Modül İzinleri",

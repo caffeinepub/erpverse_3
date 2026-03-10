@@ -285,7 +285,18 @@
       "approve": "Approve",
       "reject": "Reject",
       "total": "Total",
-      "loadingData": "جارٍ تحميل البيانات..."
+      "loadingData": "جارٍ تحميل البيانات...",
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "currency": "عملة",
+      "notes": "ملاحظات",
+      "company": "الشركة",
+      "email": "البريد الإلكتروني",
+      "phone": "الهاتف",
+      "address": "العنوان",
+      "new": "جديد",
+      "view": "عرض",
+      "update": "تحديث"
     },
     "hr": {
       "title": "الموارد البشرية",
@@ -327,7 +338,23 @@
       "leaveSick": "Sick Leave",
       "leaveExcused": "Excused Leave",
       "leaveUnpaid": "Unpaid Leave",
-      "leaveRequestsDesc": "Employee leave requests and statuses"
+      "leaveRequestsDesc": "Employee leave requests and statuses",
+      "email": "البريد الإلكتروني",
+      "phone": "الهاتف",
+      "leaveType": "نوع الإجازة",
+      "leaveStart": "البداية",
+      "leaveEnd": "النهاية",
+      "leaveDays": "أيام",
+      "leaveStatus": "الحالة",
+      "leaveReason": "السبب",
+      "salary": "الراتب",
+      "employeeAdded": "تم إضافة الموظف",
+      "employeeUpdated": "تم تحديث الموظف",
+      "employeeDeleted": "تم حذف الموظف",
+      "leaveCreated": "تم إنشاء طلب الإجازة",
+      "leaveApproved": "تمت الموافقة على الإجازة",
+      "leaveRejected": "تم رفض الإجازة",
+      "salaryAdded": "تم حفظ معلومات الراتب"
     },
     "accounting": {
       "title": "المحاسبة",
@@ -370,7 +397,14 @@
       "colType": "Type",
       "colDescription": "Description",
       "colCustomer": "Customer",
-      "updateStatus": "Update Status"
+      "updateStatus": "Update Status",
+      "transactionType": "نوع المعاملة",
+      "description": "الوصف",
+      "date": "التاريخ",
+      "invoiceStatus": "الحالة",
+      "transactionAdded": "تم إضافة المعاملة",
+      "invoiceAdded": "تم إضافة الفاتورة",
+      "invoiceUpdated": "تم تحديث الفاتورة"
     },
     "crm": {
       "title": "علاقات العملاء",
@@ -411,7 +445,22 @@
       "closingDateLabel": "Estimated Closing Date",
       "addContactNote": "Add Contact Note",
       "contactTypeLabel": "Contact Type",
-      "addNoteBtn": "Add Note"
+      "addNoteBtn": "Add Note",
+      "email": "البريد الإلكتروني",
+      "phone": "الهاتف",
+      "industry": "الصناعة",
+      "status": "الحالة",
+      "leadName": "الاسم الكامل",
+      "source": "المصدر",
+      "probability": "الاحتمالية",
+      "prospect": "عميل محتمل",
+      "qualified": "مؤهل",
+      "proposal": "عرض",
+      "negotiation": "تفاوض",
+      "closed": "مغلق",
+      "customerAdded": "تم إضافة العميل",
+      "leadAdded": "تم إضافة العميل المحتمل",
+      "opportunityAdded": "تم إضافة الفرصة"
     },
     "projects": {
       "title": "إدارة المشاريع",
@@ -448,7 +497,20 @@
       "todo2": "To Do",
       "inProgress2": "In Progress",
       "done": "Done",
-      "deleted": "Project deleted"
+      "deleted": "Project deleted",
+      "description": "الوصف",
+      "startDate": "تاريخ البدء",
+      "endDate": "تاريخ الانتهاء",
+      "status": "الحالة",
+      "teamMembers": "أعضاء الفريق",
+      "activeProjects": "المشاريع النشطة",
+      "completedProjects": "المشاريع المكتملة",
+      "totalTasks": "إجمالي المهام",
+      "completedTasks": "المهام المكتملة",
+      "notStarted": "لم يبدأ",
+      "onHold": "معلق",
+      "projectAdded": "تم إضافة المشروع",
+      "taskAdded": "تم إضافة المهمة"
     },
     "inventory": {
       "title": "المخزون",
@@ -500,7 +562,12 @@
       "stockOut": "Stock Out",
       "addMovementTitle": "Record Stock Movement",
       "movementAdded2": "Stock movement recorded",
-      "stockMovement": "Stock Movement"
+      "stockMovement": "Stock Movement",
+      "criticalItems": "مخزون حرج",
+      "lowItems": "مخزون منخفض",
+      "totalValue": "القيمة الإجمالية",
+      "productAdded": "تم إضافة المنتج",
+      "movementAdded": "تم تسجيل الحركة"
     },
     "procurement": {
       "title": "المشتريات",
@@ -553,7 +620,15 @@
       "colRating": "Rating",
       "colTotal": "Total",
       "colEstDelivery": "Est. Delivery",
-      "approvedLabel": "Approved"
+      "approvedLabel": "Approved",
+      "contactPerson": "شخص الاتصال",
+      "email": "البريد الإلكتروني",
+      "phone": "الهاتف",
+      "category": "الفئة",
+      "amount": "المبلغ",
+      "orderStatus": "الحالة",
+      "supplierAdded": "تم إضافة المورد",
+      "orderAdded": "تم إضافة الطلب"
     },
     "manufacturing": {
       "title": "التصنيع",
@@ -596,7 +671,16 @@
       "selectWorkOrderLeft": "Select a work order from the left",
       "noMaterialsAdded": "No materials added for this work order",
       "materialAdded": "Material added",
-      "materialDeleted": "Material deleted"
+      "materialDeleted": "Material deleted",
+      "startDate": "تاريخ البدء",
+      "endDate": "تاريخ الانتهاء",
+      "status": "الحالة",
+      "priority": "الأولوية",
+      "inProduction2": "في الإنتاج",
+      "completedOrders": "مكتمل",
+      "efficiency": "الكفاءة",
+      "workOrderAdded": "تم إضافة أمر العمل",
+      "bomAdded": "تم إضافة قائمة المواد"
     },
     "workflow": {
       "title": "المهام وسير العمل",
@@ -628,7 +712,15 @@
       "createBtn": "Create",
       "moveToColumn": "Move",
       "noTasksShort": "No tasks",
-      "editTitle": "Edit"
+      "editTitle": "Edit",
+      "description": "الوصف",
+      "status": "الحالة",
+      "completedTasks": "مكتمل",
+      "inProgressTasks": "قيد التنفيذ",
+      "overdueTasks": "متأخر",
+      "taskAdded": "تم إضافة المهمة",
+      "taskUpdated": "تم تحديث المهمة",
+      "tags": "علامات"
     },
     "reporting": {
       "title": "التقارير والتحليلات",
@@ -652,7 +744,23 @@
       "noHRData": "لم يتم العثور على بيانات الموارد البشرية",
       "noStockAlert": "لا توجد تنبيهات للمخزون",
       "noOpportunityData": "لم يتم العثور على بيانات الفرص",
-      "noProjectData": "لم يتم العثور على بيانات المشاريع"
+      "noProjectData": "لم يتم العثور على بيانات المشاريع",
+      "hr": "تقرير الموارد البشرية",
+      "accounting": "تقرير المحاسبة",
+      "projects": "تقرير المشاريع",
+      "inventory": "تقرير المخزون",
+      "crm": "تقرير CRM",
+      "totalTasks": "إجمالي المهام",
+      "totalProducts": "إجمالي المنتجات",
+      "criticalStock": "مخزون حرج",
+      "procurementSummary": "ملخص المشتريات",
+      "manufacturingSummary": "ملخص التصنيع",
+      "workflowSummary": "ملخص سير العمل",
+      "totalSuppliers": "الموردون",
+      "pendingOrders": "طلبات معلقة",
+      "totalOrders": "إجمالي الطلبات",
+      "totalWorkOrders": "أوامر العمل",
+      "inProduction": "في الإنتاج"
     },
     "modulePermissions": {
       "title": "صلاحيات الوحدات",

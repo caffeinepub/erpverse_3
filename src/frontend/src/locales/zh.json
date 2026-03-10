@@ -281,7 +281,18 @@
       "approve": "Approve",
       "reject": "Reject",
       "total": "Total",
-      "loadingData": "正在加载数据..."
+      "loadingData": "正在加载数据...",
+      "active": "活跃",
+      "inactive": "非活跃",
+      "currency": "货币",
+      "notes": "备注",
+      "company": "公司",
+      "email": "电子邮件",
+      "phone": "电话",
+      "address": "地址",
+      "new": "新建",
+      "view": "查看",
+      "update": "更新"
     },
     "hr": {
       "title": "人力资源",
@@ -323,7 +334,23 @@
       "leaveSick": "Sick Leave",
       "leaveExcused": "Excused Leave",
       "leaveUnpaid": "Unpaid Leave",
-      "leaveRequestsDesc": "Employee leave requests and statuses"
+      "leaveRequestsDesc": "Employee leave requests and statuses",
+      "email": "电子邮件",
+      "phone": "电话",
+      "leaveType": "假期类型",
+      "leaveStart": "开始",
+      "leaveEnd": "结束",
+      "leaveDays": "天数",
+      "leaveStatus": "状态",
+      "leaveReason": "原因",
+      "salary": "薪资",
+      "employeeAdded": "员工已添加",
+      "employeeUpdated": "员工已更新",
+      "employeeDeleted": "员工已删除",
+      "leaveCreated": "请假申请已创建",
+      "leaveApproved": "假期已批准",
+      "leaveRejected": "假期已拒绝",
+      "salaryAdded": "薪资信息已保存"
     },
     "accounting": {
       "title": "会计",
@@ -366,7 +393,14 @@
       "colType": "Type",
       "colDescription": "Description",
       "colCustomer": "Customer",
-      "updateStatus": "Update Status"
+      "updateStatus": "Update Status",
+      "transactionType": "交易类型",
+      "description": "描述",
+      "date": "日期",
+      "invoiceStatus": "状态",
+      "transactionAdded": "交易已添加",
+      "invoiceAdded": "发票已添加",
+      "invoiceUpdated": "发票已更新"
     },
     "crm": {
       "title": "客户关系",
@@ -407,7 +441,22 @@
       "closingDateLabel": "Estimated Closing Date",
       "addContactNote": "Add Contact Note",
       "contactTypeLabel": "Contact Type",
-      "addNoteBtn": "Add Note"
+      "addNoteBtn": "Add Note",
+      "email": "电子邮件",
+      "phone": "电话",
+      "industry": "行业",
+      "status": "状态",
+      "leadName": "全名",
+      "source": "来源",
+      "probability": "概率",
+      "prospect": "潜在客户",
+      "qualified": "已认证",
+      "proposal": "提案",
+      "negotiation": "谈判",
+      "closed": "已关闭",
+      "customerAdded": "客户已添加",
+      "leadAdded": "潜在客户已添加",
+      "opportunityAdded": "商机已添加"
     },
     "projects": {
       "title": "项目管理",
@@ -444,7 +493,20 @@
       "todo2": "To Do",
       "inProgress2": "In Progress",
       "done": "Done",
-      "deleted": "Project deleted"
+      "deleted": "Project deleted",
+      "description": "描述",
+      "startDate": "开始日期",
+      "endDate": "结束日期",
+      "status": "状态",
+      "teamMembers": "团队成员",
+      "activeProjects": "活跃项目",
+      "completedProjects": "已完成项目",
+      "totalTasks": "总任务",
+      "completedTasks": "已完成任务",
+      "notStarted": "未开始",
+      "onHold": "暂停",
+      "projectAdded": "项目已添加",
+      "taskAdded": "任务已添加"
     },
     "inventory": {
       "title": "库存",
@@ -496,7 +558,12 @@
       "stockOut": "Stock Out",
       "addMovementTitle": "Record Stock Movement",
       "movementAdded2": "Stock movement recorded",
-      "stockMovement": "Stock Movement"
+      "stockMovement": "Stock Movement",
+      "criticalItems": "严重库存",
+      "lowItems": "低库存",
+      "totalValue": "总价值",
+      "productAdded": "产品已添加",
+      "movementAdded": "移动已记录"
     },
     "procurement": {
       "title": "采购",
@@ -549,7 +616,15 @@
       "colRating": "Rating",
       "colTotal": "Total",
       "colEstDelivery": "Est. Delivery",
-      "approvedLabel": "Approved"
+      "approvedLabel": "Approved",
+      "contactPerson": "联系人",
+      "email": "电子邮件",
+      "phone": "电话",
+      "category": "类别",
+      "amount": "金额",
+      "orderStatus": "状态",
+      "supplierAdded": "供应商已添加",
+      "orderAdded": "订单已添加"
     },
     "manufacturing": {
       "title": "生产",
@@ -592,7 +667,16 @@
       "selectWorkOrderLeft": "Select a work order from the left",
       "noMaterialsAdded": "No materials added for this work order",
       "materialAdded": "Material added",
-      "materialDeleted": "Material deleted"
+      "materialDeleted": "Material deleted",
+      "startDate": "开始日期",
+      "endDate": "结束日期",
+      "status": "状态",
+      "priority": "优先级",
+      "inProduction2": "生产中",
+      "completedOrders": "已完成",
+      "efficiency": "效率",
+      "workOrderAdded": "工作单已添加",
+      "bomAdded": "物料清单已添加"
     },
     "workflow": {
       "title": "任务与工作流",
@@ -624,7 +708,15 @@
       "createBtn": "Create",
       "moveToColumn": "Move",
       "noTasksShort": "No tasks",
-      "editTitle": "Edit"
+      "editTitle": "Edit",
+      "description": "描述",
+      "status": "状态",
+      "completedTasks": "已完成",
+      "inProgressTasks": "进行中",
+      "overdueTasks": "已超期",
+      "taskAdded": "任务已添加",
+      "taskUpdated": "任务已更新",
+      "tags": "标签"
     },
     "reporting": {
       "title": "报告与分析",
@@ -648,7 +740,23 @@
       "noHRData": "未找到HR数据",
       "noStockAlert": "无库存警报",
       "noOpportunityData": "未找到商机数据",
-      "noProjectData": "未找到项目数据"
+      "noProjectData": "未找到项目数据",
+      "hr": "人力资源报告",
+      "accounting": "会计报告",
+      "projects": "项目报告",
+      "inventory": "库存报告",
+      "crm": "CRM报告",
+      "totalTasks": "总任务",
+      "totalProducts": "总产品",
+      "criticalStock": "严重库存",
+      "procurementSummary": "采购概览",
+      "manufacturingSummary": "制造概览",
+      "workflowSummary": "工作流概览",
+      "totalSuppliers": "供应商",
+      "pendingOrders": "待处理订单",
+      "totalOrders": "总订单",
+      "totalWorkOrders": "工单",
+      "inProduction": "生产中"
     },
     "modulePermissions": {
       "title": "模块权限",

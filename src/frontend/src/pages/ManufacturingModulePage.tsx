@@ -211,7 +211,9 @@ function WorkOrderDialog({
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
           <div className="space-y-1.5">
-            <Label htmlFor="wo-product">Ürün Adı *</Label>
+            <Label htmlFor="wo-product">
+              {t("erp.manufacturing.productNameLabel")} *
+            </Label>
             <Input
               id="wo-product"
               value={form.productName}
@@ -229,7 +231,7 @@ function WorkOrderDialog({
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <Label htmlFor="wo-qty">Miktar</Label>
+              <Label htmlFor="wo-qty">{t("erp.manufacturing.quantity")}</Label>
               <Input
                 id="wo-qty"
                 type="number"
@@ -246,7 +248,7 @@ function WorkOrderDialog({
               />
             </div>
             <div className="space-y-1.5">
-              <Label>Durum</Label>
+              <Label>{t("erp.manufacturing.status")}</Label>
               <Select
                 value={form.status}
                 onValueChange={(v) =>
@@ -280,7 +282,9 @@ function WorkOrderDialog({
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <Label htmlFor="wo-start">Başlangıç Tarihi</Label>
+              <Label htmlFor="wo-start">
+                {t("erp.manufacturing.startDateLabel")}
+              </Label>
               <Input
                 id="wo-start"
                 type="date"
@@ -296,7 +300,9 @@ function WorkOrderDialog({
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="wo-end">Bitiş Tarihi</Label>
+              <Label htmlFor="wo-end">
+                {t("erp.manufacturing.endDateLabel")}
+              </Label>
               <Input
                 id="wo-end"
                 type="date"
@@ -313,7 +319,9 @@ function WorkOrderDialog({
             </div>
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="wo-notes">Açıklama / Notlar</Label>
+            <Label htmlFor="wo-notes">
+              {t("erp.manufacturing.notesLabel")}
+            </Label>
             <Textarea
               id="wo-notes"
               value={form.notes}
@@ -340,7 +348,7 @@ function WorkOrderDialog({
                 color: "oklch(0.4 0.01 270)",
               }}
             >
-              İptal
+              {t("erp.manufacturing.cancelBtn")}
             </Button>
             <Button
               type="submit"
@@ -465,7 +473,7 @@ function BOMDialog({
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <Label htmlFor="bom-qty">Miktar</Label>
+              <Label htmlFor="bom-qty">{t("erp.manufacturing.quantity")}</Label>
               <Input
                 id="bom-qty"
                 type="number"
@@ -486,7 +494,7 @@ function BOMDialog({
               />
             </div>
             <div className="space-y-1.5">
-              <Label>Birim</Label>
+              <Label>{t("erp.manufacturing.unit")}</Label>
               <Select
                 value={form.unit}
                 onValueChange={(v) => setForm((p) => ({ ...p, unit: v }))}
@@ -527,7 +535,7 @@ function BOMDialog({
                 color: "oklch(0.4 0.01 270)",
               }}
             >
-              İptal
+              {t("erp.manufacturing.cancelBtn")}
             </Button>
             <Button
               type="submit"
@@ -675,7 +683,7 @@ export default function ManufacturingModulePage({
           style={{ color: "oklch(0.5 0.01 270)" }}
         >
           <Loader2 className="h-5 w-5 animate-spin" />
-          <span>Veriler yükleniyor...</span>
+          <span>{t("erp.common.loading")}</span>
         </div>
       </div>
     );
@@ -700,7 +708,7 @@ export default function ManufacturingModulePage({
             className="text-sm mt-0.5"
             style={{ color: "oklch(0.5 0.01 270)" }}
           >
-            İş emirleri ve malzeme listesi yönetimi
+            {t("erp.manufacturing.subtitle")}
           </p>
         </div>
       </div>
@@ -817,7 +825,8 @@ export default function ManufacturingModulePage({
                   border: "none",
                 }}
               >
-                <Plus className="h-4 w-4 mr-1.5" /> Yeni İş Emri
+                <Plus className="h-4 w-4 mr-1.5" />{" "}
+                {t("erp.manufacturing.newWorkOrderBtn")}
               </Button>
             </div>
             {workOrders.length === 0 ? (
@@ -827,7 +836,9 @@ export default function ManufacturingModulePage({
                 data-ocid="manufacturing.workorders.empty_state"
               >
                 <Factory className="h-10 w-10 mb-3 opacity-30" />
-                <p className="text-sm">Henüz iş emri bulunmuyor</p>
+                <p className="text-sm">
+                  {t("erp.manufacturing.noWorkOrdersShort")}
+                </p>
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -837,22 +848,22 @@ export default function ManufacturingModulePage({
                       style={{ borderBottom: "1px solid oklch(0.88 0.01 270)" }}
                     >
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                        Ürün
+                        {t("erp.manufacturing.colProduct")}
                       </TableHead>
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                        Miktar
+                        {t("erp.manufacturing.quantity")}
                       </TableHead>
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                        Durum
+                        {t("erp.manufacturing.status")}
                       </TableHead>
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                        Başlangıç
+                        {t("erp.manufacturing.colStart")}
                       </TableHead>
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                        Bitiş
+                        {t("erp.manufacturing.colEnd")}
                       </TableHead>
                       <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                        Malzeme
+                        {t("erp.manufacturing.material")}
                       </TableHead>
                       <TableHead />
                     </TableRow>
@@ -975,7 +986,7 @@ export default function ManufacturingModulePage({
                   className="font-semibold text-sm"
                   style={{ color: "oklch(0.12 0.012 270)" }}
                 >
-                  İş Emri Seç
+                  {t("erp.manufacturing.selectWorkOrder")}
                 </h3>
               </div>
               {workOrders.length === 0 ? (
@@ -983,7 +994,7 @@ export default function ManufacturingModulePage({
                   className="p-6 text-center text-sm"
                   style={{ color: "oklch(0.55 0.01 270)" }}
                 >
-                  Önce bir iş emri oluşturun
+                  {t("erp.manufacturing.createWorkOrderFirst")}
                 </div>
               ) : (
                 <div
@@ -1068,7 +1079,8 @@ export default function ManufacturingModulePage({
                       border: "none",
                     }}
                   >
-                    <Plus className="h-4 w-4 mr-1.5" /> Malzeme Ekle
+                    <Plus className="h-4 w-4 mr-1.5" />{" "}
+                    {t("erp.manufacturing.addMaterial")}
                   </Button>
                 )}
               </div>
@@ -1078,7 +1090,9 @@ export default function ManufacturingModulePage({
                   style={{ color: "oklch(0.55 0.01 270)" }}
                 >
                   <Layers className="h-10 w-10 mb-3 opacity-30" />
-                  <p className="text-sm">Sol taraftan bir iş emri seçin</p>
+                  <p className="text-sm">
+                    {t("erp.manufacturing.selectWorkOrderLeft")}
+                  </p>
                 </div>
               ) : activeBOMItems.length === 0 ? (
                 <div
@@ -1087,7 +1101,9 @@ export default function ManufacturingModulePage({
                   data-ocid="manufacturing.bom.empty_state"
                 >
                   <Layers className="h-10 w-10 mb-3 opacity-30" />
-                  <p className="text-sm">Bu iş emri için malzeme eklenmedi</p>
+                  <p className="text-sm">
+                    {t("erp.manufacturing.noMaterialsAdded")}
+                  </p>
                 </div>
               ) : (
                 <div className="overflow-x-auto">
@@ -1099,13 +1115,13 @@ export default function ManufacturingModulePage({
                         }}
                       >
                         <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                          Malzeme
+                          {t("erp.manufacturing.material")}
                         </TableHead>
                         <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                          Miktar
+                          {t("erp.manufacturing.quantity")}
                         </TableHead>
                         <TableHead style={{ color: "oklch(0.5 0.01 270)" }}>
-                          Birim
+                          {t("erp.manufacturing.unit")}
                         </TableHead>
                         <TableHead />
                       </TableRow>

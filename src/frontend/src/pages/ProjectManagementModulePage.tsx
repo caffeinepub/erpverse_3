@@ -272,10 +272,10 @@ export default function ProjectManagementModulePage({
               style={{ color: "oklch(0.42 0.18 220)" }}
             />
           </div>
-          Proje Yönetimi
+          {t("erp.projects.title")}
         </h1>
         <p className="text-sm mt-1" style={{ color: "oklch(0.5 0.01 270)" }}>
-          Projeler, görevler ve ekip yönetimi
+          {t("erp.projects.subtitle")}
         </p>
       </div>
 
@@ -332,7 +332,7 @@ export default function ProjectManagementModulePage({
                 border: "1px solid oklch(0.88 0.01 270)",
               }}
             >
-              Henüz proje yok
+              {t("erp.projects.noProjectsShort")}
             </div>
           ) : (
             projects.map((project, i) => (
@@ -587,7 +587,7 @@ export default function ProjectManagementModulePage({
                               className="text-center text-xs py-4 opacity-50"
                               style={{ color: col.color }}
                             >
-                              Görev yok
+                              {t("erp.projects.noTasksShort")}
                             </p>
                           ) : (
                             colTasks.map((task, i) => (
@@ -685,7 +685,7 @@ export default function ProjectManagementModulePage({
                     data-ocid="projects.tasks.empty_state"
                     style={{ color: "oklch(0.6 0.01 270)" }}
                   >
-                    Bu projede henüz görev yok
+                    {t("erp.projects.noTasksInProject")}
                   </div>
                 )}
               </div>
@@ -704,7 +704,7 @@ export default function ProjectManagementModulePage({
                   style={{ color: "oklch(0.7 0.05 270)" }}
                 />
                 <p style={{ color: "oklch(0.5 0.01 270)" }}>
-                  Detayları görmek için bir proje seçin
+                  {t("erp.projects.selectProjectFirst")}
                 </p>
               </div>
             </div>
@@ -726,7 +726,9 @@ export default function ProjectManagementModulePage({
           </DialogHeader>
           <div className="space-y-4 py-2">
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Proje Adı</Label>
+              <Label style={LABEL_STYLE}>
+                {t("erp.projects.projectNameLabel")}
+              </Label>
               <Input
                 value={projectForm.name}
                 onChange={(e) =>
@@ -737,7 +739,9 @@ export default function ProjectManagementModulePage({
               />
             </div>
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Açıklama</Label>
+              <Label style={LABEL_STYLE}>
+                {t("erp.projects.descriptionLabel")}
+              </Label>
               <Textarea
                 value={projectForm.description}
                 onChange={(e) =>
@@ -749,7 +753,7 @@ export default function ProjectManagementModulePage({
               />
             </div>
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Son Tarih</Label>
+              <Label style={LABEL_STYLE}>{t("erp.projects.endDate")}</Label>
               <Input
                 type="date"
                 value={projectForm.deadline}
@@ -760,7 +764,7 @@ export default function ProjectManagementModulePage({
               />
             </div>
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Durum</Label>
+              <Label style={LABEL_STYLE}>{t("erp.projects.status")}</Label>
               <Select
                 value={projectForm.status}
                 onValueChange={(v) =>
@@ -796,7 +800,7 @@ export default function ProjectManagementModulePage({
               {createProject.isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : null}
-              Oluştur
+              {t("erp.projects.createBtn")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -816,7 +820,9 @@ export default function ProjectManagementModulePage({
           </DialogHeader>
           <div className="space-y-4 py-2">
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Görev Başlığı</Label>
+              <Label style={LABEL_STYLE}>
+                {t("erp.projects.taskTitleLabel")}
+              </Label>
               <Input
                 value={taskForm.title}
                 onChange={(e) =>
@@ -827,7 +833,7 @@ export default function ProjectManagementModulePage({
               />
             </div>
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Son Tarih</Label>
+              <Label style={LABEL_STYLE}>{t("erp.projects.endDate")}</Label>
               <Input
                 type="date"
                 value={taskForm.dueDate}

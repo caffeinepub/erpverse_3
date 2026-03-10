@@ -417,7 +417,7 @@ export default function InventoryModulePage({
                     color: "oklch(0.12 0.012 270)",
                   }}
                 >
-                  Ürün Listesi
+                  {t("erp.inventory.productList")}
                 </h2>
                 <p
                   className="text-xs mt-0.5"
@@ -473,7 +473,7 @@ export default function InventoryModulePage({
                 style={{ color: "oklch(0.6 0.01 270)" }}
               >
                 <Package className="w-10 h-10 mb-3 opacity-30" />
-                <p className="text-sm">Henüz ürün kaydı yok</p>
+                <p className="text-sm">{t("erp.inventory.noProductsShort")}</p>
               </div>
             ) : (
               <Table>
@@ -666,7 +666,9 @@ export default function InventoryModulePage({
                   <SelectValue placeholder={t("erp.inventory.products")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Tüm ürünler</SelectItem>
+                  <SelectItem value="all">
+                    {t("erp.inventory.allProducts")}
+                  </SelectItem>
                   {products.map((p) => (
                     <SelectItem key={p.id} value={p.id}>
                       {p.name}
@@ -688,7 +690,7 @@ export default function InventoryModulePage({
                 style={{ color: "oklch(0.6 0.01 270)" }}
               >
                 <History className="w-10 h-10 mb-3 opacity-30" />
-                <p className="text-sm">Henüz stok hareketi yok</p>
+                <p className="text-sm">{t("erp.inventory.noMovementsShort")}</p>
               </div>
             ) : (
               <Table>
@@ -739,7 +741,7 @@ export default function InventoryModulePage({
                             style={{ color: "oklch(0.42 0.16 145)" }}
                           >
                             <ArrowUpCircle className="w-4 h-4" />
-                            Giriş
+                            {t("erp.inventory.inbound")}
                           </span>
                         ) : (
                           <span
@@ -747,7 +749,7 @@ export default function InventoryModulePage({
                             style={{ color: "oklch(0.45 0.18 25)" }}
                           >
                             <ArrowDownCircle className="w-4 h-4" />
-                            Çıkış
+                            {t("erp.inventory.outbound")}
                           </span>
                         )}
                       </TableCell>
@@ -826,7 +828,7 @@ export default function InventoryModulePage({
               </div>
             </div>
             <div className="space-y-1.5">
-              <Label style={LABEL_STYLE}>Kategori</Label>
+              <Label style={LABEL_STYLE}>{t("erp.inventory.category")}</Label>
               <Select
                 value={productForm.category}
                 onValueChange={(v) =>

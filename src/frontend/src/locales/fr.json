@@ -289,7 +289,18 @@
       "approve": "Approve",
       "reject": "Reject",
       "total": "Total",
-      "loadingData": "Chargement des données..."
+      "loadingData": "Chargement des données...",
+      "active": "Actif",
+      "inactive": "Inactif",
+      "currency": "Devise",
+      "notes": "Notes",
+      "company": "Entreprise",
+      "email": "E-mail",
+      "phone": "Téléphone",
+      "address": "Adresse",
+      "new": "Nouveau",
+      "view": "Voir",
+      "update": "Mettre à jour"
     },
     "hr": {
       "title": "Ressources Humaines",
@@ -331,7 +342,23 @@
       "leaveAnnual": "Annual Leave",
       "leaveSick": "Sick Leave",
       "leaveExcused": "Excused Leave",
-      "leaveUnpaid": "Unpaid Leave"
+      "leaveUnpaid": "Unpaid Leave",
+      "email": "E-mail",
+      "phone": "Téléphone",
+      "leaveType": "Type de congé",
+      "leaveStart": "Début",
+      "leaveEnd": "Fin",
+      "leaveDays": "Jours",
+      "leaveStatus": "Statut",
+      "leaveReason": "Raison",
+      "salary": "Salaire",
+      "employeeAdded": "Employé ajouté",
+      "employeeUpdated": "Employé mis à jour",
+      "employeeDeleted": "Employé supprimé",
+      "leaveCreated": "Demande de congé créée",
+      "leaveApproved": "Congé approuvé",
+      "leaveRejected": "Congé refusé",
+      "salaryAdded": "Informations salariales enregistrées"
     },
     "accounting": {
       "title": "Comptabilité",
@@ -374,7 +401,14 @@
       "colType": "Type",
       "colDescription": "Description",
       "colCustomer": "Customer",
-      "updateStatus": "Update Status"
+      "updateStatus": "Update Status",
+      "transactionType": "Type de transaction",
+      "description": "Description",
+      "date": "Date",
+      "invoiceStatus": "Statut",
+      "transactionAdded": "Transaction ajoutée",
+      "invoiceAdded": "Facture ajoutée",
+      "invoiceUpdated": "Facture mise à jour"
     },
     "crm": {
       "title": "Relations Clients",
@@ -415,7 +449,22 @@
       "closingDateLabel": "Estimated Closing Date",
       "addContactNote": "Add Contact Note",
       "contactTypeLabel": "Contact Type",
-      "addNoteBtn": "Add Note"
+      "addNoteBtn": "Add Note",
+      "email": "E-mail",
+      "phone": "Téléphone",
+      "industry": "Secteur",
+      "status": "Statut",
+      "leadName": "Nom complet",
+      "source": "Source",
+      "probability": "Probabilité",
+      "prospect": "Prospect",
+      "qualified": "Qualifié",
+      "proposal": "Proposition",
+      "negotiation": "Négociation",
+      "closed": "Fermé",
+      "customerAdded": "Client ajouté",
+      "leadAdded": "Prospect ajouté",
+      "opportunityAdded": "Opportunité ajoutée"
     },
     "projects": {
       "title": "Gestion de Projet",
@@ -452,7 +501,20 @@
       "todo2": "To Do",
       "inProgress2": "In Progress",
       "done": "Done",
-      "deleted": "Project deleted"
+      "deleted": "Project deleted",
+      "description": "Description",
+      "startDate": "Date de début",
+      "endDate": "Date de fin",
+      "status": "Statut",
+      "teamMembers": "Membres de l'équipe",
+      "activeProjects": "Projets actifs",
+      "completedProjects": "Projets terminés",
+      "totalTasks": "Total des tâches",
+      "completedTasks": "Tâches terminées",
+      "notStarted": "Non commencé",
+      "onHold": "En attente",
+      "projectAdded": "Projet ajouté",
+      "taskAdded": "Tâche ajoutée"
     },
     "inventory": {
       "title": "Inventaire",
@@ -504,7 +566,12 @@
       "stockOut": "Stock Out",
       "addMovementTitle": "Record Stock Movement",
       "movementAdded2": "Stock movement recorded",
-      "stockMovement": "Stock Movement"
+      "stockMovement": "Stock Movement",
+      "criticalItems": "Stock critique",
+      "lowItems": "Stock bas",
+      "totalValue": "Valeur totale",
+      "productAdded": "Produit ajouté",
+      "movementAdded": "Mouvement enregistré"
     },
     "procurement": {
       "title": "Approvisionnement",
@@ -557,7 +624,15 @@
       "colRating": "Rating",
       "colTotal": "Total",
       "colEstDelivery": "Est. Delivery",
-      "approvedLabel": "Approved"
+      "approvedLabel": "Approved",
+      "contactPerson": "Personne de contact",
+      "email": "E-mail",
+      "phone": "Téléphone",
+      "category": "Catégorie",
+      "amount": "Montant",
+      "orderStatus": "Statut",
+      "supplierAdded": "Fournisseur ajouté",
+      "orderAdded": "Commande ajoutée"
     },
     "manufacturing": {
       "title": "Production",
@@ -600,7 +675,16 @@
       "selectWorkOrderLeft": "Select a work order from the left",
       "noMaterialsAdded": "No materials added for this work order",
       "materialAdded": "Material added",
-      "materialDeleted": "Material deleted"
+      "materialDeleted": "Material deleted",
+      "startDate": "Date de début",
+      "endDate": "Date de fin",
+      "status": "Statut",
+      "priority": "Priorité",
+      "inProduction2": "En production",
+      "completedOrders": "Terminé",
+      "efficiency": "Efficacité",
+      "workOrderAdded": "Ordre de travail ajouté",
+      "bomAdded": "Nomenclature ajoutée"
     },
     "workflow": {
       "title": "Tâches & Workflow",
@@ -632,7 +716,15 @@
       "createBtn": "Create",
       "moveToColumn": "Move",
       "noTasksShort": "No tasks",
-      "editTitle": "Edit"
+      "editTitle": "Edit",
+      "description": "Description",
+      "status": "Statut",
+      "completedTasks": "Terminé",
+      "inProgressTasks": "En cours",
+      "overdueTasks": "En retard",
+      "taskAdded": "Tâche ajoutée",
+      "taskUpdated": "Tâche mise à jour",
+      "tags": "Étiquettes"
     },
     "reporting": {
       "title": "Rapports & Analytique",
@@ -656,7 +748,23 @@
       "noHRData": "Aucune donnée RH trouvée",
       "noStockAlert": "Aucune alerte de stock",
       "noOpportunityData": "Aucune donnée d'opportunité trouvée",
-      "noProjectData": "Aucune donnée de projet trouvée"
+      "noProjectData": "Aucune donnée de projet trouvée",
+      "hr": "Rapport RH",
+      "accounting": "Rapport comptable",
+      "projects": "Rapport de projets",
+      "inventory": "Rapport d'inventaire",
+      "crm": "Rapport CRM",
+      "totalTasks": "Total des tâches",
+      "totalProducts": "Total des produits",
+      "criticalStock": "Stock critique",
+      "procurementSummary": "Résumé des achats",
+      "manufacturingSummary": "Résumé de production",
+      "workflowSummary": "Résumé des workflows",
+      "totalSuppliers": "Fournisseurs",
+      "pendingOrders": "Commandes en attente",
+      "totalOrders": "Total des commandes",
+      "totalWorkOrders": "Ordres de travail",
+      "inProduction": "En production"
     },
     "modulePermissions": {
       "title": "Permissions des Modules",

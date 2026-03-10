@@ -189,7 +189,9 @@ function TaskDialog({
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="task-desc">Açıklama</Label>
+            <Label htmlFor="task-desc">
+              {t("erp.workflow.descriptionLabel")}
+            </Label>
             <Textarea
               id="task-desc"
               value={form.description}
@@ -207,7 +209,7 @@ function TaskDialog({
           </div>
           <div className="grid grid-cols-3 gap-3">
             <div className="space-y-1.5">
-              <Label>Öncelik</Label>
+              <Label>{t("erp.workflow.priority")}</Label>
               <Select
                 value={form.priority}
                 onValueChange={(v) =>
@@ -239,7 +241,7 @@ function TaskDialog({
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label>Sütun</Label>
+              <Label>{t("erp.workflow.columnLabel")}</Label>
               <Select
                 value={form.status}
                 onValueChange={(v) =>
@@ -288,7 +290,7 @@ function TaskDialog({
           </div>
           {/* Tags */}
           <div className="space-y-1.5">
-            <Label>Etiketler</Label>
+            <Label>{t("erp.workflow.tags")}</Label>
             <div className="flex gap-2">
               <Input
                 value={tagInput}
@@ -350,7 +352,7 @@ function TaskDialog({
                 color: "oklch(0.4 0.01 270)",
               }}
             >
-              İptal
+              {t("erp.workflow.cancelBtn")}
             </Button>
             <Button
               type="submit"
@@ -489,7 +491,7 @@ function TaskCard({
             }}
             data-ocid="workflow.task.toggle"
           >
-            <ArrowRight className="h-3 w-3" /> Taşı
+            <ArrowRight className="h-3 w-3" /> {t("erp.workflow.moveToColumn")}
             <ChevronDown className="h-3 w-3" />
           </button>
         </DropdownMenuTrigger>
@@ -666,7 +668,7 @@ export default function WorkflowModulePage({
           style={{ color: "oklch(0.5 0.01 270)" }}
         >
           <Loader2 className="h-5 w-5 animate-spin" />
-          <span>Veriler yükleniyor...</span>
+          <span>{t("erp.common.loading")}</span>
         </div>
       </div>
     );
@@ -691,7 +693,7 @@ export default function WorkflowModulePage({
             className="text-sm mt-0.5"
             style={{ color: "oklch(0.5 0.01 270)" }}
           >
-            Kanban board — görevi sütunlar arasında taşıyın
+            {t("erp.workflow.kanbanDesc")}
           </p>
         </div>
         <Button
@@ -774,7 +776,7 @@ export default function WorkflowModulePage({
                     }}
                     data-ocid={`workflow.${col.id}.empty_state`}
                   >
-                    Görev yok
+                    {t("erp.workflow.noTasksShort")}
                   </div>
                 ) : (
                   colTasks.map((task, i) => (

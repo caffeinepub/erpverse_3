@@ -289,7 +289,18 @@
       "approve": "Approve",
       "reject": "Reject",
       "total": "Total",
-      "loadingData": "Загрузка данных..."
+      "loadingData": "Загрузка данных...",
+      "active": "Активный",
+      "inactive": "Неактивный",
+      "currency": "Валюта",
+      "notes": "Заметки",
+      "company": "Компания",
+      "email": "Электронная почта",
+      "phone": "Телефон",
+      "address": "Адрес",
+      "new": "Новый",
+      "view": "Просмотр",
+      "update": "Обновить"
     },
     "hr": {
       "title": "Кадры",
@@ -331,7 +342,23 @@
       "leaveSick": "Sick Leave",
       "leaveExcused": "Excused Leave",
       "leaveUnpaid": "Unpaid Leave",
-      "leaveRequestsDesc": "Employee leave requests and statuses"
+      "leaveRequestsDesc": "Employee leave requests and statuses",
+      "email": "Электронная почта",
+      "phone": "Телефон",
+      "leaveType": "Тип отпуска",
+      "leaveStart": "Начало",
+      "leaveEnd": "Конец",
+      "leaveDays": "Дни",
+      "leaveStatus": "Статус",
+      "leaveReason": "Причина",
+      "salary": "Зарплата",
+      "employeeAdded": "Сотрудник добавлен",
+      "employeeUpdated": "Сотрудник обновлён",
+      "employeeDeleted": "Сотрудник удалён",
+      "leaveCreated": "Запрос отпуска создан",
+      "leaveApproved": "Отпуск одобрен",
+      "leaveRejected": "Отпуск отклонён",
+      "salaryAdded": "Информация о зарплате сохранена"
     },
     "accounting": {
       "title": "Бухгалтерия",
@@ -374,7 +401,14 @@
       "colType": "Type",
       "colDescription": "Description",
       "colCustomer": "Customer",
-      "updateStatus": "Update Status"
+      "updateStatus": "Update Status",
+      "transactionType": "Тип транзакции",
+      "description": "Описание",
+      "date": "Дата",
+      "invoiceStatus": "Статус",
+      "transactionAdded": "Транзакция добавлена",
+      "invoiceAdded": "Счёт добавлен",
+      "invoiceUpdated": "Счёт обновлён"
     },
     "crm": {
       "title": "Работа с клиентами",
@@ -415,7 +449,22 @@
       "closingDateLabel": "Estimated Closing Date",
       "addContactNote": "Add Contact Note",
       "contactTypeLabel": "Contact Type",
-      "addNoteBtn": "Add Note"
+      "addNoteBtn": "Add Note",
+      "email": "Электронная почта",
+      "phone": "Телефон",
+      "industry": "Отрасль",
+      "status": "Статус",
+      "leadName": "Полное имя",
+      "source": "Источник",
+      "probability": "Вероятность",
+      "prospect": "Перспектива",
+      "qualified": "Квалифицированный",
+      "proposal": "Предложение",
+      "negotiation": "Переговоры",
+      "closed": "Закрыт",
+      "customerAdded": "Клиент добавлен",
+      "leadAdded": "Лид добавлен",
+      "opportunityAdded": "Возможность добавлена"
     },
     "projects": {
       "title": "Управление проектами",
@@ -452,7 +501,20 @@
       "todo2": "To Do",
       "inProgress2": "In Progress",
       "done": "Done",
-      "deleted": "Project deleted"
+      "deleted": "Project deleted",
+      "description": "Описание",
+      "startDate": "Дата начала",
+      "endDate": "Дата окончания",
+      "status": "Статус",
+      "teamMembers": "Члены команды",
+      "activeProjects": "Активные проекты",
+      "completedProjects": "Завершённые проекты",
+      "totalTasks": "Всего задач",
+      "completedTasks": "Завершённые задачи",
+      "notStarted": "Не начат",
+      "onHold": "Приостановлен",
+      "projectAdded": "Проект добавлен",
+      "taskAdded": "Задача добавлена"
     },
     "inventory": {
       "title": "Инвентарь",
@@ -504,7 +566,12 @@
       "stockOut": "Stock Out",
       "addMovementTitle": "Record Stock Movement",
       "movementAdded2": "Stock movement recorded",
-      "stockMovement": "Stock Movement"
+      "stockMovement": "Stock Movement",
+      "criticalItems": "Критический запас",
+      "lowItems": "Низкий запас",
+      "totalValue": "Общая стоимость",
+      "productAdded": "Продукт добавлен",
+      "movementAdded": "Движение зафиксировано"
     },
     "procurement": {
       "title": "Закупки",
@@ -557,7 +624,15 @@
       "colRating": "Rating",
       "colTotal": "Total",
       "colEstDelivery": "Est. Delivery",
-      "approvedLabel": "Approved"
+      "approvedLabel": "Approved",
+      "contactPerson": "Контактное лицо",
+      "email": "Электронная почта",
+      "phone": "Телефон",
+      "category": "Категория",
+      "amount": "Сумма",
+      "orderStatus": "Статус",
+      "supplierAdded": "Поставщик добавлен",
+      "orderAdded": "Заказ добавлен"
     },
     "manufacturing": {
       "title": "Производство",
@@ -600,7 +675,16 @@
       "selectWorkOrderLeft": "Select a work order from the left",
       "noMaterialsAdded": "No materials added for this work order",
       "materialAdded": "Material added",
-      "materialDeleted": "Material deleted"
+      "materialDeleted": "Material deleted",
+      "startDate": "Дата начала",
+      "endDate": "Дата окончания",
+      "status": "Статус",
+      "priority": "Приоритет",
+      "inProduction2": "В производстве",
+      "completedOrders": "Завершено",
+      "efficiency": "Эффективность",
+      "workOrderAdded": "Производственный заказ добавлен",
+      "bomAdded": "Спецификация добавлена"
     },
     "workflow": {
       "title": "Задачи и рабочий процесс",
@@ -632,7 +716,15 @@
       "createBtn": "Create",
       "moveToColumn": "Move",
       "noTasksShort": "No tasks",
-      "editTitle": "Edit"
+      "editTitle": "Edit",
+      "description": "Описание",
+      "status": "Статус",
+      "completedTasks": "Завершено",
+      "inProgressTasks": "В процессе",
+      "overdueTasks": "Просрочено",
+      "taskAdded": "Задача добавлена",
+      "taskUpdated": "Задача обновлена",
+      "tags": "Теги"
     },
     "reporting": {
       "title": "Отчёты и аналитика",
@@ -656,7 +748,23 @@
       "noHRData": "Данные HR не найдены",
       "noStockAlert": "Нет предупреждений о запасах",
       "noOpportunityData": "Данные о возможностях не найдены",
-      "noProjectData": "Данные о проектах не найдены"
+      "noProjectData": "Данные о проектах не найдены",
+      "hr": "Отчёт по персоналу",
+      "accounting": "Бухгалтерский отчёт",
+      "projects": "Отчёт по проектам",
+      "inventory": "Отчёт по запасам",
+      "crm": "Отчёт CRM",
+      "totalTasks": "Всего задач",
+      "totalProducts": "Всего продуктов",
+      "criticalStock": "Критический запас",
+      "procurementSummary": "Сводка закупок",
+      "manufacturingSummary": "Сводка производства",
+      "workflowSummary": "Сводка рабочих процессов",
+      "totalSuppliers": "Поставщики",
+      "pendingOrders": "Ожидающие заказы",
+      "totalOrders": "Всего заказов",
+      "totalWorkOrders": "Рабочие заказы",
+      "inProduction": "В производстве"
     },
     "modulePermissions": {
       "title": "Разрешения Модулей",

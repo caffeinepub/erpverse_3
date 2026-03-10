@@ -719,7 +719,8 @@
       "kanbanDesc": "Kanban board — drag tasks between columns",
       "noTasksShort": "No tasks",
       "editTitle": "Edit",
-      "urgent": "Urgent"
+      "urgent": "Urgent",
+      "tags": "Tags"
     },
     "reporting": {
       "title": "Reporting & Analytics",
@@ -751,7 +752,15 @@
       "noHRData": "No HR data found",
       "noStockAlert": "No stock alerts",
       "noOpportunityData": "No opportunity data found",
-      "noProjectData": "No project data found"
+      "noProjectData": "No project data found",
+      "procurementSummary": "Procurement Summary",
+      "manufacturingSummary": "Manufacturing Summary",
+      "workflowSummary": "Workflow Summary",
+      "totalSuppliers": "Suppliers",
+      "pendingOrders": "Pending Orders",
+      "totalOrders": "Total Orders",
+      "totalWorkOrders": "Work Orders",
+      "inProduction": "In Production"
     },
     "modulePermissions": {
       "title": "Module Permissions",
