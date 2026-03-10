@@ -194,7 +194,13 @@
       "alreadyAssigned": "هذا الموظف موجود بالفعل في الشركة",
       "insufficientPermissions": "ليس لديك صلاحية لتعيين هذا الدور",
       "operationFailed": "فشلت العملية",
-      "customRoleAdded": "تمت إضافة دور مخصص"
+      "customRoleAdded": "تمت إضافة دور مخصص",
+      "moduleRevoked": "تم إلغاء وصول الوحدة",
+      "moduleGranted": "تم منح وصول الوحدة",
+      "roleSaved": "تم حذف الدور",
+      "roleAddFailed": "تعذر إضافة الدور",
+      "roleDeleteFailed": "تعذر حذف الدور",
+      "managerDescription": "يمكنك عرض الموظفين في هذا المستوى وما دونه"
     },
     "staff": {
       "title": "لوحة تحكم الموظف",

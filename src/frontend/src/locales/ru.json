@@ -198,7 +198,13 @@
       "alreadyAssigned": "Этот сотрудник уже в компании",
       "insufficientPermissions": "У вас нет разрешения назначать эту роль",
       "operationFailed": "Операция не выполнена",
-      "customRoleAdded": "Пользовательская роль добавлена"
+      "customRoleAdded": "Пользовательская роль добавлена",
+      "moduleRevoked": "доступ к модулю отозван",
+      "moduleGranted": "доступ к модулю предоставлен",
+      "roleSaved": "Роль удалена",
+      "roleAddFailed": "Не удалось добавить роль",
+      "roleDeleteFailed": "Не удалось удалить роль",
+      "managerDescription": "Вы можете просматривать сотрудников на этом уровне и ниже"
     },
     "staff": {
       "title": "Панель сотрудника",

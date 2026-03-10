@@ -194,7 +194,13 @@
       "alreadyAssigned": "この従業員はすでに会社に登録されています",
       "insufficientPermissions": "この役割を割り当てる権限がありません",
       "operationFailed": "操作に失敗しました",
-      "customRoleAdded": "カスタム役割が追加されました"
+      "customRoleAdded": "カスタム役割が追加されました",
+      "moduleRevoked": "モジュールアクセスが取り消されました",
+      "moduleGranted": "モジュールアクセスが付与されました",
+      "roleSaved": "ロールが削除されました",
+      "roleAddFailed": "ロールを追加できませんでした",
+      "roleDeleteFailed": "ロールを削除できませんでした",
+      "managerDescription": "このレベル以下のスタッフを表示できます"
     },
     "staff": {
       "title": "スタッフダッシュボード",

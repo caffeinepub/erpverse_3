@@ -194,7 +194,13 @@
       "alreadyAssigned": "This employee is already in the company",
       "insufficientPermissions": "You don't have permission to assign this role",
       "operationFailed": "Operation failed",
-      "customRoleAdded": "Custom role added"
+      "customRoleAdded": "Custom role added",
+      "moduleRevoked": "module access revoked",
+      "moduleGranted": "module access granted",
+      "roleSaved": "Role deleted",
+      "roleAddFailed": "Could not add role",
+      "roleDeleteFailed": "Could not delete role",
+      "managerDescription": "You can view staff at this level and below"
     },
     "staff": {
       "title": "Staff Dashboard",

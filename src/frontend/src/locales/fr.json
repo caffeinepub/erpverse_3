@@ -198,7 +198,13 @@
       "alreadyAssigned": "Cet employé est déjà dans l'entreprise",
       "insufficientPermissions": "Vous n'avez pas la permission d'attribuer ce rôle",
       "operationFailed": "Opération échouée",
-      "customRoleAdded": "Rôle personnalisé ajouté"
+      "customRoleAdded": "Rôle personnalisé ajouté",
+      "moduleRevoked": "accès au module révoqué",
+      "moduleGranted": "accès au module accordé",
+      "roleSaved": "Rôle supprimé",
+      "roleAddFailed": "Impossible d'ajouter le rôle",
+      "roleDeleteFailed": "Impossible de supprimer le rôle",
+      "managerDescription": "Vous pouvez voir le personnel à ce niveau et en dessous"
     },
     "staff": {
       "title": "Tableau de Bord Personnel",

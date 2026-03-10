@@ -190,7 +190,13 @@
       "alreadyAssigned": "该员工已在公司中",
       "insufficientPermissions": "您没有分配此角色的权限",
       "operationFailed": "操作失败",
-      "customRoleAdded": "自定义角色已添加"
+      "customRoleAdded": "自定义角色已添加",
+      "moduleRevoked": "模块访问已撤销",
+      "moduleGranted": "模块访问已授予",
+      "roleSaved": "角色已删除",
+      "roleAddFailed": "无法添加角色",
+      "roleDeleteFailed": "无法删除角色",
+      "managerDescription": "您可以查看此级别及以下的员工"
     },
     "staff": {
       "title": "员工控制台",

@@ -70,7 +70,7 @@ interface CompanyOwnerDashboardProps {
 const ERP_MODULES = [
   { name: "HR", labelKey: "modules.hr" },
   { name: "Accounting", labelKey: "modules.accounting" },
-  { name: "ProjectManagement", labelKey: "modules.projects" },
+  { name: "Projects", labelKey: "modules.projects" },
   { name: "Inventory", labelKey: "modules.inventory" },
   { name: "CRM", labelKey: "modules.crm" },
   { name: "Procurement", labelKey: "modules.procurement" },
@@ -141,14 +141,14 @@ function ModulePermissionsView({
           staffPrincipal: staff.principal,
           moduleName,
         });
-        toast.success(`${moduleName} erişimi kaldırıldı`);
+        toast.success(`${t("dashboard.owner.moduleRevoked")}: ${moduleName}`);
       } else {
         await grantMutation.mutateAsync({
           companyId,
           staffPrincipal: staff.principal,
           moduleName,
         });
-        toast.success(`${moduleName} erişimi verildi`);
+        toast.success(`${t("dashboard.owner.moduleGranted")}: ${moduleName}`);
       }
     } catch {
       toast.error(t("dashboard.owner.operationFailed"));
@@ -450,7 +450,7 @@ export default function CompanyOwnerDashboard({
       toast.success(t("dashboard.owner.customRoleAdded"));
       setNewRoleName("");
     } catch {
-      toast.error("Rol eklenemedi");
+      toast.error(t("dashboard.owner.roleAddFailed"));
     } finally {
       setAddingRole(false);
     }
@@ -459,9 +459,9 @@ export default function CompanyOwnerDashboard({
   const handleRemoveCustomRole = async (roleName: string) => {
     try {
       await removeCustomRole.mutateAsync({ companyId, roleName });
-      toast.success("Rol silindi");
+      toast.success(t("dashboard.owner.roleSaved"));
     } catch {
-      toast.error("Rol silinemedi");
+      toast.error(t("dashboard.owner.roleDeleteFailed"));
     }
   };
 
@@ -757,8 +757,7 @@ export default function CompanyOwnerDashboard({
                 {isManager && (
                   <p className="text-muted-foreground text-sm flex items-center gap-1.5">
                     <Shield className="h-3.5 w-3.5 text-primary" />
-                    {t("roles.companyManager")} — Yönetici ve altındaki
-                    personeli görüntüleyebilirsiniz
+                    {t("dashboard.owner.managerDescription")}
                   </p>
                 )}
               </div>

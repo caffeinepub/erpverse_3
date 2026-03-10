@@ -198,7 +198,13 @@
       "alreadyAssigned": "Dieser Mitarbeiter ist bereits im Unternehmen",
       "insufficientPermissions": "Sie haben keine Berechtigung, diese Rolle zuzuweisen",
       "operationFailed": "Vorgang fehlgeschlagen",
-      "customRoleAdded": "Benutzerdefinierte Rolle hinzugefügt"
+      "customRoleAdded": "Benutzerdefinierte Rolle hinzugefügt",
+      "moduleRevoked": "Modulzugriff entzogen",
+      "moduleGranted": "Modulzugriff gewährt",
+      "roleSaved": "Rolle gelöscht",
+      "roleAddFailed": "Rolle konnte nicht hinzugefügt werden",
+      "roleDeleteFailed": "Rolle konnte nicht gelöscht werden",
+      "managerDescription": "Sie können Mitarbeiter auf dieser Ebene und darunter anzeigen"
     },
     "staff": {
       "title": "Mitarbeiter-Dashboard",

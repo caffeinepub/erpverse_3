@@ -198,7 +198,13 @@
       "alreadyAssigned": "Este empleado ya está en la empresa",
       "insufficientPermissions": "No tienes permiso para asignar este rol",
       "operationFailed": "Operación fallida",
-      "customRoleAdded": "Rol personalizado agregado"
+      "customRoleAdded": "Rol personalizado agregado",
+      "moduleRevoked": "acceso al módulo revocado",
+      "moduleGranted": "acceso al módulo concedido",
+      "roleSaved": "Rol eliminado",
+      "roleAddFailed": "No se pudo agregar el rol",
+      "roleDeleteFailed": "No se pudo eliminar el rol",
+      "managerDescription": "Puede ver el personal en este nivel y por debajo"
     },
     "staff": {
       "title": "Panel de Personal",

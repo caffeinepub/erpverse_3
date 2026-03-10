@@ -198,7 +198,13 @@
       "alreadyAssigned": "Este funcionário já está na empresa",
       "insufficientPermissions": "Você não tem permissão para atribuir esta função",
       "operationFailed": "Operação falhou",
-      "customRoleAdded": "Função personalizada adicionada"
+      "customRoleAdded": "Função personalizada adicionada",
+      "moduleRevoked": "acesso ao módulo revogado",
+      "moduleGranted": "acesso ao módulo concedido",
+      "roleSaved": "Função excluída",
+      "roleAddFailed": "Não foi possível adicionar a função",
+      "roleDeleteFailed": "Não foi possível excluir a função",
+      "managerDescription": "Você pode visualizar funcionários neste nível e abaixo"
     },
     "staff": {
       "title": "Painel de Funcionário",

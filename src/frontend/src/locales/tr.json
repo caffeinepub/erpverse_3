@@ -190,7 +190,13 @@
       "alreadyAssigned": "Bu personel zaten şirkete ekli",
       "insufficientPermissions": "Bu rolü atamak için yetkiniz yok",
       "operationFailed": "İşlem başarısız oldu",
-      "customRoleAdded": "Özel rol eklendi"
+      "customRoleAdded": "Özel rol eklendi",
+      "moduleRevoked": "modül erişimi kaldırıldı",
+      "moduleGranted": "modül erişimi verildi",
+      "roleSaved": "Rol silindi",
+      "roleAddFailed": "Rol eklenemedi",
+      "roleDeleteFailed": "Rol silinemedi",
+      "managerDescription": "Yönetici ve altındaki personeli görüntüleyebilirsiniz"
     },
     "staff": {
       "title": "Personel Paneli",
