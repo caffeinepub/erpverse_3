@@ -118,7 +118,7 @@ export default function CompanySetupPage({
   };
 
   const inputClass = (field: string) =>
-    `w-full bg-white border ${errors[field] ? "border-destructive" : "border-border"} rounded-lg px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all`;
+    `w-full bg-gray-50 border ${errors[field] ? "border-destructive" : "border-border"} rounded-lg px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all`;
 
   if (submitted) {
     return (
@@ -282,7 +282,7 @@ export default function CompanySetupPage({
                 <select
                   value={form.countryCode}
                   onChange={(e) => handleChange("countryCode", e.target.value)}
-                  className="bg-white border border-border rounded-lg px-2 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring w-24"
+                  className="bg-gray-50 border border-border rounded-lg px-2 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring w-24"
                 >
                   <option value="+90">+90 🇹🇷</option>
                   <option value="+1">+1 🇺🇸</option>

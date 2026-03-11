@@ -170,7 +170,7 @@ export default function DashboardSidebar({
             ? "text-primary font-semibold nav-item-active"
             : disabled
               ? "text-muted-foreground/40 cursor-not-allowed"
-              : "text-sidebar-foreground hover:text-foreground",
+              : "text-gray-700 hover:text-gray-900",
         )}
         style={
           isActive
@@ -194,7 +194,7 @@ export default function DashboardSidebar({
               ? ""
               : disabled
                 ? "opacity-30"
-                : "text-muted-foreground group-hover:text-foreground",
+                : "text-gray-500 group-hover:text-gray-700",
           )}
           style={isActive && iconStyle ? iconStyle : undefined}
         />

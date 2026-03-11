@@ -295,9 +295,9 @@ export default function CompanyInfoCard({
                 placeholder="Şirket adı"
                 data-ocid="company.edit.name.input"
                 style={{
-                  backgroundColor: "oklch(1 0 0)",
+                  backgroundColor: "oklch(0.97 0.006 270)",
                   color: "oklch(0.12 0.012 270)",
-                  borderColor: "oklch(0.88 0.01 270)",
+                  borderColor: "oklch(0.82 0.01 270)",
                 }}
               />
             </div>
@@ -336,18 +336,18 @@ export default function CompanyInfoCard({
                 <SelectTrigger
                   data-ocid="company.edit.sector.select"
                   style={{
-                    backgroundColor: "oklch(1 0 0)",
+                    backgroundColor: "oklch(0.97 0.006 270)",
                     color: "oklch(0.12 0.012 270)",
-                    borderColor: "oklch(0.88 0.01 270)",
+                    borderColor: "oklch(0.82 0.01 270)",
                   }}
                 >
                   <SelectValue placeholder="Sektör seçin" />
                 </SelectTrigger>
                 <SelectContent
                   style={{
-                    backgroundColor: "oklch(1 0 0)",
+                    backgroundColor: "oklch(0.97 0.006 270)",
                     color: "oklch(0.12 0.012 270)",
-                    border: "1px solid oklch(0.88 0.01 270)",
+                    border: "1px solid oklch(0.82 0.01 270)",
                   }}
                 >
                   {SECTORS.map((s) => (
@@ -374,9 +374,9 @@ export default function CompanyInfoCard({
                 placeholder="Şirket adresi"
                 data-ocid="company.edit.address.input"
                 style={{
-                  backgroundColor: "oklch(1 0 0)",
+                  backgroundColor: "oklch(0.97 0.006 270)",
                   color: "oklch(0.12 0.012 270)",
-                  borderColor: "oklch(0.88 0.01 270)",
+                  borderColor: "oklch(0.82 0.01 270)",
                 }}
               />
             </div>
@@ -397,9 +397,9 @@ export default function CompanyInfoCard({
                   placeholder="+90"
                   className="w-24"
                   style={{
-                    backgroundColor: "oklch(1 0 0)",
+                    backgroundColor: "oklch(0.97 0.006 270)",
                     color: "oklch(0.12 0.012 270)",
-                    borderColor: "oklch(0.88 0.01 270)",
+                    borderColor: "oklch(0.82 0.01 270)",
                   }}
                 />
                 <Input
@@ -411,9 +411,9 @@ export default function CompanyInfoCard({
                   className="flex-1"
                   data-ocid="company.edit.phone.input"
                   style={{
-                    backgroundColor: "oklch(1 0 0)",
+                    backgroundColor: "oklch(0.97 0.006 270)",
                     color: "oklch(0.12 0.012 270)",
-                    borderColor: "oklch(0.88 0.01 270)",
+                    borderColor: "oklch(0.82 0.01 270)",
                   }}
                 />
               </div>
@@ -435,9 +435,9 @@ export default function CompanyInfoCard({
                 placeholder="info@sirket.com"
                 data-ocid="company.edit.email.input"
                 style={{
-                  backgroundColor: "oklch(1 0 0)",
+                  backgroundColor: "oklch(0.97 0.006 270)",
                   color: "oklch(0.12 0.012 270)",
-                  borderColor: "oklch(0.88 0.01 270)",
+                  borderColor: "oklch(0.82 0.01 270)",
                 }}
               />
             </div>
@@ -457,9 +457,9 @@ export default function CompanyInfoCard({
                 placeholder="Yetkili kişi adı"
                 data-ocid="company.edit.authorized_person.input"
                 style={{
-                  backgroundColor: "oklch(1 0 0)",
+                  backgroundColor: "oklch(0.97 0.006 270)",
                   color: "oklch(0.12 0.012 270)",
-                  borderColor: "oklch(0.88 0.01 270)",
+                  borderColor: "oklch(0.82 0.01 270)",
                 }}
               />
             </div>
@@ -481,9 +481,9 @@ export default function CompanyInfoCard({
                   placeholder="0"
                   data-ocid="company.edit.employee_count.input"
                   style={{
-                    backgroundColor: "oklch(1 0 0)",
+                    backgroundColor: "oklch(0.97 0.006 270)",
                     color: "oklch(0.12 0.012 270)",
-                    borderColor: "oklch(0.88 0.01 270)",
+                    borderColor: "oklch(0.82 0.01 270)",
                   }}
                 />
               </div>
@@ -502,9 +502,9 @@ export default function CompanyInfoCard({
                   placeholder="2020"
                   data-ocid="company.edit.founding_year.input"
                   style={{
-                    backgroundColor: "oklch(1 0 0)",
+                    backgroundColor: "oklch(0.97 0.006 270)",
                     color: "oklch(0.12 0.012 270)",
-                    borderColor: "oklch(0.88 0.01 270)",
+                    borderColor: "oklch(0.82 0.01 270)",
                   }}
                 />
               </div>

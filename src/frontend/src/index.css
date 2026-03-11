@@ -129,10 +129,10 @@
     color: oklch(0.12 0.012 270);
   }
 
-  /* ── Inputs: always solid white bg with readable text ───────────── */
+  /* ── Inputs: light gray bg to distinguish from white card backgrounds ─ */
   input,
   textarea {
-    background-color: oklch(1 0 0);
+    background-color: oklch(0.97 0.006 270);
     color: oklch(0.12 0.012 270);
   }
   input::placeholder,
@@ -447,4 +447,18 @@ thead th {
   .erp-table tr:hover td {
     background-color: oklch(0.97 0.005 280);
   }
+}
+
+/* ── Sidebar nav: ensure text is always visible ────────────────────── */
+aside nav button:not([disabled]):not(.nav-item-active) {
+  color: oklch(0.25 0.015 270) !important;
+}
+
+/* ── Inputs inside white cards: ensure visual distinction ──────────── */
+.bg-card input:not([readonly]),
+.bg-card textarea:not([readonly]),
+[data-slot="dialog-content"] input:not([readonly]),
+[data-slot="dialog-content"] textarea:not([readonly]) {
+  background-color: oklch(0.97 0.006 270) !important;
+  border-color: oklch(0.82 0.01 270) !important;
 }
